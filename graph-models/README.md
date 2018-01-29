@@ -1,5 +1,7 @@
 # Graph of models interactions for Borgia
 
+[PDF](Borgia-models.pdf)
+
 Created with [Draw.io](https://www.draw.io).
 
 To edit the graph, load the .html file into Draw.io.
