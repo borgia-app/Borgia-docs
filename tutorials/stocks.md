@@ -4,7 +4,7 @@
 
 ## Application
 
-Borgia versions 4.4.1+
+Borgia versions 4.4.3+
 
 ## Introduction
 
