@@ -80,7 +80,7 @@ La suite des commandes est a effectuer dans l'invite de commande postgres. `psql
 Dans l'invite postgres :
 
 * `CREATE DATABASE borgia;`
-* `CREATE USER borgiauser WITH PASSWORD 'MOT_DE_PASSE';`
+* `CREATE USER borgiauser WITH PASSWORD 'MOT_DE_PASSE_DB';`
 * `GRANT ALL PRIVILEGES ON DATABASE borgia TO borgiauser;`
 
 ## Copie de Borgia
