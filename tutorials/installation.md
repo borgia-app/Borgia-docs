@@ -14,11 +14,11 @@ L'ensemble de l'installation se fait sur un serveur sous Linux. La distribution 
 
 # Première configuration du serveur
 
-* L'ensemble des commandes suivantes sont a effectuer en `sudo`, sauf cas exceptionnels contraires et indiqués par la suite.
+* L'ensemble des commandes suivantes sont à effectuer en `sudo`, sauf cas exceptionnels contraires et indiqués explicitement par la suite.
 
 * Il est préférable que l'ensemble du serveur soit configuré sur une machine virtuelle (VM) et non sur le serveur physique directement. Elle pourra ainsi facilement être copiée, sauvegardée ou réinitialisée.
 
-* Afin que le guide soit plus clair, il est décider de travailler dans un dossier spécifique nommé `borgia-app` situé à la racine du serveur (`/borgia-app`). Il est bien évidemment possible de changer ce répertoire, les commandes devront donc être modifiées.
+* Afin que le guide soit plus clair, il est décidé de travailler dans un dossier spécifique nommé `borgia-app` situé à la racine du serveur (`/borgia-app`). Il est bien évidemment possible de changer ce répertoire, les commandes devront donc être modifiées.
 
 ## Préliminaires
 
@@ -34,17 +34,18 @@ L'ensemble de l'installation se fait sur un serveur sous Linux. La distribution 
 
 #### Installer les packages python de base :
 
-`apt-get install build-essential libpq-dev python-dev`
+`apt-get install build-essential libpq-dev python-dev libjpeg-dev`
 
 #### Installation de nginx, postgres & git :
 
 * `apt-get install postgresql postgresql-contrib nginx git`
 
-#### Installation de python3 et de pip pour python3 :
+#### Installation de pip pour python3 :
 
-`apt-get install python3-pip`
+* S'assurer que la commande `python3 --version` retourne une version supérieure ou égale à `3.6`. Si ce n'est pas le cas, réinstaller `python3`.
+* `apt-get install python3-pip`
 
-#### Installation de Yarn :
+#### Installation de Yarn (cas explicite de Debian, sinon voir [ici](https://yarnpkg.com/lang/en/docs/install/)):
 
 * `curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -`
 * `echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list`
@@ -56,11 +57,14 @@ L'ensemble de l'installation se fait sur un serveur sous Linux. La distribution 
 
 ## Mise en place de l'environnement virtuel Python
 
-#### Installation de l'environnement virtuel :
+#### Installation de `virtualenv`
 
-* `pip3 install virtualenv virtualenvwrapper`.
+* `pip3 install virtualenv virtualenvwrapper`
 * Dans `/borgia-app`, créer un environnement virtuel : `virtualenv borgiaenv`.
-* Dans la suite du tutoriel, lorsque des commandes sont effectuées dans l'environnement virtuel il faut s'assurer d'y être. Afin d'être sûr, l'invite de commande indique la version de l'environnement en parenthèses.
+
+#### Fonctionnement de l'environnement virtuel
+
+* Dans la suite du tutoriel, lorsque des commandes sont effectuées dans l'environnement virtuel il faut s'assurer d'y être. Afin d'être sûr, l'invite de commande indique le nom de l'environnement en parenthèses (ici `(borgiaenv)` par exemple).
 * Lorsque c'est demandé, la commande `source /borgia-app/borgiaenv/bin/activate` permet d'entrer dans l'environnement. Et `deactivate` pour en sortir.
 
 ## Installation et configuration de la base de données
@@ -71,11 +75,11 @@ Cette partie ne doit pas être effectuée dans l'environnement virtuel.
 
 `su - postgres`
 
-La suite des commandes est a effectuer dans l'invite de commande postgres. `psql` permet d'activer l'invite et `\q` permet d'en sortir. Attention, l'ensemble des commandes se termine par un `;`.
+La suite des commandes est a effectuer dans l'invite de commande postgres. `psql` permet d'activer l'invite et `\q` permet d'en sortir. Attention, toutes les commandes se terminent par un `;`.
 
 #### Création de la base de données
 
-**MOT_DE_PASSE_DB** est le mot de passe choisit pour se connecter à la base de données. Faites attention à le modifier dans toutes les commandes.
+**MOT_DE_PASSE_DB** est le mot de passe choisi pour se connecter à la base de données. Faites attention à le modifier dans toutes les commandes.
 
 Dans l'invite postgres :
 
@@ -85,14 +89,14 @@ Dans l'invite postgres :
 
 ## Copie de Borgia
 
-La liste des versions de Borgia est disponible [ici](https://github.com/borgia-app/Borgia/releases). Ce guide est destiné aux versions supérieures à 4.5.0. Par exemple, la version 4.5.0 est choisie.
+La liste des versions de Borgia est disponible [ici](https://github.com/borgia-app/Borgia/tags). Ce guide est destiné aux versions supérieures à 4.5.0. Ici par exemple, la version 4.5.0 est choisie et installée.
 
 Dans `/borgia-app` :
 
 * `git clone git@github.com:borgia-app/Borgia.git`
 * `git checkout tags/4.5.0`
 
-## Installation des paquets Python nécessaires
+## Installation des paquets nécessaires à l'application
 
 Dans `/borgia-app/Borgia` et dans l'environnement virtuel :
 
@@ -108,7 +112,7 @@ Et finalement, hors de l'environnement virtuel :
 
 Dans le fichier `/borgia-app/Borgia/borgia/settings.py` :
 
-* Modifier la ligne `SECRET_KEY = 'need to be changed'` en indiquant une clé privée aléatoire. Par exemple, [ce site](JPMGCpIqzP) permet de générer des clés, choisissez au minimum "CodeIgniter Encryption Keys", par exemple : `SECRET_KEY = 'AAHHBxi0qHiVWWk6J1bVWCMdF45p6X9t'`
+* Modifier la ligne `SECRET_KEY = 'need to be changed'` en indiquant une clé privée aléatoire. Par exemple, [ce site](JPMGCpIqzP) permet de générer des clés, choisissez au minimum "CodeIgniter Encryption Keys", par exemple : `SECRET_KEY = 'AAHHBxi0qHiVWWk6J1bVWCMdF45p6X9t'`.
 
 * Modifier la ligne `DEBUG = True` en `DEBUG = False`.
 
@@ -116,7 +120,7 @@ Dans le fichier `/borgia-app/Borgia/borgia/settings.py` :
 
 #### Base de données
 
-Dans le fichier `/borgia/Borgia/borgia/settings.py`, changer la partie :
+Dans le fichier `/borgia-app/Borgia/borgia/settings.py`, changer la partie :
 ```
 DATABASES = {
     'default': {
@@ -144,7 +148,7 @@ DATABASES = {
 
 * Créer un compte mail Google via le site [Gmail](https://www.google.com/gmail/) et noter le nom d'utilisateur **NOM_UTILISATEUR_MAIL** et le mot de passe **MOT_DE_PASSE_MAIL**.
 
-Dans le fichier `/borgia/Borgia/borgia/settings.py` :
+Dans le fichier `/borgia-app/Borgia/borgia/settings.py` :
 
 * Modifier les lignes `DEFAULT_FROM_EMAIL`, `SERVER_EMAIL` et `EMAIL_HOST_USER` en remplaçant `ae.ensam.assoc@gmail.com` par **NOM_UTILISATEUR_MAIL**.
 
@@ -152,15 +156,15 @@ Dans le fichier `/borgia/Borgia/borgia/settings.py` :
 
 #### Administrateurs
 
-Les administrateur reçoivent des emails en cas de problèmes lors de l'utilisation de Borgia. Par exemple, si la base de données est inacessible, Borgia enverra automatiquement un mail aux administrateurs. Ces mails sont précieux et permettent de corriger des erreurs. Il convient d'ajouter au moins un administrateur qui va stocker les éventuels mails d'erreurs pour débuguer ensuite.
+Les administrateur reçoivent des emails en cas de problèmes lors de l'utilisation de Borgia. Par exemple, si la base de données est inacessible, Borgia enverra automatiquement un mail aux administrateurs. Ces mails sont précieux et permettent de corriger des erreurs. Il convient d'ajouter au moins un administrateur qui va stocker les éventuels mails d'erreurs pour débuguer ensuite ou transférer à l'équipe de mainteneurs de Borgia-app.
 
-Pour ajouter des administrateurs, indiquer les adresses mails dans la ligne `ADMINS = []`  dans le fichier `/borgia/Borgia/borgia/settings.py`.
+Pour ajouter des administrateurs, indiquer les adresses mails dans la ligne `ADMINS = []`  dans le fichier `/borgia-app/Borgia/borgia/settings.py`.
 
 #### Paramètres d'utilisation
 
 ##### Divers
 
-Toujours dans le fichier `/borgia/Borgia/borgia/settings.py`, modifier les lignes dans le dictionnaire `SETTINGS_DEFAULT`. Il faut modifier à chaque fois uniquement la quatrième valeur du tuple `(val1, val2, val3, VAL4_A_MODIFIER)`. Il faut de même respecter le type de valeur défini la valeur 3 ("f" indique un nombre décimal à deux décimal, "i" un entier et "s" du texte) même si l'ensemble des valeurs doient être entrées en texte (ainsi on écrira `'1.00'` et non `1.00`).
+Toujours dans le fichier `/borgia-app/Borgia/borgia/settings.py`, modifier les lignes dans le dictionnaire `SETTINGS_DEFAULT`. Il faut modifier à chaque fois uniquement la quatrième valeur du tuple `(val1, val2, val3, VAL4_A_MODIFIER)`. Il faut de même respecter le type de valeur définie par la valeur 3 ("f" indique un nombre décimal à deux décimales, "i" un entier, "s" du texte, "b" un booléen), même si l'ensemble des valeurs doivent être entrées en texte (ainsi on écrira `'1.00'` et non `1.00`).
 
 Les paramètres sont :
 
@@ -178,7 +182,7 @@ Les paramètres sont :
 
 Les deux clés publique et privée `LYDIA_API_TOKEN` & `LYDIA_VENDOR_TOKEN` permettent d'identifier le compte auprès de Lydia. Ces informations sont obtenues en contactant le support de Lydia directement après avoir ouvert un compte professionnel chez eux.
 
-De même, il faut changer les deux urls `LYDIA_CALLBACK_URL` et `LYDIA_CONFIRM_URL` en modifiant la première partie concernant uniquement le domaine (`borgia.iresam.org` par exemple). Attention, `LYDIA_CONFIRM_URL` doit être en `http` et Borgia fera automatiquement la redirection si SSL est activé, mais `LYDIA_CALLBACK_URL` **DOIT** être en `https` si SSL est activé !
+De même, il faut changer les deux urls `LYDIA_CALLBACK_URL` et `LYDIA_CONFIRM_URL` en modifiant la première partie qui concerne uniquement le domaine (`borgia.iresam.org` par exemple). Attention, `LYDIA_CONFIRM_URL` doit être en `http` et Borgia fera automatiquement la redirection si SSL est activé, mais `LYDIA_CALLBACK_URL` **DOIT** être en `https` si SSL est activé !
 
 # Migration de la base de données
 
@@ -188,7 +192,7 @@ Dans `/borgia-app/Borgia` et dans l'environnement virtuel :
 * `python3 manage.py migrate`
 * `python3 manage.py loaddata initial`
 * `python3 manage.py loaddata first_member`
-* `python3 manage.py collectstatic --clear`
+* `python3 manage.py collectstatic --clear` en acceptant l'alerte
 
 Ensuite, indiquer le mot de passe du compte administrateur (qui sera désactivé par la suite) :
 
@@ -285,7 +289,7 @@ server {
 }
 ```
 
-* Activer la configuration nginx :
+* Activer la configuration nginx en créant un lien symbolique :
 
 `ln -s /borgia-app/Borgia/borgia_nginx.conf /etc/nginx/sites-enabled/`
 
@@ -293,13 +297,9 @@ server {
 
 `service nginx restart`
 
-* Activer la configuration nginx :
-
-`ln -s /borgia-app/Borgia/borgia_nginx.conf /etc/nginx/sites-enabled/`
-
 #### Test intermédiaire
 
-La commande `uwsgi --socket mysite.sock --module borgia.wsgi --chmod-socket=666` doit lancer le serveur sans problème. Si c'est le cas, la fin est proche !
+La commande `uwsgi --socket mysite.sock --module borgia.wsgi --chmod-socket=666` doit lancer le serveur sans problème. Si c'est le cas, c'est bientôt terminé !
 
 #### Suite et fin de la configuration de nginx
 
@@ -331,17 +331,39 @@ Ce mode permet à Nginx de gérer automatiquement et de manière dynamique le pr
 
 #### Démarrer uwsgi au démarrage du serveur
 
-Dernier point, toujours en root en dehors de l'environnement virtuel.
+Dernier point, toujours en sudo en dehors de l'environnement virtuel.
 Ajoutez cette ligne à la fin du fichier (avant le `exit 0`) `/etc/rc.local`:
 
 `/usr/local/bin/uwsgi --emperor /etc/uwsgi/vassals`
 
 #### Sauvegarde dans git
 
-Enfin, il convient de sauvegarder l'ensemble de cette configuration sur une branche de production :
+Enfin, il convient de sauvegarder l'ensemble de cette configuration sur une branche de production (sudo non nécessaire ici) :
 
 * `git checkout -b production`
 * `git add .`
 * `git commit -m "production"`
 
 # Début d'utilisation
+
+## Création d'un utilisateur
+
+Le compte administrateur ne doit pas être utilisé lors de la production. Il permet simplement de créer un nouvel utilisateur réel et de lui donner les bonnes permissions.
+
+* Ainsi, connecter vous avec le nom d'utilisateur `admin` et le mot de passe **MOT_DE_PASSE_ADMIN** défini plus haut lors de la configuration.
+
+* Aller sur le groupe des présidents en cliquant sur `Groupes / Présidents` dans le menu latéral.
+
+* Aller dans `Utilisateurs / Nouveau` dans le menu latéral pour créer un nouvel utilisateur et remplir le formulaire. L'utilisateur présent sera désigné président, il convient donc de créer le vrai compte du président de l'association.
+
+* Cliquer sur `Gestion des groupes / Gestion président` et ajouter le compte nouvellement créer.
+
+* Le compte nouveau peut maintenant se connecter et avoir accès au groupe des présidents. Il peut désactiver le compte `admin` dans la liste des utilisateurs. De même, il peut ajouter d'autres utilisateurs et les ajouter aux bons groupes.
+
+## Création d'un magasin
+
+L'ensemble des magasins doivent être maintenant créés. Un seul exemple sera détaillé, mais il en est de même pour les autres.
+
+* Cliquer sur `Magasin / Nouveau` depuis l'interface du groupe des présidents et remplir le formulaire.
+
+* Par défaut, personne n'est chef ou associé du nouveau magasin. Il faut donc ajouter des utilisateurs à ces groupes (au moins au groupe des chefs du magasin). Les chefs pourront ensuite gérés eux-même les associés.
