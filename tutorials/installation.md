@@ -18,7 +18,7 @@ L'ensemble de l'installation se fait sur un serveur sous Linux. La distribution 
 
 * Il est préférable que l'ensemble du serveur soit configuré sur une machine virtuelle (VM) et non sur le serveur physique directement. Elle pourra ainsi facilement être copiée, sauvegardée ou réinitialisée.
 
-* Afin que le guide soit plus clair, il est décider de travailler dans un dossier spécifique nommé `borgia` situé à la racine du serveur (`/borgia`). Il est bien évidemment possible de changer ce répertoire, les commandes devront donc être modifiées.
+* Afin que le guide soit plus clair, il est décider de travailler dans un dossier spécifique nommé `borgia-app` situé à la racine du serveur (`/borgia-app`). Il est bien évidemment possible de changer ce répertoire, les commandes devront donc être modifiées.
 
 ## Préliminaires
 
@@ -52,16 +52,16 @@ L'ensemble de l'installation se fait sur un serveur sous Linux. La distribution 
 
 #### Création du dossier racine de Borgia :
 
-`mkdir /borgia`
+`mkdir /borgia-app`
 
 ## Mise en place de l'environnement virtuel Python
 
 #### Installation de l'environnement virtuel :
 
 * `pip3 install virtualenv virtualenvwrapper`.
-* Dans `/borgia`, créer un environnement virtuel : `virtualenv borgiaenv`.
+* Dans `/borgia-app`, créer un environnement virtuel : `virtualenv borgiaenv`.
 * Dans la suite du tutoriel, lorsque des commandes sont effectuées dans l'environnement virtuel il faut s'assurer d'y être. Afin d'être sûr, l'invite de commande indique la version de l'environnement en parenthèses.
-* Lorsque c'est demandé, la commande `source /borgia/borgiaenv/bin/activate` permet d'entrer dans l'environnement. Et `deactivate` pour en sortir.
+* Lorsque c'est demandé, la commande `source /borgia-app/borgiaenv/bin/activate` permet d'entrer dans l'environnement. Et `deactivate` pour en sortir.
 
 ## Installation et configuration de la base de données
 
@@ -87,14 +87,14 @@ Dans l'invite postgres :
 
 La liste des versions de Borgia est disponible [ici](https://github.com/borgia-app/Borgia/releases). Ce guide est destiné aux versions supérieures à 4.5.0. Par exemple, la version 4.5.0 est choisie.
 
-Dans `/borgia` :
+Dans `/borgia-app` :
 
 * `git clone git@github.com:borgia-app/Borgia.git`
 * `git checkout tags/4.5.0`
 
 ## Installation des paquets Python nécessaires
 
-Dans `/borgia/Borgia` et dans l'environnement virtuel :
+Dans `/borgia-app/Borgia` et dans l'environnement virtuel :
 
 * `pip3 install -r requirements.txt`
 
@@ -106,7 +106,7 @@ Et finalement, hors de l'environnement virtuel :
 
 #### Paramètres vitaux
 
-Dans le fichier `/borgia/Borgia/borgia/settings.py` :
+Dans le fichier `/borgia-app/Borgia/borgia/settings.py` :
 
 * Modifier la ligne `SECRET_KEY = 'need to be changed'` en indiquant une clé privée aléatoire. Par exemple, [ce site](JPMGCpIqzP) permet de générer des clés, choisissez au minimum "CodeIgniter Encryption Keys", par exemple : `SECRET_KEY = 'AAHHBxi0qHiVWWk6J1bVWCMdF45p6X9t'`
 
@@ -182,7 +182,7 @@ De même, il faut changer les deux urls `LYDIA_CALLBACK_URL` et `LYDIA_CONFIRM_U
 
 # Migration de la base de données
 
-Dans `/borgia/Borgia` et dans l'environnement virtuel :
+Dans `/borgia-app/Borgia` et dans l'environnement virtuel :
 
 * `python3 manage.py makemigrations users shops finances modules settings_data notifications stocks`
 * `python3 manage.py migrate`
@@ -212,16 +212,16 @@ Dans l'environnement virtuel :
 
 * `pip3 install uwsgi`
 
-* Créer un fichier `borgia.wsgi` dans `/borgia/Borgia` :
+* Créer un fichier `borgia.wsgi` dans `/borgia-app/Borgia` :
 
 ```
 [uwgi]
 socket = :8000
-chdir = /borgia/Borgia
+chdir = /borgia-app/Borgia
 wsgi-file = borgia/wsgi.py
 ```
 
-* Créer un fichier `wsgi.py` dans `/borgia/Borgia/borgia` :
+* Créer un fichier `wsgi.py` dans `/borgia-app/Borgia/borgia` :
 
 ```
 #-*- coding: utf-8 -*-
@@ -234,7 +234,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "borgia.settings")
 application = get_wsgi_application()
 ```
 
-* Créer un fichier `uwsgi_params` dans `/borgia/Borgia` :
+* Créer un fichier `uwsgi_params` dans `/borgia-app/Borgia` :
 
 ```
 uwsgi_param  QUERY_STRING       $query_string;
@@ -255,11 +255,11 @@ uwsgi_param  SERVER_PORT        $server_port;
 uwsgi_param  SERVER_NAME        $server_name;
 ```
 
-* Créer un fichier `borgia_nginx.conf` dans `/borgia/Borgia` en modifiant le nom du serveur `SERVEUR_NAME` (par exemple `.iresam.org`) :
+* Créer un fichier `borgia_nginx.conf` dans `/borgia-app/Borgia` en modifiant le nom du serveur `SERVEUR_NAME` (par exemple `.iresam.org`) :
 
 ```
 upstream django {
-    server unix:///borgia/borgia/borgia.sock;
+    server unix:///borgia-app/Borgia/borgia.sock;
 }
 
 # configuration of the server
@@ -271,23 +271,23 @@ server {
     client_max_body_size 75M;
 
     location /media  {
-        alias /borgia/Borgia/static/media;
+        alias /borgia-app/Borgia/static/media;
     }
 
     location /static {
-        alias /borgia/Borgia/static/static_root;
+        alias /borgia-app/Borgia/static/static_root;
     }
 
     location / {
         uwsgi_pass  django;
-        include /borgia/Borgia/uwsgi_params;
+        include /borgia-app/Borgia/uwsgi_params;
     }
 }
 ```
 
 * Activer la configuration nginx :
 
-`ln -s /borgia/Borgia/borgia_nginx.conf /etc/nginx/sites-enabled/`
+`ln -s /borgia-app/Borgia/borgia_nginx.conf /etc/nginx/sites-enabled/`
 
 * Redémarrer nginx :
 
@@ -295,7 +295,7 @@ server {
 
 * Activer la configuration nginx :
 
-`ln -s /borgia/Borgia/borgia_nginx.conf /etc/nginx/sites-enabled/`
+`ln -s /borgia-app/Borgia/borgia_nginx.conf /etc/nginx/sites-enabled/`
 
 #### Test intermédiaire
 
@@ -303,18 +303,18 @@ La commande `uwsgi --socket mysite.sock --module borgia.wsgi --chmod-socket=666`
 
 #### Suite et fin de la configuration de nginx
 
-* Créer un fichier `borgia_uwsgi.ini` dans `/borgia/Borgia` :
+* Créer un fichier `borgia_uwsgi.ini` dans `/borgia-app/Borgia` :
 
 ```
 [uwsgi]
 
-chdir           = /borgia/Borgia
+chdir           = /borgia-app/Borgia
 module          = borgia.wsgi
-home            = /borgia/borgiaenv
+home            = /borgia-app/borgiaenv
 
 master          = true
 processes       = 10
-socket          = /borgia/Borgia/borgia.sock
+socket          = /borgia-app/Borgia/borgia.sock
 chmod-socket    = 666
 vacuum          = true
 ```
@@ -327,7 +327,7 @@ Ce mode permet à Nginx de gérer automatiquement et de manière dynamique le pr
 
 * `mkdir /etc/uwsgi`
 * `mkdir /etc/uwsgi/vassals`
-* `ln -s /borgia/Borgia/borgia_uwsgi.ini /etc/uwsgi/vassals/`
+* `ln -s /borgia-app/Borgia/borgia_uwsgi.ini /etc/uwsgi/vassals/`
 
 #### Démarrer uwsgi au démarrage du serveur
 
