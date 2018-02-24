@@ -1,10 +1,15 @@
-![logo](./img/borgia-logo-light.png)
+<p align="center">
+   <img src="./img/borgia-logo-light.png" />
+</p>
+
 
 # Documentation - Gestion des stocks
 
 ## Application
 
-Borgia versions 4.4.3+
+Build : [4.5.0 + ](https://github.com/borgia-app/Borgia/releases/tag/4.5.0)
+
+Licence : [GNU GPL version 3](./license.txt)
 
 ## Introduction
 
