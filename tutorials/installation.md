@@ -166,21 +166,11 @@ Pour ajouter des administrateurs, indiquer les adresses mails dans la ligne `ADM
 
 #### Paramètres d'utilisation
 
-##### Divers
+##### Introduction
 
 Toujours dans le fichier `/borgia-app/Borgia/borgia/settings.py`, modifier les lignes dans le dictionnaire `SETTINGS_DEFAULT`. Il faut modifier à chaque fois uniquement la quatrième valeur du tuple `(val1, val2, val3, VAL4_A_MODIFIER)`. Il faut de même respecter le type de valeur définie par la valeur 3 ("f" indique un nombre décimal à deux décimales, "i" un entier, "s" du texte, "b" un booléen), même si l'ensemble des valeurs doivent être entrées en texte (ainsi on écrira `'1.00'` et non `1.00`).
 
-Les paramètres sont :
-
-* `CENTER_NAME`: nom du centre Borgia (texte).
-* `MARGIN_PROFIT`: Marge (%) à appliquer sur le prix des produits calculés automatiquement (décimal 2 décimales).
-* `LYDIA_MIN_PRICE`: Valeur minimale (€) de rechargement en automatique par Lydia (décimal 2 décimales).
-* `LYDIA_MAX_PRICE`: Valeur maximale (€) de rechargement en automatique par Lydia (décimal 2 décimales).
-* `LYDIA_API_TOKEN`: Clé API (privée) (texte), détails dans la section suivante.
-* `LYDIA_VENDOR_TOKEN`: Clé vendeur (publique) (texte), détails dans la section suivante.
-* `BALANCE_THRESHOLD_MAIL_ALERT`: Valeur seuil (€) en dessous de laquelle (strictement) l'alerte par email est activée (décimal 2 décimales), expérimental uniquement.
-* `BALANCE_FREQUENCY_MAIL_ALERT`: Fréquence (jours) à laquelle l'alerte mail est envoyée si le solde est inférieur à la valeur seuil (entier), expérimental uniquement.
-* `BALANCE_THRESHOLD_PURCHASE`: Valeur seuil (€) en dessous de laquelle (strictement) la commande est impossible (décimal 2 décimales).
+Il est ok pour plupart des paramètres de les modifier directement dans l'interface graphique. Cependant, en cas de problème la valeur du fichiers `settings` sera utilisée. Ainsi, les valeurs pour `CENTER_NAME` et les paramètres de Lydia (détails dans la section suivante) devraient être modifiés ici.
 
 ##### Lydia
 
