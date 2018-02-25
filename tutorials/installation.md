@@ -8,7 +8,7 @@
 
 Build : [4.5.0 + ](https://github.com/borgia-app/Borgia/releases/tag/4.5.0)
 
-Licence : [GNU GPL version 3](./license.txt)
+Licence : [GNU GPL version 3](https://github.com/borgia-app/Borgia/blob/master/license.txt)
 
 # Introduction
 
