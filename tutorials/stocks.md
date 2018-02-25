@@ -74,7 +74,7 @@ Pour ajouter un ligne de produit il suffit de cliquer sur `Nouveau produit`.
 
 ![Formulaire inventaire](./img/form_inventory.png)
 
-Une fois validée, l'inventaire est créé et ajouté à la liste. Le détail de cet inventaire est ensuite visible en cliquant sur `détails`. Les stocks des produits correspondants ont été mis à jour automatiquement.
+Une fois validé, l'inventaire est créé et ajouté à la liste. Le détail de cet inventaire est ensuite visible en cliquant sur `détails`. Les stocks des produits correspondants ont été mis à jour automatiquement.
 
 ![Détails inventaire](./img/details_inventory.png)
 
@@ -83,7 +83,7 @@ Une fois validée, l'inventaire est créé et ajouté à la liste. Le détail de
 Les inventaires sont nécessaires pour utiliser au mieux Borgia, son application de gestion des stocks et d'avoir une vision cohérente et globale des magasins. Ainsi, l'équipe de développement de Borgia recommande d'effectuer régulièrement des inventaires pour chacun des magasins.
 
 Par exemple, le foyer des élèves est un magasin où la rotation des produits est rapide et la gestion des stocks importante. Ainsi un inventaire toutes les deux semaines semble efficace et est recommandé.
-Un autre magasin qui effectue moins de vente, comme les produits estampiés "Gadz" par exemple, peuvent effectuer un inventaire tous les mois en gardant une gestion des stocks cohérente.
+Un autre magasin qui effectue moins de vente, comme les goodies estampiés "Gadz" par exemple, peuvent effectuer un inventaire tous les mois en gardant une gestion des stocks cohérente.
 
 ## Prix de vente
 
@@ -104,16 +104,16 @@ Afin de simplifier l'exemple, considérons que l'ensemble des achats sont effect
 | 03/01/2018 soir | Vente  | Bière   | 30       | -               | 360             | G=0.93€       |
 
 Le prix de vente tient compte de la quantité en stock, et des entrées et sorties de stocks.
-Par exemple, le 01/01/2018 à midi 100 bouteilles de bière sont ajoutées au stock, et ont été acheté au coût de 1€ par bouteille.
+Par exemple, le 01/01/2018 à midi 100 bouteilles de bière sont ajoutées au stock, et ont été achetées au coût de 1€ par bouteille.
 Dès cette entrée de stock, Borgia calcule le prix de vente de ce produit:
 
-`A = [(coût total) / (quantité entrée)] \* (1 + marge) = [(100 * 1) / 100] \* (1 + 0.05) = 1 \* (1 + 0.05) = 1.05€``
+`A = [(coût total) / (quantité entrée)] * (1 + marge) = [(100 * 1) / 100] * (1 + 0.05) = 1 * (1 + 0.05) = 1.05€`
 
-La marge est un paramètre d'entrée de Borgia, que les administrateurs peuvent modifier. Elle se situe habituellement autour de 5% et permet de contrebalancer la perte des produits ou le vol le cas échéant. Les associations étudiantes étant souvent à but non lucratif, cette marge n'a pas vocation a financer autre chose que ces pertes éventuelles.
+La marge est un paramètre d'entrée de Borgia, que les administrateurs peuvent modifier. Elle se situe habituellement autour de 5% et permet de contrebalancer la perte des produits ou le vol le cas échéant. Les associations étudiantes étant souvent à but non lucratif, cette marge n'a pas vocation à financer d'autres choses que ces pertes éventuelles.
 
-Lorsque plusieurs produits sont vendus, et que des entrées de stock sont effectuées à des coûts différents la formule suivante est appliquée:
+Lorsque plusieurs produits sont vendus, et que des entrées de stock sont effectuées à des coûts différents, la formule suivante est appliquée:
 
-`G = [(coût dernière entrée de stock) / (quantité entrée)] \* (1 + marge) = [(300 \* 0.89) / 300] \* (1 + 0.05) = 0.93€`
+`G = [(coût dernière entrée de stock) / (quantité entrée)] * (1 + marge) = [(300 * 0.89) / 300] * (1 + 0.05) = 0.93€`
 
 ## Facteur de correction des ventes (FCV)
 
@@ -121,9 +121,9 @@ Lorsque plusieurs produits sont vendus, et que des entrées de stock sont effect
 
 En plus de la détermination automatique du prix de vente, Borgia effectue un traitement afin d'estimer la quantité de produit en stock. L'objectif étant d'avoir une quantité estimée la plus proche possible du réel.
 
-Pour ce faire, chaque produit dispose d'un attribut nommé "facteur de correction des ventes (FCV)" qui permet d'ajuster la quantité vendue à la quantité sortie du stock.
+Pour ce faire, chaque produit dispose d'un attribut nommé "facteur de correction des ventes (FCV)" qui permet d'ajuster la quantité vendue à la quantité réelle sortie du stock.
 
-Par exemple, un facteur FCV égal à 1 indique que pour 1 produit X vendu par Borgia, il y a effectivement 1 produit X qui est sorti du stock réel. C'est par exemple le cas pour les produits rares, ou ceux qui ont beaucoup de valeur.
+Par exemple, un facteur FCV égal à 1 indique que pour 1 produit X vendu par Borgia, il y a effectivement 1 produit X qui est sorti du stock réel. C'est par exemple le cas pour les produits unitaires, qui n'ont pas de pertes (péremption, vol, ...), tel des goodies.
 
 Cependant, dans le cas des produits liquides par exemple, une vente de 25 cl ne correspond quasiment jamais à une sortie de stock de 25 cl. Mais plutôt à une sortie de (25 cl \* FCV).
 
@@ -146,11 +146,11 @@ Pour calculer ce facteur FCV, Borgia doit connaître les entrées, les sorties e
 
 Lorsque les produits "bière" et "chips" sont créés, le facteur FCV est initialisé à 1.000. Ainsi, après avoir ajouté des produits (jour 01/01/2018 midi), lors des ventes du soir, Borgia estime le stock en cours:
 
-`A = stock initial estimé - vente \* FCV = 100 - 10 \* 1.000 = 90`
+`A = stock initial estimé - vente * FCV = 100 - 10 * 1.000 = 90`
 
-`B = 4000 - 200 \* 1.000 = 3800`
+`B = 4000 - 200 * 1.000 = 3800`
 
-A la fin du jour 01/01/2018, Borgia n'a pas l'information du stock réel, et les gestionnaires du magasin non plus. Pour l'avoir, il faut réaliser un inventaire jour 02/01/2018. Les gestionnaires se rendent alors compte qu'il y a en fait 87 produits "bière" et 3785 "chips" au lieu de respectivement 90 et 3800. Borgia ajuste donc le FCV de ces produits avec la formule suivante:
+À la fin du jour 01/01/2018, Borgia ne peut que donner une estimation, potentiellement éloignée de la réalité. Pour avoir une estimation plus précise, il faut réaliser un inventaire jour 02/01/2018. Les gestionnaires se rendent alors compte qu'il y a en fait 87 produits "bière" et 3785 "chips" au lieu de respectivement 90 et 3800. Borgia ajuste donc le FCV de ces produits avec la formule suivante:
 
 `nouveau FCV = (a + b - c) / d`
 
@@ -159,7 +159,9 @@ Où:
 * a: quantité en stock lors du dernier inventaire (0 s'il n'y a pas encore eu d'inventaire)
 * b: entrées au stock depuis le dernier inventaire (depuis la création s'il n'y a pas d'inventaire)
 * c: stock réel actuel donné par le courant inventaire
-* d: ventes enregistrées depuis le dernier inventaire (depuis la création s'il n'y a pas d'inventaire)
+* d: ventes enregistrées depuis le dernier inventaire (depuis la création s'il n'y a pas d'inven01taire)
+
+Autrement dit, dans le cas présent des chips et bières :
 
 `C = (0 + 4000 - 3785) / 200 = 215 / 200 = 1.075`
 
@@ -167,10 +169,10 @@ Où:
 
 ### Conclusion
 
-Ainsi, lors des prochains achats, les stocks estimés (E et F) seront au plus proche du réel. Afin d'ajuster encore plus les FCV, il faut effectuer des nouveaux inventaires et ainsi de suite.
+Ainsi, lors des prochains achats, les stocks estimés (E et F) seront plus proche du stock réel. En effectuant de nouveaux inventaires périodiquement, on affinera d'autant le coefficient FCV, et ainsi l'estimation du stock réel.
 
 ### Remarques
 
 * S'il n'y a pas de ventes enregistrées depuis le dernier inventaire, Borgia ne calculera pas de nouveau FCV.
-* Si le stock estimé devient négatif par calcul, Borgia indiquera un stock estimé égal à 0 afin de rester cohérent. C'est souvent qu'il faut effectuer un nouvel inventaire.
+* Si le stock estimé devient négatif par calcul, Borgia indiquera un stock estimé égal à 0 afin de rester cohérent. Cela peut notamment être dû à la non-déclaration d'une entrée de stock. Un inventaire est alors recommendé afin de profiter des fonctionnalités de Borgia.
 * L'ensemble des calculs qui permettent d'obtenir ces formules sont disponibles et détaillés dans les commentaires du code. Notamment dans les fonctions méthodes du modèle `Product` disponible dans le fichier `/shops/models`.
