@@ -66,7 +66,7 @@ Borgia offre deux types de produits pour les magasins : les produits unitaires e
 
 Un produit unitaire (aussi nommé produit tout court) est le produit de base de Borgia. L'acheteur repart avec l'intégrité du produit en une fois et il disparait physiquement du stock. Par exemple, une bouteille de bière, un écusson ou encore une blouse sont des produits basiques et unitaires.
 
-IMAGE AJOUT PRODUIT SIMPLE
+![Ajout produit simple](./img/new_product.png)
 
 L'ajout d'un tel produit ne nécessite qu'un nom de produit (qui sera le nom de vente).
 
@@ -76,9 +76,19 @@ Un produit vendu à la quantité ne disparait pas physiquement du stock lorsqu'i
 
 Par exemple, de la bière provenant d'un fût est un produit vendu à la quantité. De même, le fromage ou le pain vendu au poids en font partie. Bien sûr, ce n'est pas limité aux produits alimentaires.
 
-IMAGE AJOUT PRODUIT QUANTITE
+![Ajout produit vendu à la quantité](./img/new_product_quantity.png)
 
 L'ajout d'un tel produit nécessite un nom et aussi une unité de vente : gramme ou centilitre.
+
+### Détails d'un produit
+
+L'ensemble des informations d'un produit est disponible dans en cliquant sur "détails" pour le produit concerné dans la liste des produits du magasin.
+
+![Produit dans la liste](./img/product_in_list.png)
+
+La page qui s'affiche indique les informations du produit ainsi que les différentes manipulations possibles à effectuer (voir la suite).
+
+![Détails d'un produit](./img/product_retrieve.png)
 
 ## Activation / suppression
 
@@ -98,15 +108,15 @@ Ainsi, la suppression d'un produit est à réserver si une erreur a été faite 
 
 ## Gestion du prix de vente
 
-IMAGE GESTION PRIX DANS LISTE
-
 Borgia gère automatiquement le prix de vente des produits en utilisant les données d'entrées et de sorties du stocks (voir la section stock pour plus d'informations). De plus le paramètre qui indique la marge de vente à appliquée est utilisé et défini dans la configuration de Borgia.
 
 De plus, il est possible d'utiliser un prix défini manuellement pour chacun des produits en cliquant sur le bouton `Gestion manuelle du prix`.
 
-IMAGE GESTION PRIX
+![Gestion manuelle du prix](./img/manual_price.png)
 
 Si c'est le cas, Borgia indique la déviation par rapport au prix qu'il calcule afin d'informer les administrateurs de la cohérence ou non du prix manuel.
+
+![Ajout produit simple](./img/manual_price_deviant.png)
 
 ## Stock
 
@@ -116,10 +126,49 @@ Noter simplement qu'un produit ne peut pas être vendu s'il n'y a pas encore eu 
 
 # Modules de ventes
 
+L'objectif principal des produits et de l'application magasin est de vendre des choses par l'intermédiaire pour l'association de Borgia.
+
 ## Deux types de modules
+
+Afin de proposer des produits aux membres et utilisateurs du site, deux modules de vente différents sont disponibles. Les deux modules fonctionnent à peu près de la même façon, leur configuration n'est donc pas différenciée dans ce guide et est indiquée par la suite.
+
+Le premier est le module de "vente directe". Il autorise les utilisateurs à indiquer eux-même leurs achats via une interface simplifiée. Tout fonctionne sans l'intervention d'un administrateur du magasin et est donc basé sur la confiance entre les membres et l'association. Pour activer et configurer ce module, il faut cliquer sur "Module vente libre service" dans le menu latéral.
+
+![Module vente libre service](./img/module_selfsale.png)
+
+Le second est un module équivalent mais disponible uniquement pour les gestionnaires du magasin. La vente est donc approuvée par un administrateur directement. Ce module est nommé "Module vente par opérateur".
+
+![Module vente par opérateur](./img/module_operator.png)
 
 ## Configuration
 
+En cliquant sur le lien du module dans le menu latéral, la page de configuration s'ouvre. La section du haut indique les paramètres actuels du module, notamment s'il est activé ou non.
+
+![Configuration du module](./img/module_config.png)
+
+Pour modifier ces paramètres, cliquer sur le bouton "Modifier".
+
 ## Catégories de vente
+
+La seconde section indique les produits qui sont disponibles à la vente.
+
+Ils sont organisés par catégories que l'on peut ajouter, modifier et supprimer à la volée. Le nom de la catégorie est associée au nom affiché dans l'onglet sur l'interface utilisée par les utilisateurs.
+
+Un produit peut être ajouté à plusieurs catégories en même temps. Si c'est un produit vendu à la quantité, il faut indiquer la quantité vendu à chaque fois. Par exemple 25 cl pour un verre, 50 pour une pinte etc.
+
+![Sélection de la quantité dans une catégorie](./img/quantity_in_cat.png)
+
+## Accès aux modules
+
+Une fois activés, les modules de vente sont accessibles par les utilisateurs.
+
+Les module de vente font l'objet d'une page de login spécifique qui doit être sélectionnée en cliquant sur le bouton vert "liens directs" sur la page de login usuelle.
+
+![Liens directs](./img/direct_links.png)
+
+
+![Modal liens directs](./img/direct_links_modal.png)
+
+En plus de ces liens, des redirections sont disponibles dans le menu latéral. Par le groupe "Gadz'Arts" via "Vente directe **NOM_DU_MAGASIN**" et "Module vente" par les groupes des chefs et associés du magasin en question.
 
 # Bilan de santé
