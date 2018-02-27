@@ -97,7 +97,7 @@ La liste des versions de Borgia est disponible [ici](https://github.com/borgia-a
 
 Dans `/borgia-app` :
 
-* `git clone git@github.com:borgia-app/Borgia.git`
+* `git clone https://github.com/borgia-app/Borgia.git`
 * `git checkout tags/4.5.0`
 
 ## Installation des paquets nécessaires à l'application
