@@ -117,7 +117,7 @@ Et finalement, hors de l'environnement virtuel :
 
 Dans le fichier `/borgia-app/Borgia/borgia/settings.py` :
 
-* Modifier la ligne `SECRET_KEY = 'need to be changed'` en indiquant une clé privée aléatoire. Par exemple, [ce site](JPMGCpIqzP) permet de générer des clés, choisissez au minimum "CodeIgniter Encryption Keys", par exemple : `SECRET_KEY = 'AAHHBxi0qHiVWWk6J1bVWCMdF45p6X9t'`.
+* Modifier la ligne `SECRET_KEY = 'need to be changed'` en indiquant une clé privée aléatoire. Par exemple, [ce site](https://randomkeygen.com/) permet de générer des clés, choisissez au minimum "CodeIgniter Encryption Keys", par exemple : `SECRET_KEY = 'AAHHBxi0qHiVWWk6J1bVWCMdF45p6X9t'`.
 
 * Modifier la ligne `DEBUG = True` en `DEBUG = False`.
 
