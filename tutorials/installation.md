@@ -345,7 +345,6 @@ Ajoutez cette ligne à la fin du fichier (avant le `exit 0`) `/etc/rc.local`:
 
 Enfin, il convient de sauvegarder l'ensemble de cette configuration sur une branche de production (sudo non nécessaire ici) :
 
-* `git checkout -b production`
 * `git add .`
 * `git commit -m "production"`
 
