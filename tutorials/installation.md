@@ -99,6 +99,7 @@ Dans `/borgia-app` :
 
 * `git clone https://github.com/borgia-app/Borgia.git`
 * `git checkout tags/4.5.0`
+* `git checkout -b production_4.5.0`
 
 ## Installation des paquets nécessaires à l'application
 
