@@ -304,7 +304,7 @@ server {
 
 #### Test intermédiaire
 
-La commande `uwsgi --socket mysite.sock --module borgia.wsgi --chmod-socket=666` doit lancer le serveur sans problème (à condition d'avoir quelques modules python installés, le virtual env ne sera utilisé qu'ensuite). Si c'est le cas, c'est bientôt terminé !
+La commande `uwsgi --socket borgia.sock --module borgia.wsgi --chmod-socket=666` doit lancer le serveur sans problème (à condition d'avoir quelques modules python installés, le virtual env ne sera utilisé qu'ensuite). Si c'est le cas, c'est bientôt terminé !
 
 #### Suite et fin de la configuration de nginx
 
@@ -324,7 +324,7 @@ chmod-socket    = 666
 vacuum          = true
 ```
 
-* Ce fichier peut être testé avec la commande `uwsgi --ini mysite_uwsgi.ini`
+* Ce fichier peut être testé avec la commande `uwsgi --socket borgia.sock --module borgia.wsgi --ini mysite_uwsgi.ini`
 
 #### Mode Empereur de nginx
 
