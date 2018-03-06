@@ -30,15 +30,18 @@ L'ensemble de l'installation se fait sur un serveur sous Linux. La distribution 
 
 * `apt-get update`
 * `apt-get upgrade`
-* `apt-get dist-upgrade`
 
 #### Supprimer Apache s'il est installé :
 
 `apt-get purge apache2`
 
+#### Installer des paquets nécessaires pour la suite de l'installation :
+
+`apt-get install curl apt-transport-https`
+
 #### Installer les packages python de base :
 
-`apt-get install build-essential libpq-dev python-dev libjpeg-dev`
+`apt-get install build-essential libpq-dev python-dev libjpeg-dev libssl-dev libffi-dev`
 
 #### Installation de nginx, postgres & git :
 
@@ -46,7 +49,7 @@ L'ensemble de l'installation se fait sur un serveur sous Linux. La distribution 
 
 #### Installation de pip pour python3 :
 
-* S'assurer que la commande `python3 --version` retourne une version supérieure ou égale à `3.6`. Si ce n'est pas le cas, réinstaller `python3`.
+* S'assurer que la commande `python3 --version` retourne une version supérieure ou égale à `3.5` (Version par défaut sur Debian 9). Si ce n'est pas le cas, réinstaller `python3`.
 * `apt-get install python3-pip`
 
 #### Installation de Yarn (cas explicite de Debian, sinon voir [ici](https://yarnpkg.com/lang/en/docs/install/)):
@@ -65,6 +68,7 @@ L'ensemble de l'installation se fait sur un serveur sous Linux. La distribution 
 
 * `pip3 install virtualenv virtualenvwrapper`
 * Dans `/borgia-app`, créer un environnement virtuel : `virtualenv borgiaenv`.
+* Si la commande virtualenv n'existe pas, faire: `ln -s /usr/local/bin/virtualenv* /usr/bin/`
 
 #### Fonctionnement de l'environnement virtuel
 
@@ -94,10 +98,12 @@ Dans l'invite postgres :
 ## Copie de Borgia
 
 La liste des versions de Borgia est disponible [ici](https://github.com/borgia-app/Borgia/tags). Ce guide est destiné aux versions supérieures à 4.5.0. Ici par exemple, la version 4.5.0 est choisie et installée.
-
+ a
 Dans `/borgia-app` :
 
 * `git clone https://github.com/borgia-app/Borgia.git`
+
+Ensuite dans `/borgia-app/Borgia` :
 * `git checkout tags/4.5.0`
 * `git checkout -b production_4.5.0`
 
