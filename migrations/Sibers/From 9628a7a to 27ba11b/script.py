@@ -117,3 +117,180 @@ for pb in ProductBase.objects.all():
 
     products_pk = products_pk + 1
 print(len(products) + ' mapped')
+
+# Product
+print("Mapping exceptionnal movements")
+exceptionnal_movements = []
+exceptionnal_movements_pk = 1
+for s in Sale.objects.filter(category="exceptionnal_movement"):
+    exceptionnal_movements.append(
+        {
+            "models": "finances.exceptionnal_movement",
+            "pk": exceptionnal_movements_pk,
+            "fields": {
+                "datetime": s.date.iso_format(),
+                "justification": s.justification,
+                "operator": s.operator.pk,
+                "recipient": s.sender.pk,
+                "amount": str(s.amount),
+                "is_credit": s.is_credit
+            }
+        }
+    )
+    exceptionnal_movements_pk = exceptionnal_movements_pk + 1
+print(len(exceptionnal_movements) + ' mapped')
+
+print("Mapping transferts")
+transferts = []
+transferts_pk = 1
+for s in Sale.objects.filter(category = 'transfer'):
+    transferts.append(
+        {
+            "models": "finances.transfert",
+            "pk": transferts_pk,
+            "fields": {
+                "datetime": s.date.iso_format(),
+                "justification": s.justification,
+                "operator": s.operator.pk,
+                "recipient": s.recipient.pk,
+                "amount": str(s.amount),
+            }
+        }
+    )
+    transferts_pk = transferts_pk + 1
+print(len(transferts) + ' mapped')
+
+print("Mapping rechargings")
+rechargings = []
+payment_solutions = []
+lydias_online = []
+lydias_facetoface = []
+cashs = []
+cheques = []
+bank_accounts = []
+
+rechargings_pk = 1
+bank_accounts_pk = 1
+
+for s in Sale.objects.filter(category = 'recharging'):
+    if s.wording = "Rechargement automatique":
+        if s.payment.unique_payment_type = 'lydia_auto':
+            lydias_online.append(
+                {
+                    "models": "finances.lydiaonline",
+                    "pk": rechargings_pk,
+                    "fields": {
+
+                    }
+                }
+            )
+            payment_solutions.append(
+                {
+                    "models": "finances.paymentsolution",
+                    "pk": rechargings_pk,
+                    "fields": {
+
+                    }
+                }
+            )
+            rechargings.append(
+                {
+                    "models": "finances.paymentsolution",
+                    "pk": rechargings_pk,
+                    "fields": {
+
+                    }
+                }
+            )
+            rechargings_pk = rechargings_pk + 1
+    elif s.wording = "Recharging manuel":
+        if s.payment.unique_payment_type = 'cash':
+            cashs.append(
+                {
+                    "models": "finances.cash",
+                    "pk": rechargings_pk,
+                    "fields": {
+
+                    }
+                }
+            )
+            payment_solutions.append(
+                {
+                    "models": "finances.paymentsolution",
+                    "pk": rechargings_pk,
+                    "fields": {
+
+                    }
+                }
+            )
+            rechargings.append(
+                {
+                    "models": "finances.paymentsolution",
+                    "pk": rechargings_pk,
+                    "fields": {
+
+                    }
+                }
+            )
+            echargings_pk = rechargings_pk + 1
+        elif s.payment.unique_payment_type = 'lydia_face2face':
+            lydias_facetoface.append(
+                {
+                    "models": "finances.lydiafacetoface",
+                    "pk": rechargings_pk,
+                    "fields": {
+
+                    }
+                }
+            )
+            payment_solutions.append(
+                {
+                    "models": "finances.paymentsolution",
+                    "pk": rechargings_pk,
+                    "fields": {
+
+                    }
+                }
+            )
+            rechargings.append(
+                {
+                    "models": "finances.paymentsolution",
+                    "pk": rechargings_pk,
+                    "fields": {
+
+                    }
+                }
+            )
+            echargings_pk = rechargings_pk + 1
+        elif s.payment.unique_payment_type = 'cheque':
+            # Create bank account if needed
+            cheques.append(
+                {
+                    "models": "finances.cheque",
+                    "pk": rechargings_pk,
+                    "fields": {
+
+                    }
+                }
+            )
+            payment_solutions.append(
+                {
+                    "models": "finances.paymentsolution",
+                    "pk": rechargings_pk,
+                    "fields": {
+
+                    }
+                }
+            )
+            rechargings.append(
+                {
+                    "models": "finances.paymentsolution",
+                    "pk": rechargings_pk,
+                    "fields": {
+
+                    }
+                }
+            )
+            echargings_pk = rechargings_pk + 1
+
+print(len(rechargings) + ' mapped')

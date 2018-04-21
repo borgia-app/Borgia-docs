@@ -91,17 +91,9 @@ For each Sale where category = ‘transfer’:
 		amount —> amount
 ```
 
-### LydiaOnline (date_operation, id_from_lydia, banked, date_banked)
-
-```
-For each Sale where category = ‘recharging’ && wording = ‘Rechargement automatique’:
-	if payment.unique_payment_type == ‘lydia_auto’:
-		Create new LydiaOnline
-			date_operation —> date
-			id_from_lydia —> payment.lydias[0].id_from_lydia
-```
-
 ### Recharging (datetime, sender, operator, payment_solution)
+
+### LydiaOnline (ender, recipient, amount, date_operation, id_from_lydia, banked, date_banked)
 
 ### LydiaFaceToFace (sender, recipient, amount, date_operation, id_from_lydia, banked, date_banked)
 
@@ -110,6 +102,21 @@ For each Sale where category = ‘recharging’ && wording = ‘Rechargement aut
 ### Cheque (sender, recipient, amount, is_cashed, cheque_number, signature_date, bank_account)
 
 ### BankAccount (bank, account, owner)
+
+```
+For each Sale where category = ‘recharging’ && wording = ‘Rechargement automatique’:
+	if payment.unique_payment_type == ‘lydia_auto’:
+	Create new Recharging
+		datetime —> date
+		sender —> sender
+		operator —> operator
+		payment_solution = Create new LydiaOnline
+				sender -> sender
+				recipient -> AE ENSAM
+				amount -> amount
+				date_operation —> date
+				id_from_lydia —> payment.lydias[0].id_from_lydia
+```
 
 ```
 For each Sale where category = ‘recharging’ && wording = ‘Rechargement manuel’:
@@ -130,11 +137,11 @@ datetime —> date
 sender —> sender
 operator —> operator
 payment_solution = Create new LydiaFaceToFace
-sender —> sender
-recipient —> AE ENSAM
-amount —> amount
-date_operation —> date
-id_from_lydia —> payment.lydias[0].id_from_lydia
+	sender —> sender
+	recipient —> AE ENSAM
+	amount —> amount
+	date_operation —> date
+	id_from_lydia —> payment.lydias[0].id_from_lydia
 
 if payment.unique_payment_type == ‘cheque’:
 	Create new Recharging
