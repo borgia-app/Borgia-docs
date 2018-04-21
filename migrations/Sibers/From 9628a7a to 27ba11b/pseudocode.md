@@ -2,14 +2,12 @@
 
 ## users.models
 
-### ExtendedPermission
-
-1 -> 1
-
 ### User
 
 1 -> 1
 theme —> ‘light’
+
+TODO: groups
 
 ## shops.models
 
