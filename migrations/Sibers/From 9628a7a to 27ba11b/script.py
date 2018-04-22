@@ -154,7 +154,6 @@ for pb in ProductBase.objects.all():
     products_pk = products_pk + 1
 print(str(len(products)), " Products mapped\n")
 
-
 # FINANCES MODELS
 
 # ExceptionnalMovement
@@ -186,7 +185,7 @@ print(len(exceptionnal_movements), ' ExceptionnalMovements mapped')
 print("Mapping transfers")
 transferts = []
 transferts_pk = 1
-for s in Sale.objects.filter(category = 'transfer'):
+for s in Sale.objects.filter(category = 'transfert'):
     transferts.append(
         {
             "models": "finances.transfert",
