@@ -198,7 +198,7 @@ for s in Sale.objects.filter(category="exceptionnal_movement"):
         }
     )
     exceptionnal_movements_pk = exceptionnal_movements_pk + 1
-print(len(exceptionnal_movements), ' ExceptionnalMovements mapped\n')
+print("\n", len(exceptionnal_movements), ' ExceptionnalMovements mapped\n')
 
 # Transfer
 
@@ -222,7 +222,7 @@ for s in Sale.objects.filter(category = 'transfert'):
         }
     )
     transferts_pk = transferts_pk + 1
-print(str(len(transferts)) + " Transfers mapped\n")
+print("\n", str(len(transferts)) + " Transfers mapped\n")
 
 # Recharging
 
@@ -402,7 +402,7 @@ for s in Sale.objects.filter(category = 'recharging'):
             )
             rechargings_pk = rechargings_pk + 1
 
-print(str(len(cashs)), ' Cashs mapped\n')
+print("\n", str(len(cashs)), ' Cashs mapped\n')
 print(str(len(lydias_facetoface)), ' LydiaFaceToFaces mapped\n')
 print(str(len(lydias_online)), ' LydiaOnlines mapped\n')
 print(str(len(bank_accounts)), ' BankAccounts mapped\n')
@@ -527,7 +527,7 @@ for s in Sale.objects.filter(category = "sale"):
               }
             })
             saleproducts_pk = saleproducts_pk + 1
-print(str(len(sales)), ' Sales mapped\n')
+print("\n", str(len(sales)), ' Sales mapped\n')
 
 # DUMPING
 print("Dumping to json ...\n")
