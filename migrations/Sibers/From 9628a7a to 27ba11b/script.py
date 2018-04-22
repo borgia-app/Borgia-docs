@@ -1,3 +1,9 @@
+import os
+import django
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "borgia.settings")
+django.setup()
+
 from decimal import Decimal
 import json
 import datetime
