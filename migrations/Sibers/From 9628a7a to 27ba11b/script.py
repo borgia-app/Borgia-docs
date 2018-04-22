@@ -255,7 +255,7 @@ for s in Sale.objects.filter(category = 'recharging'):
                 }
             )
             rechargings_pk = rechargings_pk + 1
-    elif s.wording == "Recharging manuel":
+    elif s.wording == "Rechargement manuel":
         print("manual")
         if s.payment.unique_payment_type == 'cash':
             cashs.append(
