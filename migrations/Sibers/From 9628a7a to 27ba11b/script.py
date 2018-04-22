@@ -34,7 +34,7 @@ for u in User.objects.all():
             }
         }
     )
-print(len(users) + ' mapped')
+print(len(users) + ' Users mapped')
 
 
 # SHOPS MODELS
@@ -55,7 +55,7 @@ for s in Shop.objects.all():
             }
         }
     )
-print(len(shops) + ' mapped')
+print(len(shops) + ' Shops mapped')
 
 # Product
 print("Mapping products")
@@ -116,7 +116,7 @@ for pb in ProductBase.objects.all():
         )
 
     products_pk = products_pk + 1
-print(len(products) + ' mapped')
+print(len(products) + ' Products mapped')
 
 # Product
 print("Mapping exceptionnal movements")
@@ -138,9 +138,9 @@ for s in Sale.objects.filter(category="exceptionnal_movement"):
         }
     )
     exceptionnal_movements_pk = exceptionnal_movements_pk + 1
-print(len(exceptionnal_movements) + ' mapped')
+print(len(exceptionnal_movements) + ' ExceptionnalMovements mapped')
 
-print("Mapping transferts")
+print("Mapping transfers")
 transferts = []
 transferts_pk = 1
 for s in Sale.objects.filter(category = 'transfer'):
@@ -158,7 +158,7 @@ for s in Sale.objects.filter(category = 'transfer'):
         }
     )
     transferts_pk = transferts_pk + 1
-print(len(transferts) + ' mapped')
+print(len(transferts) + ' Transfers mapped')
 
 print("Mapping rechargings")
 rechargings = []
@@ -180,7 +180,10 @@ for s in Sale.objects.filter(category = 'recharging'):
                     "models": "finances.lydiaonline",
                     "pk": rechargings_pk,
                     "fields": {
-
+                        "date_operation": s.date.iso_format(),
+                        "id_from_lydia": s.payment.lydias[0].id_from_lydia,
+                        "banked": false,
+                        "date_banked": null
                     }
                 }
             )
@@ -189,7 +192,9 @@ for s in Sale.objects.filter(category = 'recharging'):
                     "models": "finances.paymentsolution",
                     "pk": rechargings_pk,
                     "fields": {
-
+                        "sender": s.sender.pk,
+                        "recipient": s.recipient.pk,
+                        "amount": str(s.amount)
                     }
                 }
             )
@@ -198,7 +203,10 @@ for s in Sale.objects.filter(category = 'recharging'):
                     "models": "finances.paymentsolution",
                     "pk": rechargings_pk,
                     "fields": {
-
+                        "datetime": s.date.iso_format(),
+                        "sender": s.sender.pk,
+                        "operator": s.operator.pk,
+                        "payment_solution": rechargings_pk
                     }
                 }
             )
@@ -209,9 +217,7 @@ for s in Sale.objects.filter(category = 'recharging'):
                 {
                     "models": "finances.cash",
                     "pk": rechargings_pk,
-                    "fields": {
-
-                    }
+                    "fields": {}
                 }
             )
             payment_solutions.append(
@@ -219,7 +225,9 @@ for s in Sale.objects.filter(category = 'recharging'):
                     "models": "finances.paymentsolution",
                     "pk": rechargings_pk,
                     "fields": {
-
+                        "sender": s.sender.pk,
+                        "recipient": s.recipient.pk,
+                        "amount": str(s.amount)
                     }
                 }
             )
@@ -228,11 +236,14 @@ for s in Sale.objects.filter(category = 'recharging'):
                     "models": "finances.paymentsolution",
                     "pk": rechargings_pk,
                     "fields": {
-
+                        "datetime": s.date.iso_format(),
+                        "sender": s.sender.pk,
+                        "operator": s.operator.pk,
+                        "payment_solution": rechargings_pk
                     }
                 }
             )
-            echargings_pk = rechargings_pk + 1
+            rechargings_pk = rechargings_pk + 1
         elif s.payment.unique_payment_type = 'lydia_face2face':
             lydias_facetoface.append(
                 {
@@ -248,7 +259,9 @@ for s in Sale.objects.filter(category = 'recharging'):
                     "models": "finances.paymentsolution",
                     "pk": rechargings_pk,
                     "fields": {
-
+                        "sender": s.sender.pk,
+                        "recipient": s.recipient.pk,
+                        "amount": str(s.amount)
                     }
                 }
             )
@@ -257,19 +270,41 @@ for s in Sale.objects.filter(category = 'recharging'):
                     "models": "finances.paymentsolution",
                     "pk": rechargings_pk,
                     "fields": {
-
+                        "datetime": s.date.iso_format(),
+                        "sender": s.sender.pk,
+                        "operator": s.operator.pk,
+                        "payment_solution": rechargings_pk
                     }
                 }
             )
-            echargings_pk = rechargings_pk + 1
+            rechargings_pk = rechargings_pk + 1
         elif s.payment.unique_payment_type = 'cheque':
-            # Create bank account if needed
+            bank_account = False
+            for ba in bank_accounts:
+                if ba.fields.account = s.payment.cheques[0].bank_account.account and ba.fields.bank = s.payment.cheques[0].bank_account.bank and ba.fields.owner = s.payment.cheques[0].bank_account.owner.pk:
+                    bank_account = ba.account.pk
+                else:
+                    bank_accounts.append(
+                        {
+                            "models": "finances.bank_account",
+                            "pk": bank_accounts_pk,
+                            "fields": {
+                                bank: s.payment.cheques[0].bank_account.bank,
+                                account: s.payment.cheques[0].bank_account.account,
+                                owner: s.payment.cheques[0].bank_account.owner.pk
+                            }
+                        }
+                    )
+                    bank_accounts_pk = bank_accounts_pk + 1
             cheques.append(
                 {
                     "models": "finances.cheque",
                     "pk": rechargings_pk,
                     "fields": {
-
+                        "is_cashed": false,
+                        "signature_date": s.payment.cheques[0].signature_date.iso_format()),
+                        "cheque_number": s.payment.cheques[0].cheque_number,
+                        "bank_account": bank_accounts_pk
                     }
                 }
             )
@@ -278,7 +313,9 @@ for s in Sale.objects.filter(category = 'recharging'):
                     "models": "finances.paymentsolution",
                     "pk": rechargings_pk,
                     "fields": {
-
+                        "sender": s.sender.pk,
+                        "recipient": s.recipient.pk,
+                        "amount": str(s.amount)
                     }
                 }
             )
@@ -287,10 +324,19 @@ for s in Sale.objects.filter(category = 'recharging'):
                     "models": "finances.paymentsolution",
                     "pk": rechargings_pk,
                     "fields": {
-
+                        "datetime": s.date.iso_format(),
+                        "sender": s.sender.pk,
+                        "operator": s.operator.pk,
+                        "payment_solution": rechargings_pk
                     }
                 }
             )
-            echargings_pk = rechargings_pk + 1
+            rechargings_pk = rechargings_pk + 1
 
-print(len(rechargings) + ' mapped')
+print(len(cashs) + ' Cashs mapped')
+print(len(lydias_facetoface) + ' LydiaFaceToFaces mapped')
+print(len(lydias_online) + ' LydiaOnlines mapped')
+print(len(bank_accounts) + ' BankAccounts mapped')
+print(len(cheques) + ' Cheques mapped')
+print(len(payment_solutions) + ' PaymentSolutions Cheques mapped')
+print(len(rechargings) + ' Rechargings mapped')
