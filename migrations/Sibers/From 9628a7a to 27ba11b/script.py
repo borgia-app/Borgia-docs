@@ -159,6 +159,7 @@ print(str(len(products)), " Products mapped\n")
 
 # ExceptionnalMovement
 
+from finances.models import Sale
 print("Mapping exceptionnal movements\n")
 exceptionnal_movements = []
 exceptionnal_movements_pk = 1
