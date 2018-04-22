@@ -225,7 +225,7 @@ for s in Sale.objects.filter(category = 'recharging'):
                     "pk": rechargings_pk,
                     "fields": {
                         "date_operation": s.date.isoformat(),
-                        "id_from_lydia": s.payment.list_lydia[0][0].id_from_lydia,
+                        "id_from_lydia": s.payment.list_lydia()[0][0].id_from_lydia,
                         "banked": False,
                         "date_banked": None
                     }
@@ -325,7 +325,7 @@ for s in Sale.objects.filter(category = 'recharging'):
         elif s.payment.unique_payment_type() == 'cheque':
             bank_account = False
             for ba in bank_accounts:
-                if ba["fields"]["account"] == s.payment.list_cheque[0][0].bank_account.account and ba["fields"]["bank"] == s.payment.list_cheque[0][0].bank_account.bank and ba["fields"]["owner"] == s.payment.list_cheque[0][0].bank_account.owner.pk:
+                if ba["fields"]["account"] == s.payment.list_cheque()[0][0].bank_account.account and ba["fields"]["bank"] == s.payment.list_cheque()[0][0].bank_account.bank and ba["fields"]["owner"] == s.payment.list_cheque()[0][0].bank_account.owner.pk:
                     bank_account = ba["pk"]
             if not bank_account:
                 bank_accounts.append(
@@ -333,9 +333,9 @@ for s in Sale.objects.filter(category = 'recharging'):
                         "models": "finances.bank_account",
                         "pk": bank_accounts_pk,
                         "fields": {
-                            bank: s.payment.list_cheque[0][0].bank_account.bank,
-                            account: s.payment.list_cheque[0][0].bank_account.account,
-                            owner: s.payment.list_cheque[0][0].bank_account.owner.pk
+                            bank: s.payment.list_cheque()[0][0].bank_account.bank,
+                            account: s.payment.list_cheque()[0][0].bank_account.account,
+                            owner: s.payment.list_cheque()[0][0].bank_account.owner.pk
                         }
                     }
                 )
@@ -347,8 +347,8 @@ for s in Sale.objects.filter(category = 'recharging'):
                     "pk": rechargings_pk,
                     "fields": {
                         "is_cashed": False,
-                        "signature_date": s.payment.list_cheque[0][0].signature_date.isoformat(),
-                        "cheque_number": s.payment.list_cheque[0][0].cheque_number,
+                        "signature_date": s.payment.list_cheque()[0][0].signature_date.isoformat(),
+                        "cheque_number": s.payment.list_cheque()[0][0].cheque_number,
                         "bank_account": bank_account
                     }
                 }
