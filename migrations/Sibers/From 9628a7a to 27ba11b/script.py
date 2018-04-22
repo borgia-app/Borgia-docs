@@ -6,7 +6,7 @@ import datetime
 from users.models import ExtendedPermission, User
 
 # User
-print("Mapping users")
+print("Mapping users\n")
 users = []
 for u in User.objects.all():
     users.append(
@@ -36,14 +36,14 @@ for u in User.objects.all():
             }
         }
     )
-print(len(users) + ' Users mapped')
+print(str(len(users)) + " Users mapped\n")
 
 
 # SHOPS MODELS & MODULES MODELS
 from shops.models import Shop, ProductBase
 
 # Shop, SelfSaleModule, OperatorSaleModule
-print("Mapping shops, selfsalemodules & operatorsalemodules")
+print("Mapping shops, selfsalemodules & operatorsalemodules\n")
 shops = []
 selfsalemodules = []
 operatorsalemodules = []
@@ -88,10 +88,10 @@ for s in Shop.objects.all():
             }
         )
         modules_pk = modules_pk + 1
-print(len(shops) + ' Shops, SelfSaleModules & OperatorSaleModules mapped')
+print(str(len(shops)) + " Shops, SelfSaleModules & OperatorSaleModules mapped\n")
 
 # Product
-print("Mapping products")
+print("Mapping products\n")
 products = []
 products_pk = 1
 for pb in ProductBase.objects.all():
@@ -149,14 +149,14 @@ for pb in ProductBase.objects.all():
         )
 
     products_pk = products_pk + 1
-print(len(products) + ' Products mapped')
+print(str(len(products)) + " Products mapped\n")
 
 
 # FINANCES MODELS
 
 # ExceptionnalMovement
 
-print("Mapping exceptionnal movements")
+print("Mapping exceptionnal movements\n")
 exceptionnal_movements = []
 exceptionnal_movements_pk = 1
 for s in Sale.objects.filter(category="exceptionnal_movement"):
@@ -197,11 +197,11 @@ for s in Sale.objects.filter(category = 'transfer'):
         }
     )
     transferts_pk = transferts_pk + 1
-print(len(transferts) + ' Transfers mapped')
+print(str(len(transferts)) + " Transfers mapped\n")
 
 # Recharging
 
-print("Mapping rechargings")
+print("Mapping rechargings\n")
 rechargings = []
 payment_solutions = []
 lydias_online = []
@@ -373,17 +373,17 @@ for s in Sale.objects.filter(category = 'recharging'):
             )
             rechargings_pk = rechargings_pk + 1
 
-print(len(cashs) + ' Cashs mapped')
-print(len(lydias_facetoface) + ' LydiaFaceToFaces mapped')
-print(len(lydias_online) + ' LydiaOnlines mapped')
-print(len(bank_accounts) + ' BankAccounts mapped')
-print(len(cheques) + ' Cheques mapped')
-print(len(payment_solutions) + ' PaymentSolutions Cheques mapped')
-print(len(rechargings) + ' Rechargings mapped')
+print(str(len(cashs)) + ' Cashs mapped\n')
+print(str(len(lydias_facetoface)) + ' LydiaFaceToFaces mapped\n')
+print(str(len(lydias_online)) + ' LydiaOnlines mapped\n')
+print(str(len(bank_accounts)) + ' BankAccounts mapped\n')
+print(str(len(cheques)) + ' Cheques mapped\n')
+print(str(len(payment_solutions)) + ' PaymentSolutions Cheques mapped\n')
+print(str(len(rechargings)) + ' Rechargings mapped\n')
 
 # Sale
 
-print("Mapping sales")
+print("Mapping sales\n")
 from django.contrib.contenttypes.models import ContentType
 sales = []
 saleproducts = []
@@ -496,10 +496,10 @@ for s in Sale.objects.filter("category" = "sale"):
               }
             })
             saleproducts_pk = saleproducts_pk + 1
-print(len(sales) + ' Sales mapped')
+print(str(len(sales)) + ' Sales mapped\n')
 
 # DUMPING
-print("Dumping to json ...")
+print("Dumping to json ...\n")
 with open('dump_' + datetime.datetime.now().iso_format() + '.json', 'w') as outfile:
     json.dump(users, outfile)
     json.dump(shops, outfile)
@@ -516,4 +516,4 @@ with open('dump_' + datetime.datetime.now().iso_format() + '.json', 'w') as outf
     json.dump(rechargings, outfile)
     json.dump(sales, outfile)
     json.dump(saleproducts, outfile)
-print("Dump completed.")
+print("Dump completed.\n")
