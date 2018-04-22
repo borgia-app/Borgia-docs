@@ -215,7 +215,7 @@ bank_accounts = []
 rechargings_pk = 1
 bank_accounts_pk = 1
 for s in Sale.objects.filter(category = 'recharging'):
-    print(s)
+    print(s.__str__())
     if s.wording == "Rechargement automatique":
         if s.payment.unique_payment_type == 'lydia_auto':
             lydias_online.append(
