@@ -8,6 +8,13 @@ from decimal import Decimal
 import json
 import datetime
 
+def progress_bar(value, endvalue, bar_length=40):
+        percent = float(value) / endvalue
+        arrow = '-' * int(round(percent * bar_length)-1) + '>'
+        spaces = ' ' * (bar_length - len(arrow))
+        sys.stdout.write("\rProgress: [{0}] {1}%".format(arrow + spaces, int(round(percent * 100))))
+        sys.stdout.flush()
+
 # USERS MODELS
 from users.models import ExtendedPermission, User
 
@@ -214,8 +221,11 @@ cheques = []
 bank_accounts = []
 rechargings_pk = 1
 bank_accounts_pk = 1
+
+rechargings_count = Sale.objects.filter(category = 'recharging').count()
+
 for s in Sale.objects.filter(category = 'recharging'):
-    print(s.pk)
+    progress_bar(rechargings_pk, rechargings_count)
     if s.wording == "Rechargement automatique":
         if s.payment.unique_payment_type() == 'lydia_auto':
             lydias_online.append(
