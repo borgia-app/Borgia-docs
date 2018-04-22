@@ -59,8 +59,31 @@ No populate for all models.
 
 ## modules.models
 
-No populate for all models.
-Will be created during populating finances and prod.
+### SelfSaleModule
+
+```
+For each Shop:
+	Create new SelfSaleModule
+		state -> False
+		shop -> shop
+		delay_post_purchase -> NULL
+		limit_purchase -> NULL
+		logout_post_purchase -> False
+```
+
+### OperatorSaleModule
+
+```
+For each Shop:
+	Create new OperatorSaleModule
+		state -> False
+		shop -> shop
+		delay_post_purchase -> NULL
+		limit_purchase -> NULL
+		logout_post_purchase -> False
+```
+
+No populate for others models.
 
 ## finances.models
 

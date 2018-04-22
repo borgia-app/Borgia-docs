@@ -37,12 +37,15 @@ for u in User.objects.all():
 print(len(users) + ' Users mapped')
 
 
-# SHOPS MODELS
+# SHOPS MODELS & MODULES MODELS
 from shops.models import Shop, ProductBase
 
-# Shop
-print("Mapping shops")
+# Shop, SelfSaleModule, OperatorSaleModule
+print("Mapping shops, selfsalemodules & operatorsalemodules")
 shops = []
+selfsalemodules = []
+operatorsalemodules = []
+modules_pk = 1
 for s in Shop.objects.all():
     shops.append(
         {
@@ -55,7 +58,35 @@ for s in Shop.objects.all():
             }
         }
     )
-print(len(shops) + ' Shops mapped')
+    if s.pk != 1:
+        selfsalemodules.append(
+            {
+                "model": "modules.selfsalemodule",
+                "pk": modules_pk,
+                "fields": {
+                    "state": false,
+                    "shop": s.pk,
+                    "delay_post_purchase": null,
+                    "limit_purchase": null,
+                    "logout_post_purchase": false
+                }
+            }
+        )
+        operatorsalemodules.append(
+            {
+                "model": "modules.operatorsalemodule",
+                "pk": modules_pk,
+                "fields": {
+                    "state": false,
+                    "shop": s.pk,
+                    "delay_post_purchase": null,
+                    "limit_purchase": null,
+                    "logout_post_purchase": false
+                }
+            }
+        )
+        modules_pk = modules_pk + 1
+print(len(shops) + ' Shops, SelfSaleModules & OperatorSaleModules mapped')
 
 # Product
 print("Mapping products")
@@ -118,7 +149,11 @@ for pb in ProductBase.objects.all():
     products_pk = products_pk + 1
 print(len(products) + ' Products mapped')
 
-# Product
+
+# FINANCES MODELS
+
+# ExceptionnalMovement
+
 print("Mapping exceptionnal movements")
 exceptionnal_movements = []
 exceptionnal_movements_pk = 1
@@ -140,6 +175,8 @@ for s in Sale.objects.filter(category="exceptionnal_movement"):
     exceptionnal_movements_pk = exceptionnal_movements_pk + 1
 print(len(exceptionnal_movements) + ' ExceptionnalMovements mapped')
 
+# Transfer
+
 print("Mapping transfers")
 transferts = []
 transferts_pk = 1
@@ -159,6 +196,8 @@ for s in Sale.objects.filter(category = 'transfer'):
     )
     transferts_pk = transferts_pk + 1
 print(len(transferts) + ' Transfers mapped')
+
+# Recharging
 
 print("Mapping rechargings")
 rechargings = []
