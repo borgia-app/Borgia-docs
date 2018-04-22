@@ -1,4 +1,6 @@
 from decimal import Decimal
+import json
+import datetime
 
 # USERS MODELS
 from users.models import ExtendedPermission, User
@@ -379,3 +381,23 @@ print(len(bank_accounts) + ' BankAccounts mapped')
 print(len(cheques) + ' Cheques mapped')
 print(len(payment_solutions) + ' PaymentSolutions Cheques mapped')
 print(len(rechargings) + ' Rechargings mapped')
+
+
+# DUMPING
+
+print("Dumping to json ...")
+with open('dump_' + datetime.datetime.now().iso_format() + '.json', 'w') as outfile:
+    json.dump(users, outfile)
+    json.dump(shops, outfile)
+    json.dump(selfsalemodules, outfile)
+    json.dump(operatorsalemodules, outfile)
+    json.dump(products, outfile)
+    json.dump(exceptionnal_movements, outfile)
+    json.dump(transferts, outfile)
+    json.dump(cashs, outfile)
+    json.dump(lydias_facetoface, outfile)
+    json.dump(lydias_online, outfile)
+    json.dump(cheques, outfile)
+    json.dump(payment_solutions, outfile)
+    json.dump(rechargings, outfile)
+print("Dump completed.")
