@@ -54,7 +54,7 @@ for u in User.objects.all():
             }
         }
     )
-print(str(len(users)), " Users mapped\n")
+print("\n", str(len(users)), " Users mapped\n")
 
 
 # SHOPS MODELS & MODULES MODELS
@@ -110,7 +110,7 @@ for s in Shop.objects.all():
             }
         )
         modules_pk = modules_pk + 1
-print(str(len(shops)), " Shops, SelfSaleModules & OperatorSaleModules mapped\n")
+print("\n", str(len(shops)), " Shops, SelfSaleModules & OperatorSaleModules mapped\n")
 
 # Product
 print("Mapping products\n")
@@ -170,7 +170,7 @@ for pb in ProductBase.objects.all():
             }
         })
     products_pk = products_pk + 1
-print(str(len(products)), " Products mapped\n")
+print("\n", str(len(products)), " Products mapped\n")
 
 # FINANCES MODELS
 
