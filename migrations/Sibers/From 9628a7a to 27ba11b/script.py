@@ -392,7 +392,7 @@ sales = []
 saleproducts = []
 sales_pk = 1
 saleproducts_pk = 1
-for s in Sale.objects.filter("category" = "sale"):
+for s in Sale.objects.filter(category = "sale"):
     if s.sender == s.operator:
         for m in selfsalemodules:
             if m["fields"]["shop"] == s.from_shop().pk:
