@@ -96,7 +96,7 @@ products = []
 products_pk = 1
 for pb in ProductBase.objects.all():
     if pb.product_unit:
-        if pb.product_unit.unit = "CL":
+        if pb.product_unit.unit == "CL":
             products.append(
                 {
                     "model": "shops.product",
@@ -113,7 +113,7 @@ for pb in ProductBase.objects.all():
                     }
                 }
             )
-        elif pb.product_unit.unit = "G":
+        elif pb.product_unit.unit == "G":
             products.append(
                 {
                     "model": "shops.product",
@@ -212,8 +212,8 @@ bank_accounts = []
 rechargings_pk = 1
 bank_accounts_pk = 1
 for s in Sale.objects.filter(category = 'recharging'):
-    if s.wording = "Rechargement automatique":
-        if s.payment.unique_payment_type = 'lydia_auto':
+    if s.wording == "Rechargement automatique":
+        if s.payment.unique_payment_type == 'lydia_auto':
             lydias_online.append(
                 {
                     "models": "finances.lydiaonline",
@@ -250,8 +250,8 @@ for s in Sale.objects.filter(category = 'recharging'):
                 }
             )
             rechargings_pk = rechargings_pk + 1
-    elif s.wording = "Recharging manuel":
-        if s.payment.unique_payment_type = 'cash':
+    elif s.wording == "Recharging manuel":
+        if s.payment.unique_payment_type == 'cash':
             cashs.append(
                 {
                     "models": "finances.cash",
@@ -283,7 +283,7 @@ for s in Sale.objects.filter(category = 'recharging'):
                 }
             )
             rechargings_pk = rechargings_pk + 1
-        elif s.payment.unique_payment_type = 'lydia_face2face':
+        elif s.payment.unique_payment_type == 'lydia_face2face':
             lydias_facetoface.append(
                 {
                     "models": "finances.lydiafacetoface",
@@ -317,10 +317,10 @@ for s in Sale.objects.filter(category = 'recharging'):
                 }
             )
             rechargings_pk = rechargings_pk + 1
-        elif s.payment.unique_payment_type = 'cheque':
+        elif s.payment.unique_payment_type == 'cheque':
             bank_account = False
             for ba in bank_accounts:
-                if ba["fields"]["account"] = s.payment.cheques[0].bank_account.account and ba["fields"]["bank"] = s.payment.cheques[0].bank_account.bank and ba["fields"]["owner"] = s.payment.cheques[0].bank_account.owner.pk:
+                if ba["fields"]["account"] == s.payment.cheques[0].bank_account.account and ba["fields"]["bank"] == s.payment.cheques[0].bank_account.bank and ba["fields"]["owner"] == s.payment.cheques[0].bank_account.owner.pk:
                     bank_account = ba["pk"]
             if not bank_account:
                 bank_accounts.append(
@@ -390,16 +390,16 @@ saleproducts = []
 sales_pk = 1
 saleproducts_pk = 1
 for s in Sale.objects.filter("category" = "sale"):
-    if s.sender = s.operator:
+    if s.sender == s.operator:
         for m in selfsalemodules:
-            if m["fields"]["shop"] = s.from_shop().pk:
+            if m["fields"]["shop"] == s.from_shop().pk:
                 module = {
                     "content_type": ContentType.objects.get(app_label='modules', model='selfsalemodule').pk,
                     "module_id": m["pk"]
                 }
     else:
         for m in selfsalemodules:
-            if m["fields"]["shop"] = s.from_shop().pk:
+            if m["fields"]["shop"] == s.from_shop().pk:
                 module = {
                     "content_type": ContentType.objects.get(app_label='modules', model='operatorsalemodule').pk,
                     "module_id": m["pk"]
@@ -424,16 +424,16 @@ for s in Sale.objects.filter("category" = "sale"):
         # Get product
         product = False # No else case here, the product must exists
         for p in products:
-            if (p["fields"]["name"] = sip.product_base.name and
-                    p["fields"]["manual_price"] = sip.product_base.get_moded_usual_price() and
-                    p["fields"]["shop"] = sip.product_base.shop.pk and
-                    p["fields"]["unit"] = None):
+            if (p["fields"]["name"] == sip.product_base.name and
+                    p["fields"]["manual_price"] == sip.product_base.get_moded_usual_price() and
+                    p["fields"]["shop"] == sip.product_base.shop.pk and
+                    p["fields"]["unit"] == None):
                 product = sip
 
         # Check if SaleProduct exist
         saleproduct = False
         for sap in saleproducts:
-            if (sap["fields"]["sale"] = sales_pk and sap["fields"]["product"] = product["pk"]):
+            if (sap["fields"]["sale"] == sales_pk and sap["fields"]["product"] == product["pk"]):
                 saleproduct = sap
         if saleproduct:
             # update current saleproduct
@@ -459,23 +459,23 @@ for s in Sale.objects.filter("category" = "sale"):
         # Get product
         product = False # No else case here, the product must exists
         for p in products:
-            if spfc.product_base.product_unit.unit = "CL":
-                if (p["fields"]["name"] = spfc.product_base.name and
-                        p["fields"]["manual_price"] = str((spfc.product_base.get_moded_usual_price() * 100) / spfc.product_base.product_unit.usual_quantity) and
-                        p["fields"]["shop"] = spfc.product_base.shop.pk and
-                        p["fields"]["unit"] = spfc.product_base.product_unit.unit):
+            if spfc.product_base.product_unit.unit == "CL":
+                if (p["fields"]["name"] == spfc.product_base.name and
+                        p["fields"]["manual_price"] == str((spfc.product_base.get_moded_usual_price() * 100) / spfc.product_base.product_unit.usual_quantity) and
+                        p["fields"]["shop"] == spfc.product_base.shop.pk and
+                        p["fields"]["unit"] == spfc.product_base.product_unit.unit):
                     product = spfc
-            elif spfc.product_base.product_unit.unit = "G":
-                if (p["fields"]["name"] = spfc.product_base.name and
-                        p["fields"]["manual_price"] = str((spfc.product_base.get_moded_usual_price() * 1000) / spfc.product_base.product_unit.usual_quantity) and
-                        p["fields"]["shop"] = spfc.product_base.shop.pk and
-                        p["fields"]["unit"] = spfc.product_base.product_unit.unit):
+            elif spfc.product_base.product_unit.unit == "G":
+                if (p["fields"]["name"] == spfc.product_base.name and
+                        p["fields"]["manual_price"] == str((spfc.product_base.get_moded_usual_price() * 1000) / spfc.product_base.product_unit.usual_quantity) and
+                        p["fields"]["shop"] == spfc.product_base.shop.pk and
+                        p["fields"]["unit"] == spfc.product_base.product_unit.unit):
                     product = spfc
 
         # Check if SaleProduct exist
         saleproduct = False
         for sap in saleproducts:
-            if (sap["fields"]["sale"] = sales_pk and sap["fields"]["product"] = product["pk"]):
+            if (sap["fields"]["sale"] == sales_pk and sap["fields"]["product"] == product["pk"]):
                 saleproduct = sap
         if saleproduct:
             # update current saleproduct
