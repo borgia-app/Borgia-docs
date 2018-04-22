@@ -7,6 +7,7 @@ django.setup()
 from decimal import Decimal
 import json
 import datetime
+import sys
 
 def progress_bar(value, endvalue, bar_length=40):
         percent = float(value) / endvalue
