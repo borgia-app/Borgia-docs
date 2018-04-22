@@ -36,7 +36,7 @@ for u in User.objects.all():
             }
         }
     )
-print(str(len(users)) + " Users mapped\n")
+print(str(len(users)), " Users mapped\n")
 
 
 # SHOPS MODELS & MODULES MODELS
@@ -88,7 +88,7 @@ for s in Shop.objects.all():
             }
         )
         modules_pk = modules_pk + 1
-print(str(len(shops)) + " Shops, SelfSaleModules & OperatorSaleModules mapped\n")
+print(str(len(shops)), " Shops, SelfSaleModules & OperatorSaleModules mapped\n")
 
 # Product
 print("Mapping products\n")
@@ -149,7 +149,7 @@ for pb in ProductBase.objects.all():
         )
 
     products_pk = products_pk + 1
-print(str(len(products)) + " Products mapped\n")
+print(str(len(products)), " Products mapped\n")
 
 
 # FINANCES MODELS
@@ -175,7 +175,7 @@ for s in Sale.objects.filter(category="exceptionnal_movement"):
         }
     )
     exceptionnal_movements_pk = exceptionnal_movements_pk + 1
-print(len(exceptionnal_movements) + ' ExceptionnalMovements mapped')
+print(len(exceptionnal_movements), ' ExceptionnalMovements mapped')
 
 # Transfer
 
@@ -373,13 +373,13 @@ for s in Sale.objects.filter(category = 'recharging'):
             )
             rechargings_pk = rechargings_pk + 1
 
-print(str(len(cashs)) + ' Cashs mapped\n')
-print(str(len(lydias_facetoface)) + ' LydiaFaceToFaces mapped\n')
-print(str(len(lydias_online)) + ' LydiaOnlines mapped\n')
-print(str(len(bank_accounts)) + ' BankAccounts mapped\n')
-print(str(len(cheques)) + ' Cheques mapped\n')
-print(str(len(payment_solutions)) + ' PaymentSolutions Cheques mapped\n')
-print(str(len(rechargings)) + ' Rechargings mapped\n')
+print(str(len(cashs)), ' Cashs mapped\n')
+print(str(len(lydias_facetoface)), ' LydiaFaceToFaces mapped\n')
+print(str(len(lydias_online)), ' LydiaOnlines mapped\n')
+print(str(len(bank_accounts)), ' BankAccounts mapped\n')
+print(str(len(cheques)), ' Cheques mapped\n')
+print(str(len(payment_solutions)), ' PaymentSolutions Cheques mapped\n')
+print(str(len(rechargings)), ' Rechargings mapped\n')
 
 # Sale
 
@@ -496,7 +496,7 @@ for s in Sale.objects.filter("category" = "sale"):
               }
             })
             saleproducts_pk = saleproducts_pk + 1
-print(str(len(sales)) + ' Sales mapped\n')
+print(str(len(sales)), ' Sales mapped\n')
 
 # DUMPING
 print("Dumping to json ...\n")
