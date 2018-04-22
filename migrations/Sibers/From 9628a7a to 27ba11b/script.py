@@ -15,13 +15,13 @@ for u in User.objects.all():
             "pk": u.pk,
             "fields": {
                 "password": u.password,
-                "last_login": null,
-                "is_superuser": false,
+                "last_login": None,
+                "is_superuser": False,
                 "username": u.username,
                 "first_name": u.first_name,
                 "last_name": u.last_name,
                 "email": u.email,
-                "is_staff": false,
+                "is_staff": False,
                 "is_active": u.is_active,
                 "date_joined": u.date_joined.iso_format(),
                 "surname": u.surname,
@@ -66,11 +66,11 @@ for s in Shop.objects.all():
                 "model": "modules.selfsalemodule",
                 "pk": modules_pk,
                 "fields": {
-                    "state": false,
+                    "state": False,
                     "shop": s.pk,
-                    "delay_post_purchase": null,
-                    "limit_purchase": null,
-                    "logout_post_purchase": false
+                    "delay_post_purchase": None,
+                    "limit_purchase": None,
+                    "logout_post_purchase": False
                 }
             }
         )
@@ -79,11 +79,11 @@ for s in Shop.objects.all():
                 "model": "modules.operatorsalemodule",
                 "pk": modules_pk,
                 "fields": {
-                    "state": false,
+                    "state": False,
                     "shop": s.pk,
-                    "delay_post_purchase": null,
-                    "limit_purchase": null,
-                    "logout_post_purchase": false
+                    "delay_post_purchase": None,
+                    "limit_purchase": None,
+                    "logout_post_purchase": False
                 }
             }
         )
@@ -103,11 +103,11 @@ for pb in ProductBase.objects.all():
                     "pk": products_pk,
                     "fields": {
                         "name": pb.name,
-                        "is_manual": true,
+                        "is_manual": True,
                         "manual_price": str((pb.get_moded_usual_price() * 100) / pb.product_unit.usual_quantity),
                         "shop": pb.shop.pk,
-                        "is_active": true,
-                        "is_removed": false,
+                        "is_active": True,
+                        "is_removed": False,
                         "unit": "CL",
                         "correcting_factor": "1"
                     }
@@ -120,11 +120,11 @@ for pb in ProductBase.objects.all():
                     "pk": products_pk,
                     "fields": {
                         "name": pb.name,
-                        "is_manual": true,
+                        "is_manual": True,
                         "manual_price": str((pb.get_moded_usual_price() * 1000) / pb.product_unit.usual_quantity),
                         "shop": pb.shop.pk,
-                        "is_active": true,
-                        "is_removed": false,
+                        "is_active": True,
+                        "is_removed": False,
                         "unit": "G",
                         "correcting_factor": "1"
                     }
@@ -137,12 +137,12 @@ for pb in ProductBase.objects.all():
                 "pk": products_pk,
                 "fields": {
                     "name": pb.name,
-                    "is_manual": true,
+                    "is_manual": True,
                     "manual_price": str(pb.get_moded_usual_price()),
                     "shop": pb.shop.pk,
-                    "is_active": true,
-                    "is_removed": false,
-                    "unit": null,
+                    "is_active": True,
+                    "is_removed": False,
+                    "unit": None,
                     "correcting_factor": "1"
                 }
             }
@@ -209,10 +209,8 @@ lydias_facetoface = []
 cashs = []
 cheques = []
 bank_accounts = []
-
 rechargings_pk = 1
 bank_accounts_pk = 1
-
 for s in Sale.objects.filter(category = 'recharging'):
     if s.wording = "Rechargement automatique":
         if s.payment.unique_payment_type = 'lydia_auto':
@@ -223,8 +221,8 @@ for s in Sale.objects.filter(category = 'recharging'):
                     "fields": {
                         "date_operation": s.date.iso_format(),
                         "id_from_lydia": s.payment.lydias[0].id_from_lydia,
-                        "banked": false,
-                        "date_banked": null
+                        "banked": False,
+                        "date_banked": None
                     }
                 }
             )
@@ -322,30 +320,31 @@ for s in Sale.objects.filter(category = 'recharging'):
         elif s.payment.unique_payment_type = 'cheque':
             bank_account = False
             for ba in bank_accounts:
-                if ba.fields.account = s.payment.cheques[0].bank_account.account and ba.fields.bank = s.payment.cheques[0].bank_account.bank and ba.fields.owner = s.payment.cheques[0].bank_account.owner.pk:
-                    bank_account = ba.account.pk
-                else:
-                    bank_accounts.append(
-                        {
-                            "models": "finances.bank_account",
-                            "pk": bank_accounts_pk,
-                            "fields": {
-                                bank: s.payment.cheques[0].bank_account.bank,
-                                account: s.payment.cheques[0].bank_account.account,
-                                owner: s.payment.cheques[0].bank_account.owner.pk
-                            }
+                if ba["fields"]["account"] = s.payment.cheques[0].bank_account.account and ba["fields"]["bank"] = s.payment.cheques[0].bank_account.bank and ba["fields"]["owner"] = s.payment.cheques[0].bank_account.owner.pk:
+                    bank_account = ba["pk"]
+            if not bank_account:
+                bank_accounts.append(
+                    {
+                        "models": "finances.bank_account",
+                        "pk": bank_accounts_pk,
+                        "fields": {
+                            bank: s.payment.cheques[0].bank_account.bank,
+                            account: s.payment.cheques[0].bank_account.account,
+                            owner: s.payment.cheques[0].bank_account.owner.pk
                         }
-                    )
-                    bank_accounts_pk = bank_accounts_pk + 1
+                    }
+                )
+                bank_account = bank_accounts_pk
+                bank_accounts_pk = bank_accounts_pk + 1
             cheques.append(
                 {
                     "models": "finances.cheque",
                     "pk": rechargings_pk,
                     "fields": {
-                        "is_cashed": false,
+                        "is_cashed": False,
                         "signature_date": s.payment.cheques[0].signature_date.iso_format()),
                         "cheque_number": s.payment.cheques[0].cheque_number,
-                        "bank_account": bank_accounts_pk
+                        "bank_account": bank_account
                     }
                 }
             )
@@ -382,9 +381,124 @@ print(len(cheques) + ' Cheques mapped')
 print(len(payment_solutions) + ' PaymentSolutions Cheques mapped')
 print(len(rechargings) + ' Rechargings mapped')
 
+# Sale
+
+print("Mapping sales")
+from django.contrib.contenttypes.models import ContentType
+sales = []
+saleproducts = []
+sales_pk = 1
+saleproducts_pk = 1
+for s in Sale.objects.filter("category" = "sale"):
+    if s.sender = s.operator:
+        for m in selfsalemodules:
+            if m["fields"]["shop"] = s.from_shop().pk:
+                module = {
+                    "content_type": ContentType.objects.get(app_label='modules', model='selfsalemodule').pk,
+                    "module_id": m["pk"]
+                }
+    else:
+        for m in selfsalemodules:
+            if m["fields"]["shop"] = s.from_shop().pk:
+                module = {
+                    "content_type": ContentType.objects.get(app_label='modules', model='operatorsalemodule').pk,
+                    "module_id": m["pk"]
+                }
+    sales.append(
+        {
+          "model": "finances.sale",
+          "pk": sales_pk,
+          "fields": {
+            "datetime": s.date.iso_format(),
+            "sender": s.sender.pk,
+            "recipient": s.recipient.pk,
+            "operator": s.operator.pk,
+            "content_type": module["content_type"],
+            "module_id": module["module_id"],
+            "shop": s.from_shop().pk
+          }
+        }
+    )
+
+    for sip in s.list_single_products()[0]:
+        # Get product
+        product = False # No else case here, the product must exists
+        for p in products:
+            if (p["fields"]["name"] = sip.product_base.name and
+                    p["fields"]["manual_price"] = sip.product_base.get_moded_usual_price() and
+                    p["fields"]["shop"] = sip.product_base.shop.pk and
+                    p["fields"]["unit"] = None):
+                product = sip
+
+        # Check if SaleProduct exist
+        saleproduct = False
+        for sap in saleproducts:
+            if (sap["fields"]["sale"] = sales_pk and sap["fields"]["product"] = product["pk"]):
+                saleproduct = sap
+        if saleproduct:
+            # update current saleproduct
+            # Delete, update, append
+            saleproducts.remove(saleproduct)
+            saleproduct["fields"]["quantity"] = str(int(saleproduct["fields"]["quantity"]) + 1)
+            saleproduct["fields"]["price"] = str(Decimal(saleproduct["fields"]["price"]) + sip.sale_price)
+            saleproducts.append(saleproduct)
+        else:
+            saleproducts.append({
+              "model": "finances.saleproduct",
+              "pk": saleproducts_pk,
+              "fields": {
+                "sale": s.pk,
+                "product": product["pk"],
+                "quantity": "1",
+                "price": str(sip.sale_price)
+              }
+            })
+            saleproducts_pk = saleproducts_pk + 1
+
+    for spfc in s.list_single_products_from_container()[0]:
+        # Get product
+        product = False # No else case here, the product must exists
+        for p in products:
+            if spfc.product_base.product_unit.unit = "CL":
+                if (p["fields"]["name"] = spfc.product_base.name and
+                        p["fields"]["manual_price"] = str((spfc.product_base.get_moded_usual_price() * 100) / spfc.product_base.product_unit.usual_quantity) and
+                        p["fields"]["shop"] = spfc.product_base.shop.pk and
+                        p["fields"]["unit"] = spfc.product_base.product_unit.unit):
+                    product = spfc
+            elif spfc.product_base.product_unit.unit = "G":
+                if (p["fields"]["name"] = spfc.product_base.name and
+                        p["fields"]["manual_price"] = str((spfc.product_base.get_moded_usual_price() * 1000) / spfc.product_base.product_unit.usual_quantity) and
+                        p["fields"]["shop"] = spfc.product_base.shop.pk and
+                        p["fields"]["unit"] = spfc.product_base.product_unit.unit):
+                    product = spfc
+
+        # Check if SaleProduct exist
+        saleproduct = False
+        for sap in saleproducts:
+            if (sap["fields"]["sale"] = sales_pk and sap["fields"]["product"] = product["pk"]):
+                saleproduct = sap
+        if saleproduct:
+            # update current saleproduct
+            # Delete, update, append
+            saleproducts.remove(saleproduct)
+            saleproduct["fields"]["quantity"] = str(Decimal(saleproduct["fields"]["quantity"]) + spfc.quantity)
+            saleproduct["fields"]["price"] = str(Decimal(saleproduct["fields"]["price"]) + spfc.sale_price)
+            saleproducts.append(saleproduct)
+        else:
+            saleproducts.append({
+              "model": "finances.saleproduct",
+              "pk": saleproducts_pk,
+              "fields": {
+                "sale": s.pk,
+                "product": product["pk"],
+                "quantity": str(spfc.quantity),
+                "price": str(spfc.sale_price)
+              }
+            })
+            saleproducts_pk = saleproducts_pk + 1
+print(len(sales) + ' Sales mapped')
 
 # DUMPING
-
 print("Dumping to json ...")
 with open('dump_' + datetime.datetime.now().iso_format() + '.json', 'w') as outfile:
     json.dump(users, outfile)
@@ -400,4 +514,6 @@ with open('dump_' + datetime.datetime.now().iso_format() + '.json', 'w') as outf
     json.dump(cheques, outfile)
     json.dump(payment_solutions, outfile)
     json.dump(rechargings, outfile)
+    json.dump(sales, outfile)
+    json.dump(saleproducts, outfile)
 print("Dump completed.")
