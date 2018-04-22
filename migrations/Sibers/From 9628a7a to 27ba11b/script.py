@@ -215,10 +215,10 @@ bank_accounts = []
 rechargings_pk = 1
 bank_accounts_pk = 1
 for s in Sale.objects.filter(category = 'recharging'):
-    print(s.pk)
     if s.wording == "Rechargement automatique":
         print("auto")
-        if s.payment.unique_payment_type == 'lydia_auto':
+        if s.payment.unique_payment_type() == 'lydia_auto':
+            print("lydia_auto")
             lydias_online.append(
                 {
                     "models": "finances.lydiaonline",
@@ -256,8 +256,7 @@ for s in Sale.objects.filter(category = 'recharging'):
             )
             rechargings_pk = rechargings_pk + 1
     elif s.wording == "Rechargement manuel":
-        print("manual")
-        if s.payment.unique_payment_type == 'cash':
+        if s.payment.unique_payment_type() == 'cash':
             cashs.append(
                 {
                     "models": "finances.cash",
@@ -289,7 +288,7 @@ for s in Sale.objects.filter(category = 'recharging'):
                 }
             )
             rechargings_pk = rechargings_pk + 1
-        elif s.payment.unique_payment_type == 'lydia_face2face':
+        elif s.payment.unique_payment_type() == 'lydia_face2face':
             lydias_facetoface.append(
                 {
                     "models": "finances.lydiafacetoface",
@@ -323,7 +322,7 @@ for s in Sale.objects.filter(category = 'recharging'):
                 }
             )
             rechargings_pk = rechargings_pk + 1
-        elif s.payment.unique_payment_type == 'cheque':
+        elif s.payment.unique_payment_type() == 'cheque':
             bank_account = False
             for ba in bank_accounts:
                 if ba["fields"]["account"] == s.payment.cheques[0].bank_account.account and ba["fields"]["bank"] == s.payment.cheques[0].bank_account.bank and ba["fields"]["owner"] == s.payment.cheques[0].bank_account.owner.pk:
