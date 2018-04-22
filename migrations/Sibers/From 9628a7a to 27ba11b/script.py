@@ -104,7 +104,7 @@ for pb in ProductBase.objects.all():
                     "fields": {
                         "name": pb.name,
                         "is_manual": True,
-                        "manual_price": str((pb.get_moded_usual_price() * 100) / pb.product_unit.usual_quantity),
+                        "manual_price": str((pb.get_moded_usual_price() * 100) / pb.product_unit.usual_quantity()),
                         "shop": pb.shop.pk,
                         "is_active": True,
                         "is_removed": False,
@@ -121,7 +121,7 @@ for pb in ProductBase.objects.all():
                     "fields": {
                         "name": pb.name,
                         "is_manual": True,
-                        "manual_price": str((pb.get_moded_usual_price() * 1000) / pb.product_unit.usual_quantity),
+                        "manual_price": str((pb.get_moded_usual_price() * 1000) / pb.product_unit.usual_quantity()),
                         "shop": pb.shop.pk,
                         "is_active": True,
                         "is_removed": False,
@@ -131,23 +131,20 @@ for pb in ProductBase.objects.all():
                 }
             )
     else:
-        products.append(
-            {
-                "model": "shops.product",
-                "pk": products_pk,
-                "fields": {
-                    "name": pb.name,
-                    "is_manual": True,
-                    "manual_price": str(pb.get_moded_usual_price()),
-                    "shop": pb.shop.pk,
-                    "is_active": True,
-                    "is_removed": False,
-                    "unit": None,
-                    "correcting_factor": "1"
-                }
+        products.append({
+            "model": "shops.product",
+            "pk": products_pk,
+            "fields": {
+                "name": pb.name,
+                "is_manual": True,
+                "manual_price": str(pb.get_moded_usual_price()),
+                "shop": pb.shop.pk,
+                "is_active": True,
+                "is_removed": False,
+                "unit": None,
+                "correcting_factor": "1"
             }
-        )
-
+        })
     products_pk = products_pk + 1
 print(str(len(products)), " Products mapped\n")
 
@@ -337,12 +334,12 @@ for s in Sale.objects.filter(category = 'recharging'):
                 bank_account = bank_accounts_pk
                 bank_accounts_pk = bank_accounts_pk + 1
             cheques.append(
-                {
+                    {
                     "models": "finances.cheque",
                     "pk": rechargings_pk,
                     "fields": {
                         "is_cashed": False,
-                        "signature_date": s.payment.cheques[0].signature_date.iso_format()),
+                        "signature_date": s.payment.cheques[0].signature_date.iso_format(),
                         "cheque_number": s.payment.cheques[0].cheque_number,
                         "bank_account": bank_account
                     }
