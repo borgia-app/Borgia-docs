@@ -29,7 +29,7 @@ for u in User.objects.all():
                 "email": u.email,
                 "is_staff": False,
                 "is_active": u.is_active,
-                "date_joined": u.date_joined.iso_format(),
+                "date_joined": u.date_joined.isoformat(),
                 "surname": u.surname,
                 "family": u.family,
                 "balance": str(u.balance),
@@ -168,7 +168,7 @@ for s in Sale.objects.filter(category="exceptionnal_movement"):
             "models": "finances.exceptionnal_movement",
             "pk": exceptionnal_movements_pk,
             "fields": {
-                "datetime": s.date.iso_format(),
+                "datetime": s.date.isoformat(),
                 "justification": s.justification,
                 "operator": s.operator.pk,
                 "recipient": s.sender.pk,
@@ -191,7 +191,7 @@ for s in Sale.objects.filter(category = 'transfer'):
             "models": "finances.transfert",
             "pk": transferts_pk,
             "fields": {
-                "datetime": s.date.iso_format(),
+                "datetime": s.date.isoformat(),
                 "justification": s.justification,
                 "operator": s.operator.pk,
                 "recipient": s.recipient.pk,
@@ -222,7 +222,7 @@ for s in Sale.objects.filter(category = 'recharging'):
                     "models": "finances.lydiaonline",
                     "pk": rechargings_pk,
                     "fields": {
-                        "date_operation": s.date.iso_format(),
+                        "date_operation": s.date.isoformat(),
                         "id_from_lydia": s.payment.lydias[0].id_from_lydia,
                         "banked": False,
                         "date_banked": None
@@ -245,7 +245,7 @@ for s in Sale.objects.filter(category = 'recharging'):
                     "models": "finances.paymentsolution",
                     "pk": rechargings_pk,
                     "fields": {
-                        "datetime": s.date.iso_format(),
+                        "datetime": s.date.isoformat(),
                         "sender": s.sender.pk,
                         "operator": s.operator.pk,
                         "payment_solution": rechargings_pk
@@ -278,7 +278,7 @@ for s in Sale.objects.filter(category = 'recharging'):
                     "models": "finances.paymentsolution",
                     "pk": rechargings_pk,
                     "fields": {
-                        "datetime": s.date.iso_format(),
+                        "datetime": s.date.isoformat(),
                         "sender": s.sender.pk,
                         "operator": s.operator.pk,
                         "payment_solution": rechargings_pk
@@ -312,7 +312,7 @@ for s in Sale.objects.filter(category = 'recharging'):
                     "models": "finances.paymentsolution",
                     "pk": rechargings_pk,
                     "fields": {
-                        "datetime": s.date.iso_format(),
+                        "datetime": s.date.isoformat(),
                         "sender": s.sender.pk,
                         "operator": s.operator.pk,
                         "payment_solution": rechargings_pk
@@ -345,7 +345,7 @@ for s in Sale.objects.filter(category = 'recharging'):
                     "pk": rechargings_pk,
                     "fields": {
                         "is_cashed": False,
-                        "signature_date": s.payment.cheques[0].signature_date.iso_format(),
+                        "signature_date": s.payment.cheques[0].signature_date.isoformat(),
                         "cheque_number": s.payment.cheques[0].cheque_number,
                         "bank_account": bank_account
                     }
@@ -367,7 +367,7 @@ for s in Sale.objects.filter(category = 'recharging'):
                     "models": "finances.paymentsolution",
                     "pk": rechargings_pk,
                     "fields": {
-                        "datetime": s.date.iso_format(),
+                        "datetime": s.date.isoformat(),
                         "sender": s.sender.pk,
                         "operator": s.operator.pk,
                         "payment_solution": rechargings_pk
@@ -412,7 +412,7 @@ for s in Sale.objects.filter(category = "sale"):
           "model": "finances.sale",
           "pk": sales_pk,
           "fields": {
-            "datetime": s.date.iso_format(),
+            "datetime": s.date.isoformat(),
             "sender": s.sender.pk,
             "recipient": s.recipient.pk,
             "operator": s.operator.pk,
@@ -503,7 +503,7 @@ print(str(len(sales)), ' Sales mapped\n')
 
 # DUMPING
 print("Dumping to json ...\n")
-with open('dump_' + datetime.datetime.now().iso_format() + '.json', 'w') as outfile:
+with open('dump_' + datetime.datetime.now().isoformat() + '.json', 'w') as outfile:
     json.dump(users, outfile)
     json.dump(shops, outfile)
     json.dump(selfsalemodules, outfile)
