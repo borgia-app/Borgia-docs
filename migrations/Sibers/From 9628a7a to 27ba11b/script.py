@@ -225,7 +225,7 @@ for s in Sale.objects.filter(category = 'transfert'):
 print("\n", str(len(transferts)) + " Transfers mapped\n")
 
 # Recharging
-
+"""
 print("Mapping rechargings\n")
 rechargings = []
 payment_solutions = []
@@ -409,6 +409,7 @@ print(str(len(bank_accounts)), ' BankAccounts mapped\n')
 print(str(len(cheques)), ' Cheques mapped\n')
 print(str(len(payment_solutions)), ' PaymentSolutions Cheques mapped\n')
 print(str(len(rechargings)), ' Rechargings mapped\n')
+"""
 
 # Sale
 
@@ -418,7 +419,7 @@ sales = []
 saleproducts = []
 sales_pk = 1
 saleproducts_pk = 1
-sm = Sale.objects.filter(category = "sale")
+sm = Sale.objects.filter(category = "sale").count()
 for s in Sale.objects.filter(category = "sale"):
     progress_bar(sales_pk, sm)
     if s.sender == s.operator:
