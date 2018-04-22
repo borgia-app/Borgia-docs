@@ -178,11 +178,11 @@ for s in Sale.objects.filter(category="exceptionnal_movement"):
         }
     )
     exceptionnal_movements_pk = exceptionnal_movements_pk + 1
-print(len(exceptionnal_movements), ' ExceptionnalMovements mapped')
+print(len(exceptionnal_movements), ' ExceptionnalMovements mapped\n')
 
 # Transfer
 
-print("Mapping transfers")
+print("Mapping transfers\n")
 transferts = []
 transferts_pk = 1
 for s in Sale.objects.filter(category = 'transfert'):
@@ -215,6 +215,7 @@ bank_accounts = []
 rechargings_pk = 1
 bank_accounts_pk = 1
 for s in Sale.objects.filter(category = 'recharging'):
+    print(s)
     if s.wording == "Rechargement automatique":
         if s.payment.unique_payment_type == 'lydia_auto':
             lydias_online.append(
