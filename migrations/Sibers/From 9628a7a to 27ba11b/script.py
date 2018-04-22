@@ -22,7 +22,11 @@ from users.models import ExtendedPermission, User
 # User
 print("Mapping users\n")
 users = []
+um = User.objects.all().count()
+uc = 1
 for u in User.objects.all():
+    progress_bar(uc, um)
+    uc = uc + 1
     users.append(
         {
             "model": "users.user",
@@ -62,7 +66,11 @@ shops = []
 selfsalemodules = []
 operatorsalemodules = []
 modules_pk = 1
+sm = Shop.objects.all().count()
+sc = 1
 for s in Shop.objects.all():
+    progress_bar(sc, sm)
+    sc = sc + 1
     shops.append(
         {
             "model": "shops.shop",
@@ -108,7 +116,9 @@ print(str(len(shops)), " Shops, SelfSaleModules & OperatorSaleModules mapped\n")
 print("Mapping products\n")
 products = []
 products_pk = 1
+pm = ProductBase.objects.all().count()
 for pb in ProductBase.objects.all():
+    progress_bar(products_pk, pm)
     if pb.product_unit:
         if pb.product_unit.unit == "CL":
             products.append(
@@ -170,7 +180,9 @@ from finances.models import Sale
 print("Mapping exceptionnal movements\n")
 exceptionnal_movements = []
 exceptionnal_movements_pk = 1
+emm = Sale.objects.filter(category="exceptionnal_movement").count()
 for s in Sale.objects.filter(category="exceptionnal_movement"):
+    progress_bar(exceptionnal_movements_pk, emm)
     exceptionnal_movements.append(
         {
             "models": "finances.exceptionnal_movement",
@@ -193,7 +205,9 @@ print(len(exceptionnal_movements), ' ExceptionnalMovements mapped\n')
 print("Mapping transfers\n")
 transferts = []
 transferts_pk = 1
+tm = Sale.objects.filter(category = 'transfert').count()
 for s in Sale.objects.filter(category = 'transfert'):
+    progress_bar(transferts_pk, tm)
     transferts.append(
         {
             "models": "finances.transfert",
@@ -223,10 +237,10 @@ bank_accounts = []
 rechargings_pk = 1
 bank_accounts_pk = 1
 
-rechargings_count = Sale.objects.filter(category = 'recharging').count()
+rm = Sale.objects.filter(category = 'recharging').count()
 
 for s in Sale.objects.filter(category = 'recharging'):
-    progress_bar(rechargings_pk, rechargings_count)
+    progress_bar(rechargings_pk, rm)
     if s.wording == "Rechargement automatique":
         if s.payment.unique_payment_type() == 'lydia_auto':
             lydias_online.append(
@@ -404,7 +418,9 @@ sales = []
 saleproducts = []
 sales_pk = 1
 saleproducts_pk = 1
+sm = Sale.objects.filter(category = "sale")
 for s in Sale.objects.filter(category = "sale"):
+    progress_bar(sales_pk, sm)
     if s.sender == s.operator:
         for m in selfsalemodules:
             if m["fields"]["shop"] == s.from_shop().pk:
