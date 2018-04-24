@@ -496,18 +496,18 @@ for s in Sale.objects.filter(category = "sale"):
                         p["fields"]["manual_price"] == str((spfc.container.product_base.get_moded_usual_price() * 100) / Decimal(spfc.container.product_base.product_unit.usual_quantity())) and
                         p["fields"]["shop"] == spfc.container.product_base.shop.pk and
                         p["fields"]["unit"] == spfc.container.product_base.product_unit.unit):
-                    product = spfc
+                    product = p.pk
             elif spfc.container.product_base.product_unit.unit == "G":
                 if (p["fields"]["name"] == spfc.container.product_base.name and
                         p["fields"]["manual_price"] == str((spfc.container.product_base.get_moded_usual_price() * 1000) / Decimal(spfc.container.product_base.product_unit.usual_quantity())) and
                         p["fields"]["shop"] == spfc.container.product_base.shop.pk and
                         p["fields"]["unit"] == spfc.container.product_base.product_unit.unit):
-                    product = spfc
+                    product = p.pk
 
         # Check if SaleProduct exist
         saleproduct = False
         for sap in saleproducts:
-            if (sap["fields"]["sale"] == sales_pk and sap["fields"]["product"] == product["pk"]):
+            if (sap["fields"]["sale"] == sales_pk and sap["fields"]["product"] == product):
                 saleproduct = sap
         if saleproduct:
             # update current saleproduct
@@ -522,7 +522,7 @@ for s in Sale.objects.filter(category = "sale"):
               "pk": saleproducts_pk,
               "fields": {
                 "sale": s.pk,
-                "product": product["pk"],
+                "product": product,
                 "quantity": str(spfc.quantity),
                 "price": str(spfc.sale_price)
               }
