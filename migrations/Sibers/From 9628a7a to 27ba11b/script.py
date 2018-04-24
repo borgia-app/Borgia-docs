@@ -504,6 +504,9 @@ for s in Sale.objects.filter(category = "sale"):
                         p["fields"]["unit"] == spfc.container.product_base.product_unit.unit):
                     product = p["pk"]
 
+        if not product:
+            print("no product found")
+            
         # Check if SaleProduct exist
         saleproduct = False
         for sap in saleproducts:
