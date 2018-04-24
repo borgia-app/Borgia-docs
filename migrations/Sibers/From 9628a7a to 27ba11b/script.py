@@ -422,7 +422,6 @@ saleproducts_pk = 1
 sm = Sale.objects.filter(category = "sale").count()
 for s in Sale.objects.filter(category = "sale"):
     progress_bar(sales_pk, sm)
-    print(s.pk, s.__str__())
     if s.sender == s.operator:
         for m in selfsalemodules:
             if m["fields"]["shop"] == s.from_shop().pk:
@@ -489,7 +488,6 @@ for s in Sale.objects.filter(category = "sale"):
             saleproducts_pk = saleproducts_pk + 1
 
     for spfc in s.list_single_products_from_container()[0]:
-        print(spfc.__str__())
         # Get product
         product = False # No else case here, the product must exists
         for p in products:
