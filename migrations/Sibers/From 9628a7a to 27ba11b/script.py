@@ -506,7 +506,8 @@ for s in Sale.objects.filter(category = "sale"):
 
         if not product:
             print("no product found")
-            
+        else:
+            print(product)
         # Check if SaleProduct exist
         saleproduct = False
         for sap in saleproducts:
