@@ -493,17 +493,17 @@ for s in Sale.objects.filter(category = "sale"):
         # Get product
         product = False # No else case here, the product must exists
         for p in products:
-            if spfc.product_base.product_unit.unit == "CL":
-                if (p["fields"]["name"] == spfc.product_base.name and
-                        p["fields"]["manual_price"] == str((spfc.product_base.get_moded_usual_price() * 100) / spfc.product_base.product_unit.usual_quantity) and
-                        p["fields"]["shop"] == spfc.product_base.shop.pk and
-                        p["fields"]["unit"] == spfc.product_base.product_unit.unit):
+            if spfc.container.product_base.product_unit.unit == "CL":
+                if (p["fields"]["name"] == spfc.container.product_base.name and
+                        p["fields"]["manual_price"] == str((spfc.container.product_base.get_moded_usual_price() * 100) / spfc.container.product_base.product_unit.usual_quantity) and
+                        p["fields"]["shop"] == spfc.container.product_base.shop.pk and
+                        p["fields"]["unit"] == spfc.container.product_base.product_unit.unit):
                     product = spfc
-            elif spfc.product_base.product_unit.unit == "G":
-                if (p["fields"]["name"] == spfc.product_base.name and
-                        p["fields"]["manual_price"] == str((spfc.product_base.get_moded_usual_price() * 1000) / spfc.product_base.product_unit.usual_quantity) and
-                        p["fields"]["shop"] == spfc.product_base.shop.pk and
-                        p["fields"]["unit"] == spfc.product_base.product_unit.unit):
+            elif spfc.container.product_base.product_unit.unit == "G":
+                if (p["fields"]["name"] == spfc.container.product_base.name and
+                        p["fields"]["manual_price"] == str((spfc.container.product_base.get_moded_usual_price() * 1000) / spfc.container.product_base.product_unit.usual_quantity) and
+                        p["fields"]["shop"] == spfc.container.product_base.shop.pk and
+                        p["fields"]["unit"] == spfc.container.product_base.product_unit.unit):
                     product = spfc
 
         # Check if SaleProduct exist
