@@ -469,7 +469,7 @@ for s in Sale.objects.filter(category = "sale"):
                     print(type(p["fields"]["manual_price"]),
                         str(Decimal(p["fields"]["manual_price"])),
                         p["fields"]["manual_price"] == str(Decimal(sip.product_base.get_moded_usual_price())))
-            print(type()
+            print(type(str(Decimal(sip.product_base.get_moded_usual_price()))),
                 str(Decimal(sip.product_base.get_moded_usual_price())))
             sys.exit("Error")
 
