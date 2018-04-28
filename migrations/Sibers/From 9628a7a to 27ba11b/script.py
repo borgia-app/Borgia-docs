@@ -467,14 +467,14 @@ for s in Sale.objects.filter(category = "sale"):
             for p in products:
                 print(p["fields"]["name"].encode('ascii', 'ignore').decode('ascii'),
                         p["fields"]["name"] == sip.product_base.name,
-                        str(sip.product_base.get_moded_usual_price()),
-                        p["fields"]["manual_price"] == str(sip.product_base.get_moded_usual_price()),
+                        str(Decimal(sip.product_base.get_moded_usual_price())),
+                        p["fields"]["manual_price"] == str(Decimal(sip.product_base.get_moded_usual_price())),
                         sip.product_base.shop.pk,
                         p["fields"]["shop"] == sip.product_base.shop.pk,
                         None,
                         p["fields"]["unit"] == None)
             print(sip.product_base.name.encode('ascii', 'ignore').decode('ascii'),
-            str(sip.product_base.get_moded_usual_price()),
+            str(Decimal(sip.product_base.get_moded_usual_price())),
             sip.product_base.shop.pk)
             sys.exit("Error")
 
