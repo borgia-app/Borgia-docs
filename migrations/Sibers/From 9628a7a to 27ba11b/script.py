@@ -425,6 +425,7 @@ sales_pk = 1
 saleproducts_pk = 1
 map_err = 0
 sm = Sale.objects.filter(category = "sale").count()
+print(sm)
 for s in Sale.objects.filter(category = "sale"):
     progress_bar(sales_pk, sm)
     if s.sender == s.operator:
@@ -543,6 +544,7 @@ for s in Sale.objects.filter(category = "sale"):
               }
             })
             saleproducts_pk = saleproducts_pk + 1
+
 print("\n", str(len(sales)), ' Sales mapped\n')
 
 # DUMPING
