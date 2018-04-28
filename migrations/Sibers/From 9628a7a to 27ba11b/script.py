@@ -456,13 +456,8 @@ for s in Sale.objects.filter(category = "sale"):
         # Get product
         product = False # No else case here, the product must exists
         for p in products:
-            print(p["fields"]["name"].encode('ascii', 'ignore').decode('ascii'),
-            p["fields"]["name"] == sip.product_base.name,
-            p["fields"]["manual_price"] == str(sip.product_base.get_moded_usual_price()),
-            p["fields"]["shop"] == sip.product_base.shop.pk,
-            p["fields"]["unit"] == None)
             if (p["fields"]["name"] == sip.product_base.name and
-                    p["fields"]["manual_price"] == sip.product_base.get_moded_usual_price() and
+                    p["fields"]["manual_price"] == str(sip.product_base.get_moded_usual_price()) and
                     p["fields"]["shop"] == sip.product_base.shop.pk and
                     p["fields"]["unit"] == None):
                 product = p["pk"]
