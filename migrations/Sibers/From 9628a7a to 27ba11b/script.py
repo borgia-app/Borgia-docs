@@ -465,17 +465,11 @@ for s in Sale.objects.filter(category = "sale"):
         if not product:
             print("no sip product found\n")
             for p in products:
-                print(p["fields"]["name"].encode('ascii', 'ignore').decode('ascii'),
-                        p["fields"]["name"] == sip.product_base.name,
+                if (p["fields"]["name"] == sip.product_base.name):
+                print(
                         str(Decimal(sip.product_base.get_moded_usual_price())),
-                        p["fields"]["manual_price"] == str(Decimal(sip.product_base.get_moded_usual_price())),
-                        sip.product_base.shop.pk,
-                        p["fields"]["shop"] == sip.product_base.shop.pk,
-                        None,
-                        p["fields"]["unit"] == None)
-            print(sip.product_base.name.encode('ascii', 'ignore').decode('ascii'),
-            str(Decimal(sip.product_base.get_moded_usual_price())),
-            sip.product_base.shop.pk)
+                        p["fields"]["manual_price"] == str(Decimal(sip.product_base.get_moded_usual_price())))
+            print(str(Decimal(sip.product_base.get_moded_usual_price())))
             sys.exit("Error")
 
         # Check if SaleProduct exist
