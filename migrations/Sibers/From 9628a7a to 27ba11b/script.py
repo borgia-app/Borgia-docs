@@ -421,7 +421,7 @@ sales_pk = 1
 saleproducts_pk = 1
 sm = Sale.objects.filter(category = "sale").count()
 for s in Sale.objects.filter(category = "sale"):
-    #progress_bar(sales_pk, sm)
+    progress_bar(sales_pk, sm)
     if s.sender == s.operator:
         for m in selfsalemodules:
             if m["fields"]["shop"] == s.from_shop().pk:
