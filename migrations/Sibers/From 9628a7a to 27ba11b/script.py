@@ -539,7 +539,7 @@ for s in Sale.objects.filter(category = "sale"):
 
         if not product:
             if spfc.container.product_base.pk not in map_spfc_list:
-                map_sfpc_list.append(sfpc.container.product_base.pk)
+                map_spfc_list.append(sfpc.container.product_base.pk)
             map_spfc_err = map_spfc_err + 1
 
         # Check if SaleProduct exist
