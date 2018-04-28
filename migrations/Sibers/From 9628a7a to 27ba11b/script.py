@@ -425,9 +425,7 @@ sales_pk = 1
 saleproducts_pk = 1
 map_err = 0
 sm = Sale.objects.filter(category = "sale").count()
-print(sm)
 for s in Sale.objects.filter(category = "sale"):
-    print(sales_pk)
     progress_bar(sales_pk, sm)
     if s.sender == s.operator:
         for m in selfsalemodules:
@@ -472,8 +470,8 @@ for s in Sale.objects.filter(category = "sale"):
 
         if not product:
             map_err = map_err + 1
-            #print("no sip product found\n")
-            #print("pk : ", sip.product_base.pk)
+            print("no sip product found\n")
+            print("pk : ", sip.product_base.pk)
             #sys.exit("Error")
 
         if product:
@@ -521,6 +519,7 @@ for s in Sale.objects.filter(category = "sale"):
 
         if not product:
             print("no spfc product found\n")
+            print("pk : ", spfc.container.product_base.pk)
 
         # Check if SaleProduct exist
         saleproduct = False
