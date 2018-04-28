@@ -458,6 +458,7 @@ for s in Sale.objects.filter(category = "sale"):
           }
         }
     )
+    sales_pk = sales_pk + 1
 
     for sip in s.list_single_products()[0]:
         # Get product
