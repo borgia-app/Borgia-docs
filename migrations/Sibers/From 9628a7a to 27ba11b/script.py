@@ -468,16 +468,8 @@ for s in Sale.objects.filter(category = "sale"):
 
         if not product:
             print("no sip product found\n")
-            for p in products:
-                if (p["fields"]["name"] == sip.product_base.name):
-                    print("!!! Identifying container to single product !!! ", p["fields"]["manual_price"], str(sip.product_base.get_moded_usual_price()))
-                    print(p["fields"]["name"] == sip.product_base.name,
-                            p["fields"]["manual_price"] == str(sip.product_base.get_moded_usual_price()),
-                            p["fields"]["shop"] == sip.product_base.shop.pk,
-                            p["fields"]["unit"] == None)
-
-            print(sip.__str__().encode('ascii', 'ignore').decode('ascii'), sip.product_base.pk)
-            sys.exit("Error")
+            print("pk : ", sip.product_base.pk)
+            #sys.exit("Error")
 
         # Check if SaleProduct exist
         saleproduct = False
