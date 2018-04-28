@@ -120,7 +120,8 @@ pm = ProductBase.objects.all().count()
 for pb in ProductBase.objects.all():
     progress_bar(products_pk, pm)
 
-    if (pb.pk in [73, 80, 67]):
+    # Second product, no container for 73
+    if (pb.pk in [73]):
         products.append({
             "model": "shops.product",
             "pk": products_pk,
@@ -135,61 +136,62 @@ for pb in ProductBase.objects.all():
                 "correcting_factor": "1"
             }
         })
-    else:
-        if pb.product_unit:
-            if pb.product_unit.unit == "CL":
-                products.append(
-                    {
-                        "model": "shops.product",
-                        "pk": products_pk,
-                        "fields": {
-                            "name": pb.name,
-                            "is_manual": True,
-                            "manual_price": str((pb.get_moded_usual_price() * 100) / pb.product_unit.usual_quantity()),
-                            "shop": pb.shop.pk,
-                            "is_active": True,
-                            "is_removed": False,
-                            "unit": "CL",
-                            "correcting_factor": "1"
-                        }
+        products_pk = products_pk + 1
+
+    if pb.product_unit:
+        if pb.product_unit.unit == "CL":
+            products.append(
+                {
+                    "model": "shops.product",
+                    "pk": products_pk,
+                    "fields": {
+                        "name": pb.name,
+                        "is_manual": True,
+                        "manual_price": str((pb.get_moded_usual_price() * 100) / pb.product_unit.usual_quantity()),
+                        "shop": pb.shop.pk,
+                        "is_active": True,
+                        "is_removed": False,
+                        "unit": "CL",
+                        "correcting_factor": "1"
                     }
-                )
-                print("CL", pb.pk,
-                pb.name.encode('ascii', 'ignore').decode('ascii'), str((pb.get_moded_usual_price() * 100) / pb.product_unit.usual_quantity()))
-            elif pb.product_unit.unit == "G":
-                products.append(
-                    {
-                        "model": "shops.product",
-                        "pk": products_pk,
-                        "fields": {
-                            "name": pb.name,
-                            "is_manual": True,
-                            "manual_price": str((pb.get_moded_usual_price() * 1000) / pb.product_unit.usual_quantity()),
-                            "shop": pb.shop.pk,
-                            "is_active": True,
-                            "is_removed": False,
-                            "unit": "G",
-                            "correcting_factor": "1"
-                        }
-                    }
-                )
-                print("G", pb.pk, pb.name.encode('ascii', 'ignore').decode('ascii'), str((pb.get_moded_usual_price() * 1000) / pb.product_unit.usual_quantity()))
-        else:
-            products.append({
-                "model": "shops.product",
-                "pk": products_pk,
-                "fields": {
-                    "name": pb.name,
-                    "is_manual": True,
-                    "manual_price": str(pb.get_moded_usual_price()),
-                    "shop": pb.shop.pk,
-                    "is_active": True,
-                    "is_removed": False,
-                    "unit": None,
-                    "correcting_factor": "1"
                 }
-            })
-            print("None", pb.pk, pb.name.encode('ascii', 'ignore').decode('ascii'), str(pb.get_moded_usual_price()))
+            )
+            print("CL", pb.pk,
+            pb.name.encode('ascii', 'ignore').decode('ascii'), str((pb.get_moded_usual_price() * 100) / pb.product_unit.usual_quantity()))
+        elif pb.product_unit.unit == "G":
+            products.append(
+                {
+                    "model": "shops.product",
+                    "pk": products_pk,
+                    "fields": {
+                        "name": pb.name,
+                        "is_manual": True,
+                        "manual_price": str((pb.get_moded_usual_price() * 1000) / pb.product_unit.usual_quantity()),
+                        "shop": pb.shop.pk,
+                        "is_active": True,
+                        "is_removed": False,
+                        "unit": "G",
+                        "correcting_factor": "1"
+                    }
+                }
+            )
+            print("G", pb.pk, pb.name.encode('ascii', 'ignore').decode('ascii'), str((pb.get_moded_usual_price() * 1000) / pb.product_unit.usual_quantity()))
+    else:
+        products.append({
+            "model": "shops.product",
+            "pk": products_pk,
+            "fields": {
+                "name": pb.name,
+                "is_manual": True,
+                "manual_price": str(pb.get_moded_usual_price()),
+                "shop": pb.shop.pk,
+                "is_active": True,
+                "is_removed": False,
+                "unit": None,
+                "correcting_factor": "1"
+            }
+        })
+        print("None", pb.pk, pb.name.encode('ascii', 'ignore').decode('ascii'), str(pb.get_moded_usual_price()))
     products_pk = products_pk + 1
 print("\n", str(len(products)), " Products mapped\n")
 
