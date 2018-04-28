@@ -423,6 +423,7 @@ sales = []
 saleproducts = []
 sales_pk = 1
 saleproducts_pk = 1
+map_err = 0
 sm = Sale.objects.filter(category = "sale").count()
 for s in Sale.objects.filter(category = "sale"):
     progress_bar(sales_pk, sm)
@@ -467,34 +468,36 @@ for s in Sale.objects.filter(category = "sale"):
                 product = p["pk"]
 
         if not product:
-            print("no sip product found\n")
-            print("pk : ", sip.product_base.pk)
+            map_err = map_err + 1
+            #print("no sip product found\n")
+            #print("pk : ", sip.product_base.pk)
             #sys.exit("Error")
 
-        # Check if SaleProduct exist
-        saleproduct = False
-        for sap in saleproducts:
-            if (sap["fields"]["sale"] == sales_pk and sap["fields"]["product"] == product):
-                saleproduct = sap
-        if saleproduct:
-            # update current saleproduct
-            # Delete, update, append
-            saleproducts.remove(saleproduct)
-            saleproduct["fields"]["quantity"] = str(int(saleproduct["fields"]["quantity"]) + 1)
-            saleproduct["fields"]["price"] = str(Decimal(saleproduct["fields"]["price"]) + sip.sale_price)
-            saleproducts.append(saleproduct)
-        else:
-            saleproducts.append({
-              "model": "finances.saleproduct",
-              "pk": saleproducts_pk,
-              "fields": {
-                "sale": s.pk,
-                "product": product,
-                "quantity": "1",
-                "price": str(sip.sale_price)
-              }
-            })
-            saleproducts_pk = saleproducts_pk + 1
+        if product:
+            # Check if SaleProduct exist
+            saleproduct = False
+            for sap in saleproducts:
+                if (sap["fields"]["sale"] == sales_pk and sap["fields"]["product"] == product):
+                    saleproduct = sap
+            if saleproduct:
+                # update current saleproduct
+                # Delete, update, append
+                saleproducts.remove(saleproduct)
+                saleproduct["fields"]["quantity"] = str(int(saleproduct["fields"]["quantity"]) + 1)
+                saleproduct["fields"]["price"] = str(Decimal(saleproduct["fields"]["price"]) + sip.sale_price)
+                saleproducts.append(saleproduct)
+            else:
+                saleproducts.append({
+                  "model": "finances.saleproduct",
+                  "pk": saleproducts_pk,
+                  "fields": {
+                    "sale": s.pk,
+                    "product": product,
+                    "quantity": "1",
+                    "price": str(sip.sale_price)
+                  }
+                })
+                saleproducts_pk = saleproducts_pk + 1
 
     for spfc in s.list_single_products_from_container()[0]:
         # Get product
