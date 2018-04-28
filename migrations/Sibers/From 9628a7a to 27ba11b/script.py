@@ -137,7 +137,7 @@ for pb in ProductBase.objects.all():
                     }
                 }
             )
-            print("CL", pb.name.encode('ascii', 'ignore').decode('ascii'), str((pb.get_moded_usual_price() * 100) / pb.product_unit.usual_quantity()))
+            print("CL", pb.pk, pb.name.encode('ascii', 'ignore').decode('ascii'), str((pb.get_moded_usual_price() * 100) / pb.product_unit.usual_quantity()))
         elif pb.product_unit.unit == "G":
             products.append(
                 {
@@ -155,7 +155,7 @@ for pb in ProductBase.objects.all():
                     }
                 }
             )
-            print("G", pb.name.encode('ascii', 'ignore').decode('ascii'), str((pb.get_moded_usual_price() * 1000) / pb.product_unit.usual_quantity()))
+            print("G", pb.pk, pb.name.encode('ascii', 'ignore').decode('ascii'), str((pb.get_moded_usual_price() * 1000) / pb.product_unit.usual_quantity()))
     else:
         products.append({
             "model": "shops.product",
@@ -171,7 +171,7 @@ for pb in ProductBase.objects.all():
                 "correcting_factor": "1"
             }
         })
-        print("None", pb.name.encode('ascii', 'ignore').decode('ascii'), str(pb.get_moded_usual_price()))
+        print("None", pb.pk, pb.name.encode('ascii', 'ignore').decode('ascii'), str(pb.get_moded_usual_price()))
     products_pk = products_pk + 1
 print("\n", str(len(products)), " Products mapped\n")
 
@@ -470,6 +470,8 @@ for s in Sale.objects.filter(category = "sale"):
             for p in products:
                 if (p["fields"]["name"] == sip.product_base.name):
                     print(p["fields"]["manual_price"], str(sip.product_base.get_moded_usual_price()))
+
+            print(sip.__str__().encode('ascii', 'ignore').decode('ascii'), sip.product_base.pk)
             sys.exit("Error")
 
         # Check if SaleProduct exist
