@@ -423,7 +423,8 @@ sales = []
 saleproducts = []
 sales_pk = 1
 saleproducts_pk = 1
-map_err = 0
+map_sip_err = 0
+map_spfc_err = 0
 sm = Sale.objects.filter(category = "sale").count()
 for s in Sale.objects.filter(category = "sale"):
     progress_bar(sales_pk, sm)
@@ -469,9 +470,7 @@ for s in Sale.objects.filter(category = "sale"):
                 product = p["pk"]
 
         if not product:
-            map_err = map_err + 1
-            print("no sip product found\n")
-            print("pk : ", sip.product_base.pk)
+            map_sip_err = map_sip_err + 1
             #sys.exit("Error")
 
         if product:
@@ -518,8 +517,7 @@ for s in Sale.objects.filter(category = "sale"):
                     product = p["pk"]
 
         if not product:
-            print("no spfc product found\n")
-            print("pk : ", spfc.container.product_base.pk)
+            map_spfc_err = map_spfc_err + 1
 
         # Check if SaleProduct exist
         saleproduct = False
@@ -546,6 +544,8 @@ for s in Sale.objects.filter(category = "sale"):
             })
             saleproducts_pk = saleproducts_pk + 1
 
+print("sip : ", map_sip_err)
+print("spfc : ", map_spfc_err)
 print("\n", str(len(sales)), ' Sales mapped\n')
 
 # DUMPING
