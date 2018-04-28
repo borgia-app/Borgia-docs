@@ -421,7 +421,7 @@ sales_pk = 1
 saleproducts_pk = 1
 sm = Sale.objects.filter(category = "sale").count()
 for s in Sale.objects.filter(category = "sale"):
-    progress_bar(sales_pk, sm)
+    #progress_bar(sales_pk, sm)
     if s.sender == s.operator:
         for m in selfsalemodules:
             if m["fields"]["shop"] == s.from_shop().pk:
@@ -463,9 +463,10 @@ for s in Sale.objects.filter(category = "sale"):
                 product = p["pk"]
 
         if not product:
-            print("no product found")
+            print("no sip product found\n")
+            print(sip.product_base.name, sip.product_base.get_moded_usual_price(), sip.product_base.shop.pk)
         else:
-            print(product)
+            print(product, "\n")
 
         # Check if SaleProduct exist
         saleproduct = False
@@ -510,9 +511,11 @@ for s in Sale.objects.filter(category = "sale"):
                     product = p["pk"]
 
         if not product:
-            print("no product found")
+            print("no spfc product found\n")
+            print(spfc.container.product_base.name, str((spfc.container.product_base.get_moded_usual_price() * 1000) / Decimal(spfc.container.product_base.product_unit.usual_quantity())), spfc.container.product_base.shop.pk, spfc.container.product_base.product_unit.unit)
         else:
-            print(product)
+            print(product, "\n")
+
         # Check if SaleProduct exist
         saleproduct = False
         for sap in saleproducts:
