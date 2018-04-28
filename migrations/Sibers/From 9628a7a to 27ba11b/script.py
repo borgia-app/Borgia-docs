@@ -464,10 +464,6 @@ for s in Sale.objects.filter(category = "sale"):
 
         if not product:
             print("no sip product found\n")
-            print(sip.product_base.name.encode('ascii', 'ignore').decode('ascii')
-            , sip.product_base.get_moded_usual_price(), sip.product_base.shop.pk)
-        else:
-            print(product, "\n")
 
         # Check if SaleProduct exist
         saleproduct = False
@@ -513,9 +509,6 @@ for s in Sale.objects.filter(category = "sale"):
 
         if not product:
             print("no spfc product found\n")
-            print(spfc.container.product_base.name.encode('ascii', 'ignore').decode('ascii'), str((spfc.container.product_base.get_moded_usual_price() * 1000) / Decimal(spfc.container.product_base.product_unit.usual_quantity())), spfc.container.product_base.shop.pk, spfc.container.product_base.product_unit.unit)
-        else:
-            print(product, "\n")
 
         # Check if SaleProduct exist
         saleproduct = False
