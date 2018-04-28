@@ -121,7 +121,7 @@ for pb in ProductBase.objects.all():
     progress_bar(products_pk, pm)
 
     # Second product, no container for 73
-    if (pb.pk in [73]):
+    if (pb.pk in [73, 90, 67]):
         products.append({
             "model": "shops.product",
             "pk": products_pk,
