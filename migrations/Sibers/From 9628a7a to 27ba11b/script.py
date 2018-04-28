@@ -137,6 +137,7 @@ for pb in ProductBase.objects.all():
                     }
                 }
             )
+            print(pb.name.encode('ascii', 'ignore').decode('ascii'), str((pb.get_moded_usual_price() * 100) / pb.product_unit.usual_quantity()))
         elif pb.product_unit.unit == "G":
             products.append(
                 {
@@ -154,6 +155,7 @@ for pb in ProductBase.objects.all():
                     }
                 }
             )
+            print(pb.name.encode('ascii', 'ignore').decode('ascii'), str((pb.get_moded_usual_price() * 1000) / pb.product_unit.usual_quantity()))
     else:
         products.append({
             "model": "shops.product",
@@ -169,7 +171,7 @@ for pb in ProductBase.objects.all():
                 "correcting_factor": "1"
             }
         })
-    print(pb.name.encode('ascii', 'ignore').decode('ascii'), str(pb.get_moded_usual_price()))
+        print(pb.name.encode('ascii', 'ignore').decode('ascii'), str(pb.get_moded_usual_price()))
     products_pk = products_pk + 1
 print("\n", str(len(products)), " Products mapped\n")
 
