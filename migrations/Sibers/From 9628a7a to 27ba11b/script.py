@@ -460,12 +460,17 @@ for s in Sale.objects.filter(category = "sale"):
                     p["fields"]["manual_price"] == sip.product_base.get_moded_usual_price() and
                     p["fields"]["shop"] == sip.product_base.shop.pk and
                     p["fields"]["unit"] == None):
-                product = sip
+                product = p["pk"]
+
+        if not product:
+            print("no product found")
+        else:
+            print(product)
 
         # Check if SaleProduct exist
         saleproduct = False
         for sap in saleproducts:
-            if (sap["fields"]["sale"] == sales_pk and sap["fields"]["product"] == product["pk"]):
+            if (sap["fields"]["sale"] == sales_pk and sap["fields"]["product"] == product):
                 saleproduct = sap
         if saleproduct:
             # update current saleproduct
@@ -480,7 +485,7 @@ for s in Sale.objects.filter(category = "sale"):
               "pk": saleproducts_pk,
               "fields": {
                 "sale": s.pk,
-                "product": product["pk"],
+                "product": product,
                 "quantity": "1",
                 "price": str(sip.sale_price)
               }
