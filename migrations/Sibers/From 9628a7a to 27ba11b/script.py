@@ -470,6 +470,9 @@ for s in Sale.objects.filter(category = "sale"):
                         p["fields"]["manual_price"] == str(sip.product_base.get_moded_usual_price()),
                         p["fields"]["shop"] == sip.product_base.shop.pk,
                         p["fields"]["unit"] == None)
+            print(sip.product_base.name.encode('ascii', 'ignore').decode('ascii'),
+            str(sip.product_base.get_moded_usual_price()),
+            sip.product_base.shop.pk)
             sys.exit("Error message")
 
         # Check if SaleProduct exist
