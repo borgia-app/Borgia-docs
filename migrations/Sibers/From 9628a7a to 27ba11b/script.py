@@ -423,7 +423,9 @@ sales = []
 saleproducts = []
 sales_pk = 1
 saleproducts_pk = 1
+map_sip_list = []
 map_sip_err = 0
+map_spfc_list = []
 map_spfc_err = 0
 sm = Sale.objects.filter(category = "sale").count()
 for s in Sale.objects.filter(category = "sale"):
@@ -470,6 +472,8 @@ for s in Sale.objects.filter(category = "sale"):
                 product = p["pk"]
 
         if not product:
+            if sip.product_base.pk not in map_sip_list:
+                map_sip_list.append(sip.product_base.pk)
             map_sip_err = map_sip_err + 1
             #sys.exit("Error")
 
@@ -517,6 +521,8 @@ for s in Sale.objects.filter(category = "sale"):
                     product = p["pk"]
 
         if not product:
+            if spfc.container.product_base.pk not in map_spfc_list:
+                map_sfpc_list.append(sfpc.container.product_base.pk)
             map_spfc_err = map_spfc_err + 1
 
         # Check if SaleProduct exist
@@ -544,8 +550,8 @@ for s in Sale.objects.filter(category = "sale"):
             })
             saleproducts_pk = saleproducts_pk + 1
 
-print("sip : ", map_sip_err)
-print("spfc : ", map_spfc_err)
+print("sip : ", map_sip_err, map_sip_list)
+print("spfc : ", map_spfc_err, map_spfc_list)
 print("\n", str(len(sales)), ' Sales mapped\n')
 
 # DUMPING
