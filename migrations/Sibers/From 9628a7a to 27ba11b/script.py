@@ -137,7 +137,8 @@ for pb in ProductBase.objects.all():
                     }
                 }
             )
-            print("CL", pb.pk, pb.name.encode('ascii', 'ignore').decode('ascii'), str((pb.get_moded_usual_price() * 100) / pb.product_unit.usual_quantity()))
+            print("CL", pb.pk,
+            pb.name.encode('ascii', 'ignore').decode('ascii'), str((pb.get_moded_usual_price() * 100) / pb.product_unit.usual_quantity()))
         elif pb.product_unit.unit == "G":
             products.append(
                 {
@@ -469,7 +470,11 @@ for s in Sale.objects.filter(category = "sale"):
             print("no sip product found\n")
             for p in products:
                 if (p["fields"]["name"] == sip.product_base.name):
-                    print(p["fields"]["manual_price"], str(sip.product_base.get_moded_usual_price()))
+                    print("!!! Identifying container to single product !!! ", p["fields"]["manual_price"], str(sip.product_base.get_moded_usual_price()))
+                    print(p["fields"]["name"] == sip.product_base.name,
+                            p["fields"]["manual_price"] == str(sip.product_base.get_moded_usual_price()),
+                            p["fields"]["shop"] == sip.product_base.shop.pk,
+                            p["fields"]["unit"] == None)
 
             print(sip.__str__().encode('ascii', 'ignore').decode('ascii'), sip.product_base.pk)
             sys.exit("Error")
