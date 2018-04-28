@@ -169,6 +169,7 @@ for pb in ProductBase.objects.all():
                 "correcting_factor": "1"
             }
         })
+        print(pb.name.encode('ascii', 'ignore').decode('ascii'), str(pb.get_moded_usual_price()))
     products_pk = products_pk + 1
 print("\n", str(len(products)), " Products mapped\n")
 
