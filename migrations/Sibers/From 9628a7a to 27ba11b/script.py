@@ -550,7 +550,7 @@ for s in Sale.objects.filter(category = "sale"):
             })
             saleproducts_pk = saleproducts_pk + 1
 
-print("sip : ", map_sip_err, map_sip_list)
+print("\nsip : ", map_sip_err, map_sip_list)
 print("spfc : ", map_spfc_err, map_spfc_list)
 print("\n", str(len(sales)), ' Sales mapped\n')
 
