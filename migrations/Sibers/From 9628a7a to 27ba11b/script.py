@@ -427,6 +427,7 @@ map_err = 0
 sm = Sale.objects.filter(category = "sale").count()
 print(sm)
 for s in Sale.objects.filter(category = "sale"):
+    print(sales_pk)
     progress_bar(sales_pk, sm)
     if s.sender == s.operator:
         for m in selfsalemodules:
