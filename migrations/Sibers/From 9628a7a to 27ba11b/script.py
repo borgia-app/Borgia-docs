@@ -208,7 +208,7 @@ for s in Sale.objects.filter(category="exceptionnal_movement"):
     progress_bar(exceptionnal_movements_pk, emm)
     exceptionnal_movements.append(
         {
-            "models": "finances.exceptionnal_movement",
+            "model": "finances.exceptionnalmovement",
             "pk": exceptionnal_movements_pk,
             "fields": {
                 "datetime": s.date.isoformat(),
@@ -233,12 +233,12 @@ for s in Sale.objects.filter(category = 'transfert'):
     progress_bar(transferts_pk, tm)
     transferts.append(
         {
-            "models": "finances.transfert",
+            "model": "finances.transfert",
             "pk": transferts_pk,
             "fields": {
                 "datetime": s.date.isoformat(),
                 "justification": s.justification,
-                "operator": s.operator.pk,
+                "sender": s.sender.pk,
                 "recipient": s.recipient.pk,
                 "amount": str(s.amount),
             }
@@ -267,10 +267,10 @@ for s in Sale.objects.filter(category = 'recharging'):
         if s.payment.unique_payment_type() == 'lydia_auto':
             lydias_online.append(
                 {
-                    "models": "finances.lydiaonline",
+                    "model": "finances.lydiaonline",
                     "pk": rechargings_pk,
                     "fields": {
-                        "date_operation": s.date.isoformat(),
+                        "date_operation": s.date.isoformat().split("T")[0],
                         "id_from_lydia": s.payment.list_lydia()[0][0].id_from_lydia,
                         "banked": False,
                         "date_banked": None
@@ -279,7 +279,7 @@ for s in Sale.objects.filter(category = 'recharging'):
             )
             payment_solutions.append(
                 {
-                    "models": "finances.paymentsolution",
+                    "model": "finances.paymentsolution",
                     "pk": rechargings_pk,
                     "fields": {
                         "sender": s.sender.pk,
@@ -290,7 +290,7 @@ for s in Sale.objects.filter(category = 'recharging'):
             )
             rechargings.append(
                 {
-                    "models": "finances.paymentsolution",
+                    "model": "finances.paymentsolution",
                     "pk": rechargings_pk,
                     "fields": {
                         "datetime": s.date.isoformat(),
@@ -305,14 +305,14 @@ for s in Sale.objects.filter(category = 'recharging'):
         if s.payment.unique_payment_type() == 'cash':
             cashs.append(
                 {
-                    "models": "finances.cash",
+                    "model": "finances.cash",
                     "pk": rechargings_pk,
                     "fields": {}
                 }
             )
             payment_solutions.append(
                 {
-                    "models": "finances.paymentsolution",
+                    "model": "finances.paymentsolution",
                     "pk": rechargings_pk,
                     "fields": {
                         "sender": s.sender.pk,
@@ -323,7 +323,7 @@ for s in Sale.objects.filter(category = 'recharging'):
             )
             rechargings.append(
                 {
-                    "models": "finances.paymentsolution",
+                    "model": "finances.paymentsolution",
                     "pk": rechargings_pk,
                     "fields": {
                         "datetime": s.date.isoformat(),
@@ -337,16 +337,19 @@ for s in Sale.objects.filter(category = 'recharging'):
         elif s.payment.unique_payment_type() == 'lydia_face2face':
             lydias_facetoface.append(
                 {
-                    "models": "finances.lydiafacetoface",
+                    "model": "finances.lydiafacetoface",
                     "pk": rechargings_pk,
                     "fields": {
-
+                        "date_operation": s.date.isoformat().split("T")[0],
+                        "id_from_lydia": s.payment.list_lydia()[0][0].id_from_lydia,
+                        "banked": False,
+                        "date_banked": None
                     }
                 }
             )
             payment_solutions.append(
                 {
-                    "models": "finances.paymentsolution",
+                    "model": "finances.paymentsolution",
                     "pk": rechargings_pk,
                     "fields": {
                         "sender": s.sender.pk,
@@ -357,7 +360,7 @@ for s in Sale.objects.filter(category = 'recharging'):
             )
             rechargings.append(
                 {
-                    "models": "finances.paymentsolution",
+                    "model": "finances.paymentsolution",
                     "pk": rechargings_pk,
                     "fields": {
                         "datetime": s.date.isoformat(),
@@ -376,7 +379,7 @@ for s in Sale.objects.filter(category = 'recharging'):
             if not bank_account:
                 bank_accounts.append(
                     {
-                        "models": "finances.bank_account",
+                        "model": "finances.bank_account",
                         "pk": bank_accounts_pk,
                         "fields": {
                             bank: s.payment.list_cheque()[0][0].bank_account.bank,
@@ -389,7 +392,7 @@ for s in Sale.objects.filter(category = 'recharging'):
                 bank_accounts_pk = bank_accounts_pk + 1
             cheques.append(
                     {
-                    "models": "finances.cheque",
+                    "model": "finances.cheque",
                     "pk": rechargings_pk,
                     "fields": {
                         "is_cashed": False,
@@ -401,7 +404,7 @@ for s in Sale.objects.filter(category = 'recharging'):
             )
             payment_solutions.append(
                 {
-                    "models": "finances.paymentsolution",
+                    "model": "finances.paymentsolution",
                     "pk": rechargings_pk,
                     "fields": {
                         "sender": s.sender.pk,
@@ -412,7 +415,7 @@ for s in Sale.objects.filter(category = 'recharging'):
             )
             rechargings.append(
                 {
-                    "models": "finances.paymentsolution",
+                    "model": "finances.paymentsolution",
                     "pk": rechargings_pk,
                     "fields": {
                         "datetime": s.date.isoformat(),
