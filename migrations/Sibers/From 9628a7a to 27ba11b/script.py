@@ -258,7 +258,7 @@ cheques = []
 bank_accounts = []
 rechargings_pk = 1
 bank_accounts_pk = 1
-"""
+
 rm = Sale.objects.filter(category = 'recharging').count()
 
 for s in Sale.objects.filter(category = 'recharging'):
@@ -431,7 +431,6 @@ print(str(len(bank_accounts)), ' BankAccounts mapped\n')
 print(str(len(cheques)), ' Cheques mapped\n')
 print(str(len(payment_solutions)), ' PaymentSolutions Cheques mapped\n')
 print(str(len(rechargings)), ' Rechargings mapped\n')
-"""
 # Sale
 
 print("Mapping sales\n")
@@ -446,7 +445,6 @@ map_spfc_list = []
 map_spfc_err = 0
 sm = Sale.objects.filter(category = "sale").count()
 
-"""
 for s in Sale.objects.filter(category = "sale"):
     progress_bar(sales_pk, sm)
     if s.sender == s.operator:
@@ -568,7 +566,7 @@ for s in Sale.objects.filter(category = "sale"):
               }
             })
             saleproducts_pk = saleproducts_pk + 1
-"""
+
 # 73, 90, 67
 
 print("\nsip : ", map_sip_err, map_sip_list)
