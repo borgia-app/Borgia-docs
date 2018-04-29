@@ -583,6 +583,6 @@ with open('dump_' + datetime.datetime.now().isoformat() + '.json', 'w') as outfi
     _str = json.dumps(_list,
                       indent=4, sort_keys=True,
                       separators=(',', ': '), ensure_ascii=False)
-    outfile.write(-str)
+    outfile.write(_str)
     outfile.close()
 print("Dump completed.\n")
