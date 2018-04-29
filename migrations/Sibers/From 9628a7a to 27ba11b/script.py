@@ -290,7 +290,7 @@ for s in Sale.objects.filter(category = 'recharging')[:1000]:
             )
             rechargings.append(
                 {
-                    "model": "finances.paymentsolution",
+                    "model": "finances.recharging",
                     "pk": rechargings_pk,
                     "fields": {
                         "datetime": s.date.isoformat(),
@@ -323,7 +323,7 @@ for s in Sale.objects.filter(category = 'recharging')[:1000]:
             )
             rechargings.append(
                 {
-                    "model": "finances.paymentsolution",
+                    "model": "finances.recharging",
                     "pk": rechargings_pk,
                     "fields": {
                         "datetime": s.date.isoformat(),
@@ -360,7 +360,7 @@ for s in Sale.objects.filter(category = 'recharging')[:1000]:
             )
             rechargings.append(
                 {
-                    "model": "finances.paymentsolution",
+                    "model": "finances.recharging",
                     "pk": rechargings_pk,
                     "fields": {
                         "datetime": s.date.isoformat(),
@@ -382,9 +382,9 @@ for s in Sale.objects.filter(category = 'recharging')[:1000]:
                         "model": "finances.bank_account",
                         "pk": bank_accounts_pk,
                         "fields": {
-                            bank: s.payment.list_cheque()[0][0].bank_account.bank,
-                            account: s.payment.list_cheque()[0][0].bank_account.account,
-                            owner: s.payment.list_cheque()[0][0].bank_account.owner.pk
+                            "bank": s.payment.list_cheque()[0][0].bank_account.bank,
+                            "account": s.payment.list_cheque()[0][0].bank_account.account,
+                            "owner": s.payment.list_cheque()[0][0].bank_account.owner.pk
                         }
                     }
                 )
@@ -415,7 +415,7 @@ for s in Sale.objects.filter(category = 'recharging')[:1000]:
             )
             rechargings.append(
                 {
-                    "model": "finances.paymentsolution",
+                    "model": "finances.recharging",
                     "pk": rechargings_pk,
                     "fields": {
                         "datetime": s.date.isoformat(),
