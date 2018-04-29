@@ -258,7 +258,7 @@ cheques = []
 bank_accounts = []
 rechargings_pk = 1
 bank_accounts_pk = 1
-
+"""
 rm = Sale.objects.filter(category = 'recharging').count()
 
 for s in Sale.objects.filter(category = 'recharging'):
@@ -431,7 +431,7 @@ print(str(len(bank_accounts)), ' BankAccounts mapped\n')
 print(str(len(cheques)), ' Cheques mapped\n')
 print(str(len(payment_solutions)), ' PaymentSolutions Cheques mapped\n')
 print(str(len(rechargings)), ' Rechargings mapped\n')
-
+"""
 # Sale
 
 print("Mapping sales\n")
@@ -445,6 +445,8 @@ map_sip_err = 0
 map_spfc_list = []
 map_spfc_err = 0
 sm = Sale.objects.filter(category = "sale").count()
+
+"""
 for s in Sale.objects.filter(category = "sale"):
     progress_bar(sales_pk, sm)
     if s.sender == s.operator:
@@ -566,7 +568,7 @@ for s in Sale.objects.filter(category = "sale"):
               }
             })
             saleproducts_pk = saleproducts_pk + 1
-
+"""
 # 73, 90, 67
 
 print("\nsip : ", map_sip_err, map_sip_list)
@@ -581,23 +583,6 @@ with open('dump_' + datetime.datetime.now().isoformat() + '.json', 'w') as outfi
     _str = json.dumps(_list,
                       indent=4, sort_keys=True,
                       separators=(',', ': '), ensure_ascii=False)
-    outfile.write(to_unicode(str_))
+    outfile.write(str_)
     outfile.close()
-"""
-    json.dump(users, outfile)
-    json.dump(shops, outfile)
-    json.dump(selfsalemodules, outfile)
-    json.dump(operatorsalemodules, outfile)
-    json.dump(products, outfile)
-    json.dump(exceptionnal_movements, outfile)
-    json.dump(transferts, outfile)
-    json.dump(cashs, outfile)
-    json.dump(lydias_facetoface, outfile)
-    json.dump(lydias_online, outfile)
-    json.dump(cheques, outfile)
-    json.dump(payment_solutions, outfile)
-    json.dump(rechargings, outfile)
-    json.dump(sales, outfile)
-    json.dump(saleproducts, outfile)
-"""
 print("Dump completed.\n")
