@@ -259,7 +259,6 @@ bank_accounts = []
 rechargings_pk = 1
 bank_accounts_pk = 1
 
-"""
 rm = Sale.objects.filter(category = 'recharging').count()
 
 for s in Sale.objects.filter(category = 'recharging'):
@@ -432,7 +431,6 @@ print(str(len(bank_accounts)), ' BankAccounts mapped\n')
 print(str(len(cheques)), ' Cheques mapped\n')
 print(str(len(payment_solutions)), ' PaymentSolutions Cheques mapped\n')
 print(str(len(rechargings)), ' Rechargings mapped\n')
-"""
 
 # Sale
 
@@ -577,7 +575,15 @@ print("\n", str(len(sales)), ' Sales mapped\n')
 
 # DUMPING
 print("Dumping to json ...\n")
+
 with open('dump_' + datetime.datetime.now().isoformat() + '.json', 'w') as outfile:
+    _list = users + shops + selfsalemodules + operatorsalemodules + products + exceptionnal_movements + transferts + cashs + lydias_facetoface + lydias_online + cheques + payment_solutions + rechargings + sales + saleproducts
+    _str = json.dumps(_list,
+                      indent=4, sort_keys=True,
+                      separators=(',', ': '), ensure_ascii=False)
+    outfile.write(to_unicode(str_))
+    outfile.close()
+"""
     json.dump(users, outfile)
     json.dump(shops, outfile)
     json.dump(selfsalemodules, outfile)
@@ -593,4 +599,5 @@ with open('dump_' + datetime.datetime.now().isoformat() + '.json', 'w') as outfi
     json.dump(rechargings, outfile)
     json.dump(sales, outfile)
     json.dump(saleproducts, outfile)
+"""
 print("Dump completed.\n")
