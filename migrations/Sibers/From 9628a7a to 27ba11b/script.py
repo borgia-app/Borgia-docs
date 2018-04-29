@@ -479,7 +479,6 @@ for s in Sale.objects.filter(category = "sale"):
           }
         }
     )
-    sales_pk = sales_pk + 1
 
     for sip in s.list_single_products()[0]:
         # Get product
@@ -515,7 +514,7 @@ for s in Sale.objects.filter(category = "sale"):
                   "model": "finances.saleproduct",
                   "pk": saleproducts_pk,
                   "fields": {
-                    "sale": s.pk,
+                    "sale": sales_pk,
                     "product": product,
                     "quantity": "1",
                     "price": str(sip.sale_price)
@@ -562,7 +561,7 @@ for s in Sale.objects.filter(category = "sale"):
               "model": "finances.saleproduct",
               "pk": saleproducts_pk,
               "fields": {
-                "sale": s.pk,
+                "sale": sales_pk,
                 "product": product,
                 "quantity": str(spfc.quantity),
                 "price": str(spfc.sale_price)
@@ -570,6 +569,7 @@ for s in Sale.objects.filter(category = "sale"):
             })
             saleproducts_pk = saleproducts_pk + 1
 
+    sales_pk = sales_pk + 1
 # 73, 90, 67
 
 print("\nsip : ", map_sip_err, map_sip_list)
