@@ -261,7 +261,7 @@ bank_accounts_pk = 1
 
 rm = Sale.objects.filter(category = 'recharging').count()
 
-for s in Sale.objects.filter(category = 'recharging'):
+for s in Sale.objects.filter(category = 'recharging')[1000]:
     progress_bar(rechargings_pk, rm)
     if s.wording == "Rechargement automatique":
         if s.payment.unique_payment_type() == 'lydia_auto':
@@ -448,7 +448,7 @@ map_spfc_list = []
 map_spfc_err = 0
 sm = Sale.objects.filter(category = "sale").count()
 
-for s in Sale.objects.filter(category = "sale"):
+for s in Sale.objects.filter(category = "sale")[3000]:
     progress_bar(sales_pk, sm)
     if s.sender == s.operator:
         for m in selfsalemodules:
