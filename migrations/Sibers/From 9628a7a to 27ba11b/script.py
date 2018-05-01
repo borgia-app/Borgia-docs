@@ -614,7 +614,7 @@ for se in SharedEvent.objects.all():
         if weightsuser:
             weightsusers.remove(weightsuser)
             weightsuser["fields"]["weights_registeration"] = p[1]
-            weightsusers.add(weightsuser)
+            weightsusers.append(weightsuser)
         else:
             weightsusers.append(
                 {
