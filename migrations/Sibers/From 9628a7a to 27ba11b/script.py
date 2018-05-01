@@ -588,7 +588,6 @@ sem = SharedEvent.objects.all().count()
 
 for se in SharedEvent.objects.all():
     progress_bar(sharedevents_pk, sem)
-    se_users = []
     for p in se.list_of_participants_ponderation():
         weightsusers.append(
             {
@@ -602,7 +601,6 @@ for se in SharedEvent.objects.all():
               }
             }
         )
-        se_users.append(weightsusers_pk)
         weightsusers_pk = weightsusers_pk + 1
     for p in se.list_of_registered_ponderation():
         weightsuser = False
@@ -626,7 +624,6 @@ for se in SharedEvent.objects.all():
                   }
                 }
             )
-            se_users.append(weightsusers_pk)
             weightsusers_pk = weightsusers_pk + 1
 
     sharedevents.append(
@@ -644,7 +641,6 @@ for se in SharedEvent.objects.all():
             "manager": se.manager.pk,
             "allow_self_registeration": True,
             "date_end_registration": se.date.isoformat(),
-            "users": se_users
           }
         }
     )
