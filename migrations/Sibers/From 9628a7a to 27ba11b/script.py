@@ -259,7 +259,7 @@ cheques = []
 bank_accounts = []
 rechargings_pk = 1
 bank_accounts_pk = 1
-
+"""
 rm = Sale.objects.filter(category = 'recharging').count()
 
 for s in Sale.objects.filter(category = 'recharging'):
@@ -435,7 +435,7 @@ print(str(len(bank_accounts)), ' BankAccounts mapped\n')
 print(str(len(cheques)), ' Cheques mapped\n')
 print(str(len(payment_solutions)), ' PaymentSolutions Cheques mapped\n')
 print(str(len(rechargings)), ' Rechargings mapped\n')
-
+"""
 # Sale
 
 print("Mapping sales\n")
@@ -449,7 +449,7 @@ map_sip_err = 0
 map_spfc_list = []
 map_spfc_err = 0
 sm = Sale.objects.filter(category = "sale").count()
-
+"""
 for s in Sale.objects.filter(category = "sale"):
     progress_bar(sales_pk, sm)
     if s.sender == s.operator:
@@ -577,7 +577,7 @@ for s in Sale.objects.filter(category = "sale"):
 print("\nsip : ", map_sip_err, map_sip_list)
 print("spfc : ", map_spfc_err, map_spfc_list)
 print("\n", str(len(sales)), ' Sales mapped\n')
-
+"""
 print("Mapping shared events\n")
 from finances.models import SharedEvent
 sharedevents = []
@@ -625,25 +625,25 @@ for se in SharedEvent.objects.all():
                 }
             )
             weightsusers_pk = weightsusers_pk + 1
-
-    sharedevents.append(
-        {
-          "model": "finances.sharedevent",
-          "pk": sharedevents_pk,
-          "fields": {
-            "description": se.description,
-            "date": se.date.isoformat(),
-            "datetime": se.date.isoformat(),
-            "price": str(se.price),
-            "bills": se.bills,
-            "done": se.done,
-            "remark": se.remark,
-            "manager": se.manager.pk,
-            "allow_self_registeration": True,
-            "date_end_registration": se.date.isoformat(),
-          }
-        }
-    )
+    se_temp =  {
+      "model": "finances.sharedevent",
+      "pk": sharedevents_pk,
+      "fields": {
+        "description": se.description,
+        "date": se.date.isoformat(),
+        "datetime": se.date.isoformat(),
+        "bills": se.bills,
+        "done": se.done,
+        "manager": se.manager.pk,
+        "allow_self_registeration": True,
+        "date_end_registration": se.date.isoformat(),
+      }
+    }
+    if se.price:
+        se_temp["fields"]["price"]: str(se.price),
+    if se.remark:
+        se_temp["fields"]["remark"]: se.remark
+    sharedevents.append(se_temp)
     sharedevents_pk = sharedevents_pk + 1
 
 print("\n", str(len(sharedevents)), ' Shared events mapped\n')
