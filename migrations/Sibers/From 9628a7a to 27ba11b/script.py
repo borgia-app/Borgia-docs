@@ -639,7 +639,7 @@ for se in SharedEvent.objects.all():
             "description": se.description,
             "date": se.date.isoformat(),
             "datetime": se.date.isoformat(),
-            "price": str(se.price.price),
+            "price": str(se.price),
             "bills": se.bills,
             "done": se.done,
             "remark": se.remark,
