@@ -261,7 +261,7 @@ rechargings_pk = 1
 bank_accounts_pk = 1
 
 rm = Sale.objects.filter(category = 'recharging').count()
-
+"""
 for s in Sale.objects.filter(category = 'recharging'):
     progress_bar(rechargings_pk, rm)
     if s.wording == "Rechargement automatique":
@@ -435,6 +435,8 @@ print(str(len(bank_accounts)), ' BankAccounts mapped\n')
 print(str(len(cheques)), ' Cheques mapped\n')
 print(str(len(payment_solutions)), ' PaymentSolutions Cheques mapped\n')
 print(str(len(rechargings)), ' Rechargings mapped\n')
+"""
+
 # Sale
 
 print("Mapping sales\n")
@@ -448,7 +450,7 @@ map_sip_err = 0
 map_spfc_list = []
 map_spfc_err = 0
 sm = Sale.objects.filter(category = "sale").count()
-
+"""
 for s in Sale.objects.filter(category = "sale"):
     progress_bar(sales_pk, sm)
     if s.sender == s.operator:
@@ -576,12 +578,87 @@ for s in Sale.objects.filter(category = "sale"):
 print("\nsip : ", map_sip_err, map_sip_list)
 print("spfc : ", map_spfc_err, map_spfc_list)
 print("\n", str(len(sales)), ' Sales mapped\n')
+"""
+
+print("Mapping shared events\n")
+from finances.models import SharedEvent
+sharedevents = []
+weightsusers = []
+sharedevents_pk = 1
+weightsusers_pk = 1
+sem = SharedEvent.objects.all.count()
+
+for se in SharedEvent.objects.all():
+    progress_bar(sharedevents_pk, sem)
+    se_users = []
+    for p in se.list_of_participants_ponderation():
+        weightsusers.append(
+            {
+              "model": "finances.weighsuser",
+              "pk": sharedevents_pk,
+              "fields": {
+                "user": p[0].pk,
+                "shared_event": sharedevents_pk,
+                "weights_registeration": 0,
+                "weights_participation": p[1]
+              }
+            }
+        )
+        se_users.append(weighsusers_pk)
+        weightsusers_pk = weightsusers_pk + 1
+    for p in se.list_of_registered_ponderation():
+        weightsuser = False
+        for w in weighsusers:
+            if (w["fields"]["user"] == p[0].pk and w["fields"]["user"] == sharedevents_pk):
+                weightsuser = w
+        if weightsuser:
+            weightsusers.remove(weightsuser)
+            weightsuser["fields"]["weights_registeration"] = p[1]
+            weightsusers.add(weightsuser)
+        else:
+            weightsusers.append(
+                {
+                  "model": "finances.weighsuser",
+                  "pk": sharedevents_pk,
+                  "fields": {
+                    "user": p[0].pk,
+                    "shared_event": sharedevents_pk,
+                    "weights_registeration": p[1],
+                    "weights_participation": 0
+                  }
+                }
+            )
+            se_users.append(weighsusers_pk)
+            weightsusers_pk = weightsusers_pk + 1
+
+    sharedevents.append(
+        {
+          "model": "finances.sharedevent",
+          "pk": sharedevents_pk,
+          "fields": {
+            "description": se.description,
+            "date": se.date.isoformat(),
+            "datetime": se.date.isoformat(),
+            "price": str(se.price.price),
+            "bills": se.bills,
+            "done": se.done,
+            "remark": se.remark,
+            "manager": se.manager.pk,
+            "allow_self_registeration": True,
+            "date_end_registration": se.date.isoformat(),
+            "users": se_users
+          }
+        }
+    )
+    sharedevents_pk = sharedevents_pk + 1
+
+print("\n", str(len(sharedevents)), ' Shared events mapped\n')
 
 # DUMPING
 print("Dumping to json ...\n")
 
 with open('dump_' + datetime.datetime.now().isoformat() + '.json', 'w') as outfile:
-    _list = users + shops + selfsalemodules + operatorsalemodules + products + exceptionnal_movements + transferts + cashs + lydias_facetoface + lydias_online + cheques + payment_solutions + rechargings + sales + saleproducts
+    _list = users + shops + selfsalemodules + operatorsalemodules + products + exceptionnal_movements + transferts + cashs + lydias_facetoface + lydias_online + cheques + payment_solutions + rechargings + sales + saleproducts + sharedevents + weighsusers
     _str = json.dumps(_list,
                       indent=4, sort_keys=True,
                       separators=(',', ': '), ensure_ascii=False)
