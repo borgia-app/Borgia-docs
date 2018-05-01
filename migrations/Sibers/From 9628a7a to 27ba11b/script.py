@@ -50,7 +50,8 @@ for u in User.objects.all():
                 "phone": u.phone,
                 "token_id": "",
                 "avatar": "",
-                "theme": "light"
+                "theme": "light",
+                "groups": [g.pk for u.groups.filter(pk__in=[1,2,3,4,5,6])]
             }
         }
     )
