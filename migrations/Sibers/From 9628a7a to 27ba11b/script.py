@@ -658,7 +658,7 @@ print("\n", str(len(sharedevents)), ' Shared events mapped\n')
 print("Dumping to json ...\n")
 
 with open('dump_' + datetime.datetime.now().isoformat() + '.json', 'w') as outfile:
-    _list = users + shops + selfsalemodules + operatorsalemodules + products + exceptionnal_movements + transferts + cashs + lydias_facetoface + lydias_online + cheques + payment_solutions + rechargings + sales + saleproducts + sharedevents + weighsusers
+    _list = users + shops + selfsalemodules + operatorsalemodules + products + exceptionnal_movements + transferts + cashs + lydias_facetoface + lydias_online + cheques + payment_solutions + rechargings + sales + saleproducts + sharedevents + weightsusers
     _str = json.dumps(_list,
                       indent=4, sort_keys=True,
                       separators=(',', ': '), ensure_ascii=False)
