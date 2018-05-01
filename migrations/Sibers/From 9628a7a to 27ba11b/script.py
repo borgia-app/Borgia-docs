@@ -586,7 +586,7 @@ sharedevents = []
 weightsusers = []
 sharedevents_pk = 1
 weightsusers_pk = 1
-sem = SharedEvent.objects.all.count()
+sem = SharedEvent.objects.all().count()
 
 for se in SharedEvent.objects.all():
     progress_bar(sharedevents_pk, sem)
