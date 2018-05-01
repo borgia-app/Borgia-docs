@@ -1,6 +1,6 @@
 # Migration Borgia Metz Sibers
 
-# FROM 9628a7a8abf36b2dff99c513aef84d3ad9701897 TO 27ba11b03a2e6fe5303d6370f718d8f5738db2d8
+# FROM 9628a7a TO 27ba11b
 
 ## Preparation
 
