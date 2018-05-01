@@ -591,7 +591,7 @@ for se in SharedEvent.objects.all():
     for p in se.list_of_participants_ponderation():
         weightsusers.append(
             {
-              "model": "finances.weighsuser",
+              "model": "finances.weightsuser",
               "pk": weightsusers_pk,
               "fields": {
                 "user": p[0].pk,
@@ -614,7 +614,7 @@ for se in SharedEvent.objects.all():
         else:
             weightsusers.append(
                 {
-                  "model": "finances.weighsuser",
+                  "model": "finances.weightsuser",
                   "pk": weightsusers_pk,
                   "fields": {
                     "user": p[0].pk,
@@ -641,10 +641,8 @@ for se in SharedEvent.objects.all():
     }
     if se.price:
         se_temp["fields"]["price"] = str(se.price)
-        #print(se.price, str(se.price), se_temp["fields"]["price"])
     if se.remark:
         se_temp["fields"]["remark"] = se.remark
-    print(se_temp)
     sharedevents.append(se_temp)
     sharedevents_pk = sharedevents_pk + 1
 
