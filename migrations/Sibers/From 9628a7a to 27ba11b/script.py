@@ -595,7 +595,7 @@ for se in SharedEvent.objects.all():
         weightsusers.append(
             {
               "model": "finances.weighsuser",
-              "pk": sharedevents_pk,
+              "pk": weightsusers_pk,
               "fields": {
                 "user": p[0].pk,
                 "shared_event": sharedevents_pk,
@@ -604,7 +604,7 @@ for se in SharedEvent.objects.all():
               }
             }
         )
-        se_users.append(weighsusers_pk)
+        se_users.append(weightsusers_pk)
         weightsusers_pk = weightsusers_pk + 1
     for p in se.list_of_registered_ponderation():
         weightsuser = False
@@ -619,7 +619,7 @@ for se in SharedEvent.objects.all():
             weightsusers.append(
                 {
                   "model": "finances.weighsuser",
-                  "pk": sharedevents_pk,
+                  "pk": weightsusers_pk,
                   "fields": {
                     "user": p[0].pk,
                     "shared_event": sharedevents_pk,
