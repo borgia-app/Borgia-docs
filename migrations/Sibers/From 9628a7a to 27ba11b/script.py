@@ -640,8 +640,8 @@ for se in SharedEvent.objects.all():
       }
     }
     if se.price:
-        print(se.price)
-        se_temp["fields"]["price"] = str(se.price[0]),
+        se_temp["fields"]["price"] = str(se.price)
+        print(se.price, str(se.price), se_temp["fields"]["price"])
     if se.remark:
         se_temp["fields"]["remark"] = se.remark
     print(se_temp)
