@@ -608,7 +608,7 @@ for se in SharedEvent.objects.all():
         weightsusers_pk = weightsusers_pk + 1
     for p in se.list_of_registered_ponderation():
         weightsuser = False
-        for w in weighsusers:
+        for w in weightsusers:
             if (w["fields"]["user"] == p[0].pk and w["fields"]["user"] == sharedevents_pk):
                 weightsuser = w
         if weightsuser:
