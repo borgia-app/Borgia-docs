@@ -628,7 +628,7 @@ for se in SharedEvent.objects.all():
                   }
                 }
             )
-            se_users.append(weighsusers_pk)
+            se_users.append(weightsusers_pk)
             weightsusers_pk = weightsusers_pk + 1
 
     sharedevents.append(
