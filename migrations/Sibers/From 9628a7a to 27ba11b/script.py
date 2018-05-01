@@ -640,9 +640,9 @@ for se in SharedEvent.objects.all():
       }
     }
     if se.price:
-        se_temp["fields"]["price"]: str(se.price),
+        se_temp["fields"]["price"] = str(se.price),
     if se.remark:
-        se_temp["fields"]["remark"]: se.remark
+        se_temp["fields"]["remark"] = se.remark
     sharedevents.append(se_temp)
     sharedevents_pk = sharedevents_pk + 1
 
