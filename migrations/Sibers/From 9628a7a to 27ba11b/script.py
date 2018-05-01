@@ -51,7 +51,7 @@ for u in User.objects.all():
                 "token_id": "",
                 "avatar": "",
                 "theme": "light",
-                "groups": [g.pk for u.groups.filter(pk__in=[1,2,3,4,5,6])]
+                "groups": [g.pk for g in u.groups.filter(pk__in=[1,2,3,4,5,6])]
             }
         }
     )
