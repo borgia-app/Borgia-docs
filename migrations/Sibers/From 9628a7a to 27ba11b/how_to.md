@@ -11,7 +11,7 @@
 
 * Enter the python environment: `source /borgia/borgiaenv/bin/activate`
 * Dump the database with the script: `python3 script.py`
-* Get the content type pks
+* Get the content type pks, if not noted during the dump :
   * Enter the Django shell: `python3 manage.py shell`
   * `from django.contrib.contenttypes.models import ContentType`
   * Save the content type pk for selfsalemodule: `ContentType.objects.get(app_label='modules', model='selfsalemodule').pk`

@@ -663,3 +663,6 @@ with open('dump_' + datetime.datetime.now().isoformat() + '.json', 'w') as outfi
     outfile.write(_str)
     outfile.close()
 print("Dump completed.\n")
+
+print("Selfsalemodule content type pk: ", ContentType.objects.get(app_label='modules', model='selfsalemodule').pk, "\n")
+print("Operatorsalemodule content type pk: ", ContentType.objects.get(app_label='modules', model='operatorsalemodule').pk, "\n")
