@@ -14,4 +14,4 @@ See [graph-models](graph-models/README.md).
 
 ## Database migrations
 
-* [Siber's from 962a7a to 27ba11b](migrations/Sibers/From 9628a7a to 27ba11b/how_to.md).
+* [Siber's from 962a7a to 27ba11b](migrations/Sibers/From%209628a7a%20to%2027ba11b/how_to.md).
