@@ -28,3 +28,8 @@
   * Save the content type pk for operatorsalemodule: `ContentType.objects.get(app_label='modules', model='operatorsalemodule').pk`
   * Replace old content type pks with new ones, using for instance Hex Friend for MacOs or nano for Unix. Search for `"content_type": X`
 * Within the Python environment, load the database: `python3 manage.py loaddata file.json`
+
+## Finish the work
+
+* Check the name of each product and change it if necessary
+* Check the price of each product and change it if necessary
