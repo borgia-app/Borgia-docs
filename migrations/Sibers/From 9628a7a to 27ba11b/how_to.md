@@ -5,7 +5,7 @@
 ## Preparation
 
 * Clone the Borgia-docs repository
-* Copy the file `script.py` into the `Borgia` folder: `cp /borgia/Borgia-docs/migrations/Sibers/From 9628a7a to 27ba11b/script.py /borgia/borgia/script.py`
+* Copy the file `script.py` into the `Borgia` folder: `cp /borgia/Borgia-docs/migrations/Sibers/From\ 9628a7a\ to\ 27ba11b/script.py /borgia/borgia/script.py`
 
 ## Dumping the database
 
