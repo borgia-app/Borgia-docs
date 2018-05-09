@@ -17,13 +17,13 @@ Il détaillera la gestion des administrateurs d'un magasin, de ses produits et d
 
 # Administrateurs du magasin
 
-Lors de la création d'un magasin, deux groupes d'administrateurs sont également créés automatiquement, afin de gérer le magasin. Ces deux groupes sont nommés "Chefs du magasin" et "Associés du magasin". Ils n'ont pas les mêmes fonctionnalités, les mêmes permissions et ne sont pas gérés par le même groupe supérieur. Dans les deux cas, ces administrateurs peuvent accéder au "Workboard" du magasin en changeant de groupe dans le menu latéral (`Groupes / Chefs ou Associés NOM-DU-MAGASIN`).
+Lors de la création d'un magasin, deux groupes d'administrateurs sont également créés automatiquement afin de gérer le magasin. Ces deux groupes sont nommés "Chefs du magasin" et "Associés du magasin". Ils n'ont pas les mêmes fonctionnalités, les mêmes permissions et ne sont pas gérés par le même groupe supérieur. Dans les deux cas, ces administrateurs peuvent accéder au "Workboard" du magasin en changeant de groupe dans le menu latéral (`Groupes / Chefs ou Associés NOM-DU-MAGASIN`).
 
 ## Chefs du magasin
 
 Le groupe admin le plus important d'un magasin est le groupe des chefs du magasin. Le nom complet est "Chefs _NOM-DU-MAGASIN_ ".
 
-La gestion de ce groupe est laissé par défaut aux groupe des présidents et des vice-présidents. C'est donc à eux de définir qui fait partie de ce groupe principal du magasin. Pour modifier les membres, cliquer sur `Gestion des groupes / Gestion chefs NOM_DU_MAGASIN` dans le menu latéral.
+La gestion de ce groupe est laissé par défaut aux groupe des présidents et des vice-présidents. C'est donc à eux de définir qui fait partie de ce groupe principal. Pour modifier les membres, cliquer sur `Gestion des groupes / Gestion chefs NOM_DU_MAGASIN` dans le menu latéral.
 
 Par défaut, ce groupe a la permission de :
 
@@ -61,7 +61,7 @@ Les produits sont les éléments qui sont vendus au magasin à travers les diff�
 
 ## Ajouter un produit
 
-Borgia propose deux types de produits différents pour les magasins : les produits unitaires et les produits vendus à la quantité. La différence est essentielle et fondamentale pour bien utiliser l'application des produits de Borgia.
+Borgia propose deux types de produits différents pour les magasins : les produits unitaires et les produits vendus à la quantité. La différence est essentielle et fondamentale pour bien utiliser l'application des produits de Borgia: elle doit donc être bien comprise.
 
 ### Produit unitaire
 
@@ -87,7 +87,7 @@ L'ensemble des informations d'un produit est disponible en cliquant sur "détail
 
 ![Produit dans la liste](./img/product_in_list.png)
 
-La page qui s'affiche indique les informations du produit ainsi que les différentes manipulations possibles à effectuer (voir la suite).
+La page qui s'affiche indique les informations du produit ainsi que les différentes manipulations possibles à effectuer (voir la suite de ce document).
 
 ![Détails d'un produit](./img/product_retrieve.png)
 
@@ -96,20 +96,20 @@ La page qui s'affiche indique les informations du produit ainsi que les différe
 Un produit peut être désactivé ou supprimé en cas de besoin.
 
 Lors de la désactivation, le produit :
-* n'est plus visible à la vente.
-* reste présent dans la liste des produits.
+* n'est plus visible à la vente,
+* reste présent dans la liste des produits,
 * peut être réactivé à tout moment, cette action **est reversible**.
 
 Et lors de la suppression, le produit :
-* disparait purement et simplement de Borgia.
-* n'est plus modifiable, visible dans les listes ou disponible à la vente.
+* disparait purement et simplement de Borgia,
+* n'est plus modifiable, visible dans les listes ou disponible à la vente,
 * cette action est **irreversible**.
 
 Ainsi, la suppression d'un produit est à réserver si une erreur a été faite concernant ce produit. Si l'objectif est simplement de le retirer de la vente temporairement, la désactivation est à privilégier.
 
 ## Gestion du prix de vente
 
-Borgia peut gérer automatiquement le prix de vente des produits en utilisant les données d'entrées et de sorties du stocks (voir la section stock pour plus d'informations). 
+Borgia peut gérer automatiquement le prix de vente des produits en utilisant les données d'entrées et de sorties du stocks (voir le tutoriel concernant les stocks pour plus d'informations). 
 Le paramètre qui indique la marge de vente à appliquer est défini dans la configuration de Borgia, et est commun à tout les magasins. Ce paramètre n'est modifiable que par les personnes autorisées (par défaut le(s) président(s), le(s) vice-président(s), et le(s) trésorier(s))
 
 De plus, il est également possible d'utiliser un prix défini manuellement pour chacun des produits en cliquant sur le bouton `Gestion manuelle du prix`.
@@ -119,6 +119,8 @@ De plus, il est également possible d'utiliser un prix défini manuellement pour
 Si c'est le cas, Borgia indique la déviation par rapport au prix qu'il calcule afin d'informer les administrateurs de la cohérence ou non du prix manuel.
 
 ![Ajout produit simple](./img/manual_price_deviant.png)
+
+**Remarque**: dans les deux cas, si le prix de vente est nul (entré manuellement ou calculé par Borgia), Borgia ne permettra pas de vendre ce produit.
 
 ## Stock
 
@@ -132,7 +134,7 @@ L'objectif principal des produits et de l'application magasin est de vendre des 
 
 ## Les deux types de modules de ventes
 
-Afin de proposer des produits aux membres et utilisateurs du site, deux modules de vente différents sont disponibles. Les deux modules ont des contenus distinct et une fonction différente, mais leurs configurations sont similaires, et ne sont donc pas différenciées dans ce guide (voir suite).
+Afin de proposer des produits aux membres et utilisateurs de la solution, deux modules de vente différents sont disponibles. Les deux modules ont des contenus distincts et une fonction différente. Mais leurs configurations sont similaires, et ne sont donc pas différenciées dans ce guide (voir suite du document).
 
 Le premier est le module de "vente directe". Il autorise les utilisateurs à indiquer eux-même leurs achats via une interface simplifiée. Tout fonctionne **sans** l'intervention d'un administrateur du magasin et est donc basé sur la confiance entre les membres et l'association. Pour activer et configurer ce module, il faut cliquer sur "Module vente libre service" dans le menu latéral des gestionnaires du magasin.
 
