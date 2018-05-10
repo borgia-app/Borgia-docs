@@ -605,7 +605,7 @@ for se in SharedEvent.objects.all():
     for p in se.list_of_registered_ponderation():
         weightsuser = False
         for w in weightsusers:
-            if (w["fields"]["user"] == p[0].pk and w["fields"]["user"] == sharedevents_pk):
+            if (w["fields"]["user"] == p[0].pk and w["fields"]["shared_event"] == sharedevents_pk):
                 weightsuser = w
         if weightsuser:
             weightsusers.remove(weightsuser)
