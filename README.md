@@ -11,6 +11,10 @@
 * [Global use (fr)](tutorials/shops.md).
 * [Stocks management (fr)](tutorials/stocks.md).
 
+## FAQ
+
+* [FAQ (fr)](FAQ.md).
+
 ## Graph of models
 
 See [graph-models](graph-models/README.md).
