@@ -7,4 +7,4 @@ This FAQ is currently in construction, and in french for now. If you have a ques
 
 - Après une vente, la page de récapitulation reste indéfiniement, il faut cliquer sur continuer pour passer. Y'a t'il un moyen de faire passer automatiquement jusqu'au menu ?
 
-  Réponse : *Pour qu'un magasin (içi l'auberge) déconnecte et/ou mette le "continuer" automatiquement, il faut aller dans les paramètres de la ventes (Onglet "Chefs nom_du_magasin", puis décocher "Durée d'affichage du résumé de commande infini", et mettre le temps voulu)*
+  Réponse : *Pour qu'un magasin poursuive automatiquement la navigation après une vente, il faut aller dans les paramètres de la ventes (Onglet "Chefs nom_du_magasin", puis décocher "Durée d'affichage du résumé de commande infini", et mettre le temps voulu). La déconnection (ou non) après une vente peut également être paramétrée dans cet onglet.*
