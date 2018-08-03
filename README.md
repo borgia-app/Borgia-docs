@@ -6,7 +6,7 @@
 * [Gestion d'un magasin](tutorials/shops.md).
 * [Gestion des stocks](tutorials/stocks.md).
 
-## FAQ
+### FAQ
 
 * [FAQ (fr)](FAQ.md).
 
