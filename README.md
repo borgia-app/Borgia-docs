@@ -1,5 +1,4 @@
-# Sommaire : Ressources - French version
-
+# Sommaire : Ressources - Fr
 ## Tutoriels
 
 ### Magasins
