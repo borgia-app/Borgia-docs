@@ -8,4 +8,4 @@ To edit the graph, load the .html file into Draw.io.
 
 Export to pdf with Draw.io directly (export to / pdf).
 
-## Please, update these files everytime models changed!
+## Please, update these files everytime models change!

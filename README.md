@@ -31,6 +31,6 @@ See [graph-models](graph-models/README.md).
 
 L'équipe qui s'occupe de Borgia travaille tous les jours pour assurer un logiciel de qualité. Nous sommes à l'écoute de vos remarques et nous essayons d'améliorer Borgia de manière continue.
 
-Borgia est actuellement utilisé par plusieurs milliers d'étudiants depuis plus de 2 ans, notamment dans les centres [Arts et Métiers](https://artsetmetiers.fr/). Nous cherchons activement des personnes pour participer à cette belle aventure, n'hésite pas à nous contacter directement. Nous avons de grands projets pour Borgia (une application mobile, de nouvelles fonctionnalités, ...) !
+Borgia est actuellement utilisé par plusieurs milliers d'étudiants depuis 2016, notamment dans les centres [Arts et Métiers](https://artsetmetiers.fr/). Nous cherchons activement des personnes pour participer à cette belle aventure, n'hésite pas à nous contacter directement. Nous avons de grands projets pour Borgia (une application mobile, de nouvelles fonctionnalités, ...) !
 
 Enfin, si tu veux apporter des modifications à ces pages, n'hésite pas à ouvrir une [issue](https://github.com/borgia-app/Borgia-docs/issues) ou même une [pull request](https://github.com/borgia-app/Borgia-docs/pulls). Cela nous aiderais beaucoup !
