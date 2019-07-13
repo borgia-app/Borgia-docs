@@ -45,7 +45,7 @@ Les commandes qui suivent sont à exécuter dans le dossier d'application `/borg
 -   `python manage.py makemigrations configurations users shops finances events modules sales stocks`,
 -   `python manage.py migrate`,
 -   `python manage.py loaddata initial`.
--   `python manage.py collectstatic`.
+-   `python manage.py collectstatic --clear` en indiquant "yes" à la validation.
 
 Données initiales pour simulation et développement.
 
