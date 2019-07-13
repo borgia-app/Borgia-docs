@@ -7,6 +7,8 @@
 Build : 5.1+
 Licence : [GNU GPL version 3](https://github.com/borgia-app/Borgia/blob/master/license.txt)
 
+# Statut : EN COURS DE MODIFICATION POUR FICHIERS DE CONFIG
+
 # Introduction
 
 Ce guide permet d'installer, configurer et faire fonctionner Borgia sur un serveur web en production.
@@ -94,22 +96,20 @@ Dans l'invite postgres :
 
 ## Copie de Borgia
 
-La liste des versions de Borgia est disponible [ici](https://github.com/borgia-app/Borgia/tags). Ce guide est destiné aux versions supérieures à 4.5.0. Ici par exemple, la version 4.5.0 est choisie et installée.
-a
 Dans `/borgia-app` :
 
 -   `git clone https://github.com/borgia-app/Borgia.git`
 
 Ensuite dans `/borgia-app/Borgia` :
 
--   `git checkout tags/4.5.0`
--   `git checkout -b production_4.5.0`
+-   `git checkout tags/RELEASE_A_UTILISER`
+-   `git checkout -b production_RELEASE_A_UTILISER`
 
 ## Installation des paquets nécessaires à l'application
 
 Dans `/borgia-app/Borgia` et dans l'environnement virtuel :
 
--   `pip3 install -r requirements.txt`
+-   `pip3 install -r requirements/prod.txt`
 
 Et finalement, hors de l'environnement virtuel :
 
@@ -119,36 +119,33 @@ Et finalement, hors de l'environnement virtuel :
 
 #### Paramètres vitaux
 
-Dans le fichier `/borgia-app/Borgia/borgia/settings.py` :
+Copier le fichier `/borgia-app/Borgia/contrib/production/settings.py` dans `/borgia-app/Borgia/borgia/borgia/settings.py` et :
 
--   Modifier la ligne `SECRET_KEY = 'need to be changed'` en indiquant une clé privée aléatoire. Par exemple, [ce site](https://randomkeygen.com/) permet de générer des clés, choisissez au minimum "CodeIgniter Encryption Keys", par exemple : `SECRET_KEY = 'AAHHBxi0qHiVWWk6J1bVWCMdF45p6X9t'`.
+-   Modifier la ligne `SECRET_KEY =` en indiquant une clé privée aléatoire. Par exemple, [ce site](https://randomkeygen.com/) permet de générer des clés, choisissez au minimum "CodeIgniter Encryption Keys", par exemple : `SECRET_KEY = 'AAHHBxi0qHiVWWk6J1bVWCMdF45p6X9t'`.
 
--   Modifier la ligne `DEBUG = True` en `DEBUG = False`.
+-   S'assurer que `DEBUG = False`.
 
--   Modifier la ligne `ALLOWED_HOSTS = ['*']` en indiquant les domaines ou sous domaines acceptés par l'application. Par exemple : `ALLOWED_HOSTS = ['www.borgia.iresam.org', 'borgia.iresam.org']`.
+-   Modifier la ligne `ALLOWED_HOSTS =` en indiquant les domaines ou sous domaines acceptés par l'application. Par exemple : `ALLOWED_HOSTS = ['sibers.borgia-app.com', 'borgia-me.ueam.net']`.
 
 #### Base de données
 
-Dans le fichier `/borgia-app/Borgia/borgia/settings.py`, changer la partie :
+Dans le fichier `/borgia-app/Borgia/borgia/borgia/settings.py`, modifier la partie :
 
-```
+```python
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+...
 }
 ```
 
-en (où **MOT_DE_PASSE_DB** a été indiqué lors de la configuragion de la base de données) :
+en indiquant le nom de la base de données, le nom de l'utilisateur et le mot de passe définis lors de la configuration de cette dernière. Par exemple :
 
-```
+```python
 DATABASES = {
    'default': {
        'ENGINE': 'django.db.backends.postgresql_psycopg2',
        'NAME': 'borgia',
        'USER': 'borgiauser',
-       'PASSWORD': 'MOT_DE_PASSE_DB',
+       'PASSWORD': 'mot_de_passe',
        'HOST': 'localhost',
        'PORT': '5432',
    }
@@ -159,49 +156,35 @@ DATABASES = {
 
 -   Créer un compte mail Google via le site [Gmail](https://www.google.com/gmail/) et noter le nom d'utilisateur **NOM_UTILISATEUR_MAIL** et le mot de passe **MOT_DE_PASSE_MAIL**.
 
-Dans le fichier `/borgia-app/Borgia/borgia/settings.py` :
+Dans le fichier `/borgia-app/Borgia/borgia/borgia/settings.py` :
 
--   Modifier les lignes `DEFAULT_FROM_EMAIL`, `SERVER_EMAIL` et `EMAIL_HOST_USER` en remplaçant `ae.ensam.assoc@gmail.com` par **NOM_UTILISATEUR_MAIL**.
+-   Modifier les lignes `DEFAULT_FROM_EMAIL`, `SERVER_EMAIL` et `EMAIL_HOST_USER` en indiquant l'email **NOM_UTILISATEUR_MAIL**.
 
 -   Modifier la ligne `EMAIL_HOST_PASSWORD` en indiquant le bon mot de passe **MOT_DE_PASSE_MAIL**.
 
 #### Administrateurs
 
-Les administrateur reçoivent des emails en cas de problèmes lors de l'utilisation de Borgia. Par exemple, si la base de données est inacessible, Borgia enverra automatiquement un mail aux administrateurs. Ces mails sont précieux et permettent de corriger des erreurs. Il convient d'ajouter au moins un administrateur qui va stocker les éventuels mails d'erreurs pour débuguer ensuite ou transférer à l'équipe de mainteneurs de Borgia-app.
+Les administrateur reçoivent des emails en cas de problèmes lors de l'utilisation de Borgia. Par exemple, si la base de données est inacessible, Borgia enverra automatiquement un mail aux administrateurs. Ces mails sont précieux et permettent de corriger des erreurs. En effet, l'interface de debug utilisée en développement n'est pas accessible ici et les mails la remplacent. Il convient d'ajouter au moins un administrateur qui va stocker les éventuels mails d'erreurs pour débuguer ensuite ou transférer à l'équipe de mainteneurs de Borgia.
 
-Pour ajouter des administrateurs, indiquer les adresses mails dans la ligne `ADMINS = []` dans le fichier `/borgia-app/Borgia/borgia/settings.py`.
-
-#### Paramètres d'utilisation
-
-##### Introduction
-
-Toujours dans le fichier `/borgia-app/Borgia/borgia/settings.py`, modifier les lignes dans le dictionnaire `SETTINGS_DEFAULT`. Il faut modifier à chaque fois uniquement la quatrième valeur du tuple `(val1, val2, val3, VAL4_A_MODIFIER)`. Il faut de même respecter le type de valeur définie par la valeur 3 ("f" indique un nombre décimal à deux décimales, "i" un entier, "s" du texte, "b" un booléen), même si l'ensemble des valeurs doivent être entrées en texte (ainsi on écrira `'1.00'` et non `1.00`).
-
-Il est ok pour plupart des paramètres de les modifier directement dans l'interface graphique. Cependant, en cas de problème la valeur du fichiers `settings` sera utilisée. Ainsi, les valeurs pour `CENTER_NAME` et les paramètres de Lydia (détails dans la section suivante) devraient être modifiés ici.
-
-##### Lydia
-
-Les deux clés publique et privée `LYDIA_API_TOKEN` & `LYDIA_VENDOR_TOKEN` permettent d'identifier le compte auprès de Lydia. Ces informations sont obtenues en contactant le support de Lydia directement après avoir ouvert un compte professionnel chez eux.
-
-De même, il faut changer les deux urls `LYDIA_CALLBACK_URL` et `LYDIA_CONFIRM_URL` en modifiant la première partie qui concerne uniquement le domaine (`borgia.iresam.org` par exemple). Attention, `LYDIA_CONFIRM_URL` doit être en `http` et Borgia fera automatiquement la redirection si SSL est activé, mais `LYDIA_CALLBACK_URL` **DOIT** être en `https` si SSL est activé !
+Pour ajouter des administrateurs, indiquer les adresses mails dans la ligne `ADMINS =` dans le fichier `/borgia-app/Borgia/borgia/borgia/settings.py`.
 
 # Migration de la base de données
 
-Dans `/borgia-app/Borgia` et dans l'environnement virtuel :
+Dans `/borgia-app/Borgia/borgia` et dans l'environnement virtuel :
 
--   `python3 manage.py makemigrations users shops finances modules settings_data notifications stocks`
+-   `python3 manage.py makemigrations configurations users shops finances events modules sales stocks`
 -   `python3 manage.py migrate`
 -   `python3 manage.py loaddata initial`
--   `python3 manage.py loaddata first_member`
 -   `python3 manage.py collectstatic --clear` en acceptant l'alerte
 
 Ensuite, indiquer le mot de passe du compte administrateur (qui sera désactivé par la suite) :
 
--   `python manage.py shell`
--   `from users.models import User`
--   `u = User.objects.get(pk=2)`
--   `u.set_password('MOT_DE_PASSE_ADMIN')`
+-   `python3 manage.py shell`,
+-   `from users.models import User`,
+-   `u = User.objects.get(pk=2)`,
+-   `u.set_password(NEW_PASSWORD)`.
 -   `u.save()`
+-   `exit()`
 
 #### Test intermédiaire
 
@@ -217,82 +200,17 @@ Dans l'environnement virtuel :
 
 -   `pip3 install uwsgi`
 
--   Créer un fichier `borgia.wsgi` dans `/borgia-app/Borgia` :
+-   Copier le fichier `/borgia-app/Borgia/contrib/production/borgia.wsgi` dans `/borgia-app/Borgia/borgia`. Le modifier si vous avez changer le répertoire de base.
 
-```
-[uwgi]
-socket = :8000
-chdir = /borgia-app/Borgia
-wsgi-file = borgia/wsgi.py
-```
+-   Copier le fichier `/borgia-app/Borgia/contrib/production/wsgi.py` dans `/borgia-app/Borgia/borgia/borgia` (attention au sous-dossier ici).
 
--   Créer un fichier `wsgi.py` dans `/borgia-app/Borgia/borgia` :
+-   Copier le fichier `/borgia-app/Borgia/contrib/production/uwsgi_params` dans `/borgia-app/Borgia/borgia`.
 
-```
-#-*- coding: utf-8 -*-
-import os
-
-from django.core.wsgi import get_wsgi_application
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "borgia.settings")
-
-application = get_wsgi_application()
-```
-
--   Créer un fichier `uwsgi_params` dans `/borgia-app/Borgia` :
-
-```
-uwsgi_param  QUERY_STRING       $query_string;
-uwsgi_param  REQUEST_METHOD     $request_method;
-uwsgi_param  CONTENT_TYPE       $content_type;
-uwsgi_param  CONTENT_LENGTH     $content_length;
-
-uwsgi_param  REQUEST_URI        $request_uri;
-uwsgi_param  PATH_INFO          $document_uri;
-uwsgi_param  DOCUMENT_ROOT      $document_root;
-uwsgi_param  SERVER_PROTOCOL    $server_protocol;
-uwsgi_param  REQUEST_SCHEME     $scheme;
-uwsgi_param  HTTPS              $https if_not_empty;
-
-uwsgi_param  REMOTE_ADDR        $remote_addr;
-uwsgi_param  REMOTE_PORT        $remote_port;
-uwsgi_param  SERVER_PORT        $server_port;
-uwsgi_param  SERVER_NAME        $server_name;
-```
-
--   Créer un fichier `borgia_nginx.conf` dans `/borgia-app/Borgia` en modifiant le nom du serveur `SERVEUR_NAME` (par exemple `.iresam.org`) :
-
-```
-upstream django {
-    server unix:///borgia-app/Borgia/borgia.sock;
-}
-
-# configuration of the server
-server {
-    listen      80;
-    server_name SERVEUR_NAME;
-    charset     utf-8;
-
-    client_max_body_size 75M;
-
-    location /media  {
-        alias /borgia-app/Borgia/static/media;
-    }
-
-    location /static {
-        alias /borgia-app/Borgia/static/static_root;
-    }
-
-    location / {
-        uwsgi_pass  django;
-        include /borgia-app/Borgia/uwsgi_params;
-    }
-}
-```
+-   Copier le fichier `/borgia-app/Borgia/contrib/production/borgia_nginx.conf` dans `/borgia-app/Borgia/borgia`. Modifier les chemins si nécessaire et changer le nom de serveur "SERVEUR_NAME" qui correspond au domaine utilisé (par exemple `.borgia-app.com`).
 
 -   Activer la configuration nginx en créant un lien symbolique :
 
-`ln -s /borgia-app/Borgia/borgia_nginx.conf /etc/nginx/sites-enabled/`
+`ln -s /borgia-app/Borgia/borgia/borgia_nginx.conf /etc/nginx/sites-enabled/`
 
 -   Redémarrer nginx :
 
@@ -304,23 +222,9 @@ La commande `uwsgi --socket borgia.sock --module borgia.wsgi --chmod-socket=666`
 
 #### Suite et fin de la configuration de nginx
 
--   Créer un fichier `borgia_uwsgi.ini` dans `/borgia-app/Borgia` :
+-   Copier le fichier `/borgia-app/Borgia/contrib/production/borgia_uwsgi.ini` dans `/borgia-app/Borgia/borgia`. Le modifier si vous avez changer le répertoire de base.
 
-```
-[uwsgi]
-
-chdir           = /borgia-app/Borgia
-module          = borgia.wsgi
-home            = /borgia-app/borgiaenv
-
-master          = true
-processes       = 10
-socket          = /borgia-app/Borgia/borgia.sock
-chmod-socket    = 666
-vacuum          = true
-```
-
--   Ce fichier peut être testé avec la commande `uwsgi --socket borgia.sock --module borgia.wsgi --ini mysite_uwsgi.ini`
+-   Ce fichier peut être testé avec la commande `uwsgi --socket borgia.sock --module borgia.wsgi --ini borgia_uwsgi.ini`
 
 #### Mode Empereur de nginx
 
@@ -328,7 +232,7 @@ Ce mode permet à Nginx de gérer automatiquement et de manière dynamique le pr
 
 -   `mkdir /etc/uwsgi`
 -   `mkdir /etc/uwsgi/vassals`
--   `ln -s /borgia-app/Borgia/borgia_uwsgi.ini /etc/uwsgi/vassals/`
+-   `ln -s /borgia-app/Borgia/borgia/borgia_uwsgi.ini /etc/uwsgi/vassals/`
 
 #### Démarrer uwsgi au démarrage du serveur
 
@@ -344,7 +248,9 @@ Enfin, il convient de sauvegarder l'ensemble de cette configuration sur une bran
 -   `git add .`
 -   `git commit -m "production"`
 
-# Début d'utilisation
+Il n'est pas recommandé de push cette branche car elle pourrait contenir des informations sensibles comme des clés et des mots de passe.
+
+# Début d'utilisation / TODO : A VERIFIER AVEC 5.1+
 
 ## Création d'un utilisateur
 
@@ -367,3 +273,17 @@ L'ensemble des magasins doivent être maintenant créés. Un seul exemple sera d
 -   Cliquer sur `Magasin / Nouveau` depuis l'interface du groupe des présidents et remplir le formulaire.
 
 -   Par défaut, personne n'est chef ou associé du nouveau magasin. Il faut donc ajouter des utilisateurs à ces groupes (au moins au groupe des chefs du magasin). Les chefs pourront ensuite gérés eux-même les associés.
+
+## Paramètres d'utilisation
+
+### Divers
+
+En étant dans le groupe des présidents, aller dans le système de paramètres et modifier l'ensemble des informations qui vous semblent utiles.
+
+### Lydia
+
+Les deux clés publique et privée `LYDIA_API_TOKEN` & `LYDIA_VENDOR_TOKEN` permettent d'identifier le compte auprès de Lydia. Ces informations sont obtenues en contactant le support de Lydia directement après avoir ouvert un compte professionnel chez eux.
+
+# TODO : VERIFIER ICI EN 5.1+
+
+De même, il faut changer les deux urls `LYDIA_CALLBACK_URL` et `LYDIA_CONFIRM_URL` en modifiant la première partie qui concerne uniquement le domaine (`borgia.iresam.org` par exemple). Attention, `LYDIA_CONFIRM_URL` doit être en `http` et Borgia fera automatiquement la redirection si SSL est activé, mais `LYDIA_CALLBACK_URL` **DOIT** être en `https` si SSL est activé !
