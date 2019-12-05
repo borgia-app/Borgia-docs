@@ -42,9 +42,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 Les commandes qui suivent sont à exécuter dans le dossier d'application `/borgia`.
 
--   `python manage.py makemigrations configurations users shops finances events modules sales stocks`,
--   `python manage.py migrate`,
--   `python manage.py loaddata initial`.
+-   `python manage.py makemigrations configurations users shops finances events modules sales stocks`
+-   `python manage.py migrate`
+-   `python manage.py loaddata initial`
 -   `python manage.py collectstatic --clear` en indiquant "yes" à la validation.
 
 Données initiales pour simulation et développement.
@@ -53,10 +53,10 @@ Données initiales pour simulation et développement.
 
 Modification du mot de passe du premier utilisateur `1Me215`:
 
--   `python manage.py shell`,
--   `from users.models import User`,
--   `u = User.objects.get(pk=2)`,
--   `u.set_password(NEW_PASSWORD)`.
+-   `python manage.py shell`
+-   `from users.models import User`
+-   `u = User.objects.get(pk=2)`
+-   `u.set_password(NEW_PASSWORD)`
 -   `u.save()`
 -   `exit()`
 
