@@ -183,10 +183,14 @@ Ensuite, indiquer le mot de passe du compte administrateur (qui sera désactivé
 
 -   `python3 manage.py shell`,
 -   `from users.models import User`,
--   `u = User.objects.get(pk=2)`,
+-   `u = User.objects.get(pk=1)`,
 -   `u.set_password(NEW_PASSWORD)`.
 -   `u.save()`
 -   `exit()`
+
+Les identifiants de ce compte seront:
+- Nom d'utilisateur: `AE_ENSAM`
+- Mot de passe défini ci-dessus
 
 #### Test intermédiaire
 
