@@ -110,6 +110,8 @@ Ensuite dans `/borgia-app/Borgia` :
 Dans `/borgia-app/Borgia` et dans l'environnement virtuel :
 
 -   `pip3 install -r requirements/prod.txt`
+-   `pip3 uninstall psycopg2`
+-   `pip3 install --no-binary :all: psycopg2`
 
 Et finalement, hors de l'environnement virtuel :
 
