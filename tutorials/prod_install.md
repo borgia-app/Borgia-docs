@@ -241,6 +241,18 @@ Ajoutez cette ligne à la fin du fichier (avant le `exit 0`) `/etc/rc.local`:
 
 `/usr/local/bin/uwsgi --emperor /etc/uwsgi/vassals`
 
+Le fichier `/etc/rc.local` a donc l'allure suivante:
+
+`#!/bin/sh -e`
+
+`/usr/local/bin/uwsgi --emperor /etc/uwsgi/vassals`
+
+`exit 0`
+
+Il faut ensuite le rendre exécutable:
+
+`chmod 755 /etc/rc.local`
+
 #### Sauvegarde dans git
 
 Enfin, il convient de sauvegarder l'ensemble de cette configuration sur une branche de production (sudo non nécessaire ici) :
