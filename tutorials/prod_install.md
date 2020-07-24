@@ -110,6 +110,8 @@ Ensuite dans `/borgia-app/Borgia` :
 Dans `/borgia-app/Borgia` et dans l'environnement virtuel :
 
 -   `pip3 install -r requirements/prod.txt`
+-   `pip3 uninstall psycopg2`
+-   `pip3 install --no-binary :all: psycopg2`
 
 Et finalement, hors de l'environnement virtuel :
 
@@ -181,10 +183,14 @@ Ensuite, indiquer le mot de passe du compte administrateur (qui sera désactivé
 
 -   `python3 manage.py shell`,
 -   `from users.models import User`,
--   `u = User.objects.get(pk=2)`,
+-   `u = User.objects.get(pk=1)`,
 -   `u.set_password(NEW_PASSWORD)`.
 -   `u.save()`
 -   `exit()`
+
+Les identifiants de ce compte seront:
+- Nom d'utilisateur: `AE_ENSAM`
+- Mot de passe défini ci-dessus
 
 #### Test intermédiaire
 
@@ -240,6 +246,18 @@ Dernier point, toujours en sudo en dehors de l'environnement virtuel.
 Ajoutez cette ligne à la fin du fichier (avant le `exit 0`) `/etc/rc.local`:
 
 `/usr/local/bin/uwsgi --emperor /etc/uwsgi/vassals`
+
+Le fichier `/etc/rc.local` a donc l'allure suivante:
+
+`#!/bin/sh -e`
+
+`/usr/local/bin/uwsgi --emperor /etc/uwsgi/vassals`
+
+`exit 0`
+
+Il faut ensuite le rendre exécutable:
+
+`chmod 755 /etc/rc.local`
 
 #### Sauvegarde dans git
 
