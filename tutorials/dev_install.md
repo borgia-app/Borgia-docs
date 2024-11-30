@@ -15,6 +15,8 @@ L'ensemble de ce qui suit est indépendant du système d'exploitation utilisé. 
 
 Attention, si Python 2 et 3 cohabitent, python 3 sera appelé avec `python3`. Dans tous les cas, vérifiez que c'est bien Python 3 qui est utilisé pour les commandes suivantes, en faisant : `python --version` ou `python3 --version`. Pareil pour `pip` et `pip3` si nécessaire.
 
+Python version 3.12 maximum est utilisable, puisque `cgi`, utilisé par Django 2.2.28 à été supprimé de la version 3.13.
+
 # Installation des dépendances
 
 -   Packages Python : `pip install -r requirements/dev.txt`
