@@ -49,7 +49,7 @@ L'ensemble de l'installation se fait sur un serveur sous Linux. La distribution 
 #### Installation de pip pour python3 :
 
 -   S'assurer que la commande `python3 --version` retourne une version supérieure ou égale à `3.5` (Version par défaut sur Debian 9). Si ce n'est pas le cas, réinstaller `python3`.
--   Python version 3.12 maximum est utilisable, puisque cgi, utilisé par Django 2.2.28 à été supprimé de la version 3.13.
+-   Python version 3.12 maximum est utilisable, puisque cgi, utilisé par Django 2.2.28 a été supprimé de la version 3.13.
 -   `apt-get install python3-pip`
 
 #### Installation de Yarn (cas explicite de Debian, sinon voir [ici](https://yarnpkg.com/lang/en/docs/install/)):
